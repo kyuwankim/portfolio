@@ -300,41 +300,41 @@
       display: flex; gap: 0.6rem; flex-wrap: wrap;
     }
     .exp-chip {
-      display: flex; align-items: baseline; gap: 0.4rem;
-      background: var(--accent-dim);
-      border: 1px solid var(--accent-border);
+      display: flex; flex-direction: column; align-items: center;
+      background: var(--bg-card);
+      border: 1px solid var(--border-light);
       border-radius: 6px;
-      padding: 0.4rem 0.85rem;
+      padding: 0.6rem 1rem;
+      min-width: 80px;
     }
     .exp-chip-value {
       font-family: var(--mono);
-      font-size: 0.9rem;
+      font-size: 1rem;
       color: var(--accent);
       font-weight: 700;
+      line-height: 1.2;
     }
     .exp-chip-label {
-      font-size: 0.72rem;
-      color: var(--text);
+      font-size: 0.62rem;
+      color: #5a7090;
+      margin-top: 0.15rem;
     }
 
     .exp-links {
-      display: flex; flex-wrap: wrap; gap: 0.5rem;
+      display: flex; flex-wrap: wrap; gap: 0.4rem;
       margin-top: 1rem;
     }
     .exp-link {
-      font-size: 0.75rem;
-      color: var(--accent);
+      font-size: 0.72rem;
+      color: #5a7090;
       text-decoration: none;
       display: flex; align-items: center; gap: 0.3rem;
-      padding: 0.25rem 0.6rem;
-      background: var(--accent-dim);
-      border: 1px solid var(--accent-border);
-      border-radius: 4px;
-      transition: background 0.2s;
+      padding: 0.2rem 0;
+      transition: color 0.2s;
     }
-    .exp-link:hover { background: rgba(56, 189, 248, 0.15); }
+    .exp-link:hover { color: var(--accent); }
     .exp-link svg {
-      width: 12px; height: 12px;
+      width: 11px; height: 11px;
       stroke: currentColor; fill: none;
       stroke-width: 2;
     }
