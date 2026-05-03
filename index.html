@@ -13,7 +13,7 @@
   <meta property="og:url" content="https://kyuwan.kim/">
   <meta property="og:locale" content="ko_KR">
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%230f1620'/%3E%3Cpath d='M11 8v16M11 16l9-8M11 16l9 8' stroke='%2338bdf8' stroke-width='2.8' stroke-linecap='round' stroke-linejoin='round' fill='none'/%3E%3C/svg%3E">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='32' y2='32' gradientUnits='userSpaceOnUse'%3E%3Cstop stop-color='%2338bdf8'/%3E%3Cstop offset='1' stop-color='%23818cf8'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='32' height='32' rx='8' fill='%230f1620'/%3E%3Cpath d='M12 7v18M12 16l9-9M12 16l9 9' stroke='url(%23g)' stroke-width='3' stroke-linecap='round' stroke-linejoin='round' fill='none'/%3E%3C/svg%3E">
   <style>
     :root {
       --bg: #0f1620;
@@ -364,6 +364,52 @@
       stroke-width: 2;
     }
 
+    /* ── Preview ── */
+    .exp-preview {
+      display: block;
+      margin-top: 1rem;
+      border-radius: 8px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      position: relative;
+      text-decoration: none;
+      max-width: 420px;
+      aspect-ratio: 16/9;
+    }
+    .exp-preview img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      filter: brightness(0.65) saturate(0.9);
+      transition: filter 0.4s, transform 0.4s;
+    }
+    .exp-preview:hover img {
+      filter: brightness(0.85) saturate(1);
+      transform: scale(1.03);
+    }
+    .exp-preview-play {
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 44px; height: 44px;
+      background: rgba(0,0,0,0.5);
+      border: 2px solid rgba(255,255,255,0.25);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      transition: background 0.3s, border-color 0.3s;
+      pointer-events: none;
+    }
+    .exp-preview:hover .exp-preview-play {
+      background: rgba(56,189,248,0.7);
+      border-color: rgba(56,189,248,0.4);
+    }
+    .exp-preview-play svg {
+      width: 16px; height: 16px;
+      fill: #fff;
+      margin-left: 2px;
+    }
+
     /* ── Collapse ── */
     .exp-collapse {
       border: 1px solid var(--border);
@@ -657,6 +703,7 @@
       .contact-links { flex-direction: column; }
       .contact-link-value { font-size: 0.88rem; }
       .evolution { padding: 1rem; }
+      .exp-preview { max-width: 100%; }
     }
     @media (max-width: 480px) {
       .hero-name { font-size: 2rem; }
@@ -871,6 +918,10 @@
             <li>미국 CTK USA 센터에서 실서비스 운영,
               이후 CTK가 콜로세움에 시리즈A 투자</li>
           </ul>
+          <a href="https://www.youtube.com/watch?v=J1wTtEk9U74" target="_blank" rel="noopener" class="exp-preview">
+            <img src="https://img.youtube.com/vi/J1wTtEk9U74/hqdefault.jpg" alt="CTK USA 센터 운영 영상" loading="lazy">
+            <div class="exp-preview-play"><svg viewBox="0 0 24 24"><polygon points="8 5 19 12 8 19"/></svg></div>
+          </a>
           <div class="exp-results">
             <div class="exp-chip">
               <span class="exp-chip-value">Series A</span>
@@ -944,6 +995,10 @@
                     <li>Android 태블릿 + HMD 연동,
                       전시 선택 → VR 자동 재생</li>
                   </ul>
+                  <a href="https://www.youtube.com/watch?v=HLH1BRMnhEY" target="_blank" rel="noopener" class="exp-preview">
+                    <img src="https://img.youtube.com/vi/HLH1BRMnhEY/hqdefault.jpg" alt="360SCOPE 홍보 영상" loading="lazy">
+                    <div class="exp-preview-play"><svg viewBox="0 0 24 24"><polygon points="8 5 19 12 8 19"/></svg></div>
+                  </a>
                   <div class="exp-links">
                     <a href="https://www.youtube.com/watch?v=HLH1BRMnhEY" target="_blank" rel="noopener" class="exp-link"><svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>홍보 영상</a>
                   </div>
@@ -980,6 +1035,10 @@
                     <li>VR 플레이어 Unity 개발,
                       앱에서 APK 호출 연동</li>
                   </ul>
+                  <a href="https://www.youtube.com/watch?v=Im8VWpGox1k" target="_blank" rel="noopener" class="exp-preview">
+                    <img src="https://img.youtube.com/vi/Im8VWpGox1k/hqdefault.jpg" alt="Bideomap 서비스 영상" loading="lazy">
+                    <div class="exp-preview-play"><svg viewBox="0 0 24 24"><polygon points="8 5 19 12 8 19"/></svg></div>
+                  </a>
                   <div class="exp-links">
                     <a href="https://www.youtube.com/watch?v=Im8VWpGox1k" target="_blank" rel="noopener" class="exp-link"><svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>서비스 영상</a>
                     <a href="https://www.youtube.com/watch?v=XmX75pf1RsI" target="_blank" rel="noopener" class="exp-link"><svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>VR 플레이어 영상</a>
