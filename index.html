@@ -409,6 +409,13 @@
       fill: #fff;
       margin-left: 2px;
     }
+    .exp-preview iframe {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
 
     /* ── Collapse ── */
     .exp-collapse {
@@ -918,10 +925,10 @@
             <li>미국 CTK USA 센터에서 실서비스 운영,
               이후 CTK가 콜로세움에 시리즈A 투자</li>
           </ul>
-          <a href="https://www.youtube.com/watch?v=J1wTtEk9U74" target="_blank" rel="noopener" class="exp-preview">
+          <div class="exp-preview" data-yt="J1wTtEk9U74">
             <img src="https://img.youtube.com/vi/J1wTtEk9U74/hqdefault.jpg" alt="CTK USA 센터 운영 영상" loading="lazy">
             <div class="exp-preview-play"><svg viewBox="0 0 24 24"><polygon points="8 5 19 12 8 19"/></svg></div>
-          </a>
+          </div>
           <div class="exp-results">
             <div class="exp-chip">
               <span class="exp-chip-value">Series A</span>
@@ -995,10 +1002,10 @@
                     <li>Android 태블릿 + HMD 연동,
                       전시 선택 → VR 자동 재생</li>
                   </ul>
-                  <a href="https://www.youtube.com/watch?v=HLH1BRMnhEY" target="_blank" rel="noopener" class="exp-preview">
+                  <div class="exp-preview" data-yt="HLH1BRMnhEY">
                     <img src="https://img.youtube.com/vi/HLH1BRMnhEY/hqdefault.jpg" alt="360SCOPE 홍보 영상" loading="lazy">
                     <div class="exp-preview-play"><svg viewBox="0 0 24 24"><polygon points="8 5 19 12 8 19"/></svg></div>
-                  </a>
+                  </div>
                   <div class="exp-links">
                     <a href="https://www.youtube.com/watch?v=HLH1BRMnhEY" target="_blank" rel="noopener" class="exp-link"><svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>홍보 영상</a>
                   </div>
@@ -1035,10 +1042,10 @@
                     <li>VR 플레이어 Unity 개발,
                       앱에서 APK 호출 연동</li>
                   </ul>
-                  <a href="https://www.youtube.com/watch?v=Im8VWpGox1k" target="_blank" rel="noopener" class="exp-preview">
+                  <div class="exp-preview" data-yt="Im8VWpGox1k">
                     <img src="https://img.youtube.com/vi/Im8VWpGox1k/hqdefault.jpg" alt="Bideomap 서비스 영상" loading="lazy">
                     <div class="exp-preview-play"><svg viewBox="0 0 24 24"><polygon points="8 5 19 12 8 19"/></svg></div>
-                  </a>
+                  </div>
                   <div class="exp-links">
                     <a href="https://www.youtube.com/watch?v=Im8VWpGox1k" target="_blank" rel="noopener" class="exp-link"><svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>서비스 영상</a>
                     <a href="https://www.youtube.com/watch?v=XmX75pf1RsI" target="_blank" rel="noopener" class="exp-link"><svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>VR 플레이어 영상</a>
@@ -1191,6 +1198,14 @@
         });
       }, { threshold: 0.5 });
       obs.observe(el);
+    });
+
+    document.querySelectorAll('.exp-preview[data-yt]').forEach(el => {
+      el.style.cursor = 'pointer';
+      el.addEventListener('click', function() {
+        const id = this.dataset.yt;
+        this.innerHTML = '<iframe src="https://www.youtube.com/embed/' + id + '?autoplay=1&rel=0" allow="autoplay; encrypted-media" allowfullscreen></iframe>';
+      });
     });
 
     document.querySelectorAll('a[href^="#"]').forEach(a => {
