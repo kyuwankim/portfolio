@@ -1,0 +1,1118 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Research — Kyuwan Kim</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0f1620;
+      --bg-card: #151d2b;
+      --bg-card-hover: #1a2435;
+      --border: #1e2a3a;
+      --border-light: #253245;
+      --text: #a3b3c6;
+      --text-light: #d4dde8;
+      --text-white: #f1f5f9;
+      --accent: #38bdf8;
+      --accent-dim: rgba(56, 189, 248, 0.08);
+      --accent-border: rgba(56, 189, 248, 0.15);
+      --mono: 'JetBrains Mono', monospace;
+      --sans: 'Noto Sans KR', sans-serif;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    ::selection { background: rgba(56,189,248,0.25); color: #fff; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--sans);
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      overflow-x: hidden;
+      word-break: keep-all;
+      overflow-wrap: break-word;
+    }
+
+    ::-webkit-scrollbar { width: 5px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: #253245; border-radius: 3px; }
+
+    /* ── Nav ── */
+    nav {
+      position: fixed; top: 0; width: 100%; z-index: 100;
+      padding: 1rem 2rem;
+      background: rgba(15,22,32,0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-inner {
+      max-width: 1000px; margin: 0 auto;
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .nav-name {
+      font-weight: 700; font-size: 0.95rem; color: var(--text-white);
+      text-decoration: none; letter-spacing: -0.02em;
+    }
+    .nav-links { display: flex; gap: 1.75rem; list-style: none; }
+    .nav-links a {
+      color: #4a5568; text-decoration: none; font-size: 0.8rem;
+      font-weight: 500; transition: color 0.2s; letter-spacing: 0.01em;
+    }
+    .nav-links a:hover { color: var(--accent); }
+    .nav-links a.active { color: var(--accent); }
+
+    /* ── Layout ── */
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+    .page-header {
+      padding: 7rem 0 3rem;
+    }
+    .page-header-inner {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      color: #5a7090;
+      text-decoration: none;
+      margin-bottom: 2rem;
+      transition: color 0.2s;
+    }
+    .back-link:hover { color: var(--accent); }
+    .page-title {
+      font-size: clamp(1.8rem, 4vw, 2.5rem);
+      font-weight: 900;
+      color: var(--text-white);
+      letter-spacing: -0.03em;
+      margin-bottom: 0.5rem;
+    }
+    .page-sub {
+      font-size: 0.92rem;
+      color: var(--text);
+      line-height: 1.7;
+    }
+    .page-sub strong {
+      color: var(--text-light);
+      font-weight: 600;
+    }
+    .divider {
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--border), transparent);
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+    section { padding: 3rem 0; }
+    .section-label {
+      font-size: 0.75rem;
+      font-family: var(--mono);
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: var(--accent);
+      padding-left: 0.75rem;
+      border-left: 2px solid var(--accent);
+      margin-bottom: 2rem;
+    }
+
+    /* ── Project Card ── */
+    .project-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+      margin-bottom: 2rem;
+    }
+    .project-header {
+      padding: 2rem;
+    }
+    .project-status {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: #34d399;
+      margin-bottom: 0.75rem;
+    }
+    .project-status .dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: #34d399;
+      animation: blink 2.5s infinite;
+    }
+    @keyframes blink { 0%,100%{opacity:1}50%{opacity:0.2} }
+    .project-title {
+      font-size: 1.2rem;
+      color: var(--text-white);
+      font-weight: 700;
+      margin-bottom: 0.25rem;
+    }
+    .project-subtitle {
+      font-size: 0.85rem;
+      color: var(--text);
+      font-family: var(--mono);
+      margin-bottom: 1.25rem;
+    }
+    .project-desc {
+      font-size: 0.9rem;
+      color: var(--text);
+      line-height: 1.85;
+    }
+    .project-desc p {
+      margin-bottom: 0.75rem;
+    }
+    .project-desc p:last-child { margin-bottom: 0; }
+
+    /* ── Pipeline ── */
+    .pipeline {
+      margin-top: 1.5rem;
+      padding: 1.25rem 1.5rem;
+      background: rgba(56,189,248,0.03);
+      border: 1px solid var(--accent-border);
+      border-radius: 6px;
+    }
+    .pipeline-label {
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 0.5rem;
+    }
+    .pipeline-flow {
+      font-family: var(--mono);
+      font-size: 0.78rem;
+      color: var(--text-light);
+      line-height: 1.8;
+    }
+
+    /* ── Tags ── */
+    .tags {
+      display: flex; flex-wrap: wrap; gap: 0.4rem;
+      margin-top: 1.5rem;
+    }
+    .tag {
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      color: #5a7090;
+      padding: 0.25rem 0.6rem;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid var(--border-light);
+      border-radius: 4px;
+    }
+
+    /* ── Why Block ── */
+    .why-block {
+      margin-top: 1.5rem;
+      padding: 1.25rem 1.5rem;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--accent);
+      border-radius: 0 8px 8px 0;
+    }
+    .why-block-title {
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 0.5rem;
+    }
+    .why-block p {
+      font-size: 0.88rem;
+      color: var(--text);
+      line-height: 1.8;
+    }
+
+    /* ── Figures ── */
+    .figure {
+      margin: 1.5rem 0;
+    }
+    .figure img {
+      width: 100%;
+      border-radius: 6px;
+      border: 1px solid var(--border);
+    }
+    .figure-caption {
+      font-size: 0.78rem;
+      color: #5a7090;
+      margin-top: 0.5rem;
+      font-family: var(--mono);
+    }
+    .figure-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin: 1.5rem 0;
+    }
+
+    /* ── Data Table ── */
+    .data-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.82rem;
+      margin: 1.25rem 0;
+    }
+    .data-table th {
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      padding: 0.6rem 0.75rem;
+      border-bottom: 2px solid var(--border-light);
+      text-align: left;
+      white-space: nowrap;
+    }
+    .data-table td {
+      padding: 0.5rem 0.75rem;
+      border-bottom: 1px solid var(--border);
+      color: var(--text);
+      font-family: var(--mono);
+      font-size: 0.78rem;
+    }
+    .data-table tr:hover td {
+      background: var(--bg-card-hover);
+    }
+    .data-table .num { text-align: right; }
+    .data-table .highlight {
+      color: var(--accent);
+      font-weight: 600;
+    }
+
+    /* ── Stat Cards ── */
+    .stat-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 0.75rem;
+      margin: 1.25rem 0;
+    }
+    .stat-card {
+      padding: 1rem 1.25rem;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      text-align: center;
+    }
+    .stat-value {
+      font-family: var(--mono);
+      font-size: 1.1rem;
+      color: var(--accent);
+      font-weight: 700;
+    }
+    .stat-label {
+      font-size: 0.7rem;
+      color: #5a7090;
+      margin-top: 0.2rem;
+    }
+
+    /* ── Architecture ── */
+    .arch-diagram {
+      margin-top: 2rem;
+      padding: 2rem;
+      background: rgba(56,189,248,0.02);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+    }
+    .arch-label {
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 1.5rem;
+    }
+    .arch-flow {
+      display: flex;
+      align-items: flex-start;
+      gap: 0;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .arch-node {
+      text-align: center;
+      flex-shrink: 0;
+    }
+    .arch-box {
+      padding: 0.7rem 1.2rem;
+      border: 1px solid var(--border-light);
+      border-radius: 6px;
+      background: var(--bg-card);
+      font-family: var(--mono);
+      font-size: 0.78rem;
+      color: var(--text-light);
+      white-space: nowrap;
+    }
+    .arch-box.accent {
+      border-color: var(--accent-border);
+      background: var(--accent-dim);
+      color: var(--accent);
+    }
+    .arch-box-sub {
+      font-size: 0.65rem;
+      color: #5a7090;
+      margin-top: 0.25rem;
+    }
+    .arch-arrow {
+      display: flex;
+      align-items: center;
+      padding: 0 0.5rem;
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      color: #3a4a5e;
+      padding-top: 0.7rem;
+    }
+    .arch-ec2-inner {
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+      padding: 1rem;
+      border: 1px dashed var(--accent-border);
+      border-radius: 6px;
+      min-width: 180px;
+    }
+    .arch-ec2-title {
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      color: var(--accent);
+      text-align: center;
+      margin-bottom: 0.25rem;
+    }
+    .arch-ec2-item {
+      padding: 0.4rem 0.75rem;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      color: var(--text);
+      text-align: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.4rem;
+    }
+    .arch-icon {
+      width: 16px;
+      height: 16px;
+      flex-shrink: 0;
+    }
+    .arch-box-icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+    }
+    .arch-box-icon .arch-icon {
+      width: 20px;
+      height: 20px;
+    }
+    .arch-note {
+      margin-top: 1rem;
+      font-size: 0.75rem;
+      color: #5a7090;
+      text-align: center;
+      line-height: 1.6;
+    }
+    @media (max-width: 768px) {
+      .arch-flow { gap: 0.5rem; }
+      .arch-arrow { padding: 0 0.25rem; font-size: 0.65rem; }
+      .arch-box { font-size: 0.7rem; padding: 0.5rem 0.8rem; }
+      .arch-ec2-inner { min-width: 140px; }
+    }
+
+    /* ── Weekly Log ── */
+    .log-section { padding: 3rem 0 5rem; }
+    .week-item {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      margin-bottom: 1rem;
+      border-left: 3px solid transparent;
+      transition: border-color 0.3s;
+    }
+    .week-item:hover {
+      border-left-color: var(--accent);
+    }
+    .week-toggle {
+      width: 100%;
+      background: none;
+      border: none;
+      padding: 1.5rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
+      color: var(--text-white);
+      font-family: var(--sans);
+      font-size: 0.95rem;
+      font-weight: 600;
+      transition: background 0.2s;
+    }
+    .week-toggle:hover { background: var(--bg-card-hover); border-radius: 8px; }
+    .week-toggle-right {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+    .week-badge {
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      color: var(--accent);
+      background: var(--accent-dim);
+      border: 1px solid var(--accent-border);
+      padding: 0.15rem 0.5rem;
+      border-radius: 3px;
+    }
+    .week-arrow {
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      color: #4a5568;
+      transition: transform 0.3s;
+    }
+    .week-item[open] .week-arrow { transform: rotate(180deg); }
+    .week-content {
+      padding: 0 2rem 2rem;
+    }
+    .week-desc {
+      font-size: 0.88rem;
+      color: var(--text);
+      line-height: 1.85;
+    }
+    .week-desc li {
+      margin-bottom: 0.5rem;
+      list-style: none;
+      padding-left: 1.1rem;
+      position: relative;
+    }
+    .week-desc li:last-child { margin-bottom: 0; }
+    .week-desc li::before {
+      content: '';
+      position: absolute;
+      left: 0; top: 0.6em;
+      width: 5px; height: 5px;
+      border-radius: 50%;
+      background: var(--accent);
+      opacity: 0.4;
+    }
+    .week-result {
+      margin-top: 1rem;
+      padding: 1rem 1.25rem;
+      background: rgba(56,189,248,0.03);
+      border: 1px solid var(--accent-border);
+      border-radius: 6px;
+      font-size: 0.82rem;
+      color: var(--text);
+      font-family: var(--mono);
+      line-height: 1.7;
+    }
+
+    /* ── Setup Guide ── */
+    .setup-section { padding: 3rem 0 5rem; }
+    .setup-phase {
+      margin-bottom: 2rem;
+    }
+    .setup-phase-title {
+      font-family: var(--mono);
+      font-size: 0.82rem;
+      color: var(--text-white);
+      font-weight: 600;
+      padding-bottom: 0.75rem;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+    .setup-phase-num {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 22px; height: 22px;
+      border-radius: 50%;
+      background: var(--accent-dim);
+      border: 1px solid var(--accent-border);
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      color: var(--accent);
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+    .setup-step {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.6rem;
+      padding: 0.6rem 0;
+      font-size: 0.85rem;
+      color: var(--text);
+      line-height: 1.7;
+    }
+    .setup-check {
+      width: 16px; height: 16px;
+      border: 1.5px solid var(--border-light);
+      border-radius: 3px;
+      flex-shrink: 0;
+      margin-top: 0.25rem;
+    }
+    .setup-step.done .setup-check {
+      background: var(--accent);
+      border-color: var(--accent);
+    }
+    .setup-step.done .setup-check::after {
+      content: '✓';
+      display: block;
+      text-align: center;
+      font-size: 0.65rem;
+      color: var(--bg);
+      font-weight: 700;
+      line-height: 16px;
+    }
+    .setup-step.done { color: #5a7090; }
+    .setup-cmd {
+      display: block;
+      margin-top: 0.3rem;
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      color: #5a7090;
+      background: rgba(0,0,0,0.2);
+      padding: 0.3rem 0.6rem;
+      border-radius: 4px;
+    }
+    .setup-detail {
+      font-size: 0.78rem;
+      color: #5a7090;
+      margin-top: 0.15rem;
+    }
+
+    /* ── Footer ── */
+    footer {
+      padding: 2.5rem 0;
+      font-size: 0.72rem;
+      color: #2a3545;
+    }
+
+    /* ── Reveal ── */
+    .reveal {
+      opacity: 0; transform: translateY(16px);
+      transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    /* ── Mobile ── */
+    @media (max-width: 768px) {
+      nav { padding: 0.8rem 1.25rem; }
+      .nav-links { display: none; }
+      .page-header { padding: 5.5rem 0 2rem; }
+      .page-header-inner { padding: 0 1.25rem; }
+      .container { padding: 0 1.25rem; }
+      .project-header { padding: 1.5rem 1.25rem; }
+      .week-toggle { padding: 1.25rem; font-size: 0.88rem; }
+      .week-content { padding: 0 1.25rem 1.5rem; }
+      .figure-grid { grid-template-columns: 1fr; }
+      .data-table { font-size: 0.75rem; }
+      .data-table th, .data-table td { padding: 0.4rem 0.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <div class="nav-inner">
+      <a href="index.html" class="nav-name">Kyuwan Kim</a>
+      <ul class="nav-links">
+        <li><a href="index.html#experience">Experience</a></li>
+        <li><a href="research.html" class="active">Research</a></li>
+        <li><a href="index.html#stack">Stack</a></li>
+        <li><a href="index.html#education">Education</a></li>
+        <li><a href="index.html#contact">Contact</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <div class="page-header">
+    <div class="page-header-inner">
+      <a href="index.html" class="back-link">&larr; Back</a>
+      <h1 class="page-title">Research</h1>
+      <p class="page-sub">
+        물류 현장의 문제에서 출발한 위상데이터분석(TDA) 연구.
+      </p>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- Project -->
+  <section>
+    <div class="container">
+      <div class="section-label reveal">Project</div>
+
+      <div class="project-card reveal">
+        <div class="project-header">
+          <div class="project-status"><span class="dot"></span> In Progress</div>
+          <h2 class="project-title">TDA 기반 상품 식별</h2>
+          <p class="project-subtitle">Persistent Homology를 활용한 PH 바코드 실험</p>
+          <div class="project-desc">
+            <p>물류센터에서 바코드가 훼손되거나 누락된 경우,
+              상품 포장 정면을 스마트폰으로 촬영하여
+              Persistent Homology 기반의 PH 바코드를 생성하고,
+              이를 통해 상품을 식별할 수 있는지 실험적으로 검증한다.</p>
+            <p>학습 데이터 불필요, GPU 없이 CPU만으로 계산 가능 —
+              중소 창고에서도 도입할 수 있는 경량 시스템이 목표.</p>
+          </div>
+
+          <div class="why-block">
+            <div class="why-block-title">Why — 현업 배경</div>
+            <p>물류센터에서 상품 구분은 거의 전적으로 바코드에 의존한다.
+              바코드가 훼손되면 작업자가 육안으로 확인해야 하고,
+              오분류와 속도 저하가 발생한다.
+              RFID는 태그 단가, 비전처리는 GPU 비용 문제로
+              중소 창고에서는 도입이 어렵다.
+              TDA는 학습 데이터 없이 사진 한 장에서 바로 특징을 추출할 수 있다.</p>
+          </div>
+
+          <div class="pipeline">
+            <div class="pipeline-label">Pipeline</div>
+            <div class="pipeline-flow">
+              촬영 → Grayscale → Simplicial Complex → Filtration<br>
+              → Persistent Homology → PH 바코드 → 특징 벡터 → 유사도 비교 → 상품 식별
+            </div>
+          </div>
+
+          <div class="arch-diagram">
+            <div class="arch-label">Infrastructure</div>
+            <div class="arch-flow">
+              <div class="arch-node">
+                <div class="arch-box arch-box-icon">
+                  <img class="arch-icon" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/android/android-original.svg" alt="Android">
+                  Android
+                </div>
+                <div class="arch-box-sub">촬영 &amp; 요청</div>
+              </div>
+              <div class="arch-arrow">→</div>
+              <div class="arch-node">
+                <div class="arch-ec2-inner">
+                  <div class="arch-ec2-title">EC2 · kyuwan.kim</div>
+                  <div class="arch-ec2-item">
+                    <img class="arch-icon" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nginx/nginx-original.svg" alt="nginx">
+                    nginx
+                  </div>
+                  <div class="arch-ec2-item">
+                    <img class="arch-icon" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/spring/spring-original.svg" alt="Spring">
+                    Spring Boot API
+                  </div>
+                  <div class="arch-ec2-item">
+                    <img class="arch-icon" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" alt="Python">
+                    Python TDA
+                  </div>
+                  <div class="arch-ec2-item">
+                    <img class="arch-icon" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg" alt="MySQL">
+                    MySQL
+                  </div>
+                  <div class="arch-ec2-item">Local Storage</div>
+                </div>
+              </div>
+            </div>
+            <div class="arch-note">도메인: kyuwan.kim (Cloudflare DNS) · 현재 EC2 단일 구성 — 규모 확장 시 RDS, S3 분리 예정</div>
+          </div>
+
+          <div class="tags">
+            <span class="tag">Python</span>
+            <span class="tag">GUDHI</span>
+            <span class="tag">JavaPlex</span>
+            <span class="tag">OpenCV</span>
+            <span class="tag">Spring Boot</span>
+            <span class="tag">Android</span>
+            <span class="tag">AWS</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- Weekly Log -->
+  <section class="log-section">
+    <div class="container">
+      <div class="section-label reveal">Weekly Log</div>
+
+      <details class="week-item reveal" open>
+        <summary class="week-toggle">
+          <span>1주차 — 환경 구축 및 파이프라인 검증</span>
+          <div class="week-toggle-right">
+            <span class="week-badge">Latest</span>
+            <span class="week-arrow">▼</span>
+          </div>
+        </summary>
+        <div class="week-content">
+          <ul class="week-desc">
+            <li>Python + JavaPlex 기반 PH 바코드 파이프라인 구현</li>
+            <li>같은 상품 10장 촬영 —
+              조건(각도, 거리, 조명)별 PH 바코드 일관성 검증</li>
+            <li>Canny 엣지 자동 크롭 실패(5/10) →
+              고정 크롭 1816×2420으로 해결.
+              향후 Android 앱 프레임 오버레이로 대체 예정</li>
+            <li>18차원 특징 벡터 설계 — H₀/H₁ 각각의 count,
+              total/max/mean/std persistence,
+              4개 구간별 Betti number</li>
+          </ul>
+
+          <!-- Fig 1: Pipeline -->
+          <div class="figure">
+            <img src="research/pipeline_sample.png" alt="PH Pipeline: Original → Crop → Grayscale → Persistence Diagram → Barcode">
+            <div class="figure-caption">Fig 1. 파이프라인 전체 시각화 — 원본 촬영 → 고정 크롭 → Grayscale → PH Diagram → Barcode</div>
+          </div>
+
+          <!-- Per-image stats table -->
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Image</th>
+                <th class="num">H₀ count</th>
+                <th class="num">H₁ count</th>
+                <th class="num">H₀ max pers.</th>
+                <th class="num">H₁ max pers.</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>img_01</td><td class="num">5,803</td><td class="num">5,534</td><td class="num highlight">247</td><td class="num">27</td></tr>
+              <tr><td>img_02</td><td class="num">4,784</td><td class="num">4,499</td><td class="num highlight">245</td><td class="num">31</td></tr>
+              <tr><td>img_03</td><td class="num">4,869</td><td class="num">4,598</td><td class="num highlight">246</td><td class="num">23</td></tr>
+              <tr><td>img_04</td><td class="num">5,256</td><td class="num">4,970</td><td class="num highlight">247</td><td class="num">21</td></tr>
+              <tr><td>img_05</td><td class="num">4,614</td><td class="num">4,326</td><td class="num highlight">240</td><td class="num">24</td></tr>
+              <tr><td>img_06</td><td class="num">3,884</td><td class="num">3,706</td><td class="num highlight">248</td><td class="num">24</td></tr>
+              <tr><td>img_07</td><td class="num">4,698</td><td class="num">4,419</td><td class="num highlight">246</td><td class="num">27</td></tr>
+              <tr><td>img_08</td><td class="num">4,826</td><td class="num">4,560</td><td class="num highlight">249</td><td class="num">32</td></tr>
+              <tr><td>img_09</td><td class="num">4,979</td><td class="num">4,697</td><td class="num highlight">245</td><td class="num">28</td></tr>
+              <tr><td>img_10</td><td class="num">4,654</td><td class="num">4,377</td><td class="num highlight">246</td><td class="num">27</td></tr>
+            </tbody>
+          </table>
+
+          <!-- L2 distance stats -->
+          <div class="stat-row">
+            <div class="stat-card">
+              <div class="stat-value">22,032</div>
+              <div class="stat-label">L2 Mean Distance</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-value">13,946</div>
+              <div class="stat-label">Std Deviation</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-value">997</div>
+              <div class="stat-label">Min Distance</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-value">50,810</div>
+              <div class="stat-label">Max Distance</div>
+            </div>
+          </div>
+
+          <!-- Fig 2: Comparison Matrix -->
+          <div class="figure">
+            <img src="research/comparison.png" alt="10장 비교 분석: L2 거리 행렬, PH Diagram, 주요 특징">
+            <div class="figure-caption">Fig 2. 10장 종합 비교 — L2 거리 행렬 + Persistence Diagram + 주요 특징 비교</div>
+          </div>
+
+          <!-- Fig 3: PH Diagram & Barcode -->
+          <div class="figure">
+            <img src="research/ph_chart.png" alt="Persistence Diagram & PH Barcode">
+            <div class="figure-caption">Fig 3. Persistence Diagram &amp; PH Barcode — H₀(연결 성분), H₁(루프) 분포</div>
+          </div>
+
+          <div class="week-result">
+            H₀ 3,884~5,803개 · H₁ 3,706~5,534개 구조 검출<br>
+            H₀ max persistence 240~249 범위에서 안정적 — 전체 밝기 구조가 일관됨<br>
+            L2 평균 거리 22,032 · 표준편차 13,946<br>
+            → 같은 상품의 PH 바코드는 촬영 조건이 달라져도 일정 범위 안에 분포 (긍정적 신호)
+          </div>
+        </div>
+      </details>
+
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- Setup Guide -->
+  <section class="setup-section">
+    <div class="container">
+      <div class="section-label reveal">Setup Guide</div>
+
+      <!-- Phase 1 -->
+      <div class="setup-phase reveal">
+        <div class="setup-phase-title">
+          <span class="setup-phase-num">1</span>
+          GitHub 레포 생성
+        </div>
+        <div class="setup-step">
+          <div class="setup-check"></div>
+          <div>
+            <strong>portfolio</strong> — public
+            <span class="setup-detail">정적 HTML 포트폴리오. GitHub Pages 배포 가능.</span>
+          </div>
+        </div>
+        <div class="setup-step">
+          <div class="setup-check"></div>
+          <div>
+            <strong>tda-api</strong> — private
+            <span class="setup-detail">Spring Boot + Python FastAPI 모노레포 (backend/ + tda-engine/)</span>
+          </div>
+        </div>
+        <div class="setup-step">
+          <div class="setup-check"></div>
+          <div>
+            <strong>tda-android</strong> — private
+            <span class="setup-detail">Android 촬영 앱</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Phase 2 -->
+      <div class="setup-phase reveal">
+        <div class="setup-phase-title">
+          <span class="setup-phase-num">2</span>
+          AWS EC2 생성
+        </div>
+        <div class="setup-step">
+          <div class="setup-check"></div>
+          <div>
+            EC2 인스턴스 생성 — t3.small, Ubuntu 24.04 LTS
+            <span class="setup-detail">리전: ap-northeast-2 (서울)</span>
+          </div>
+        </div>
+        <div class="setup-step">
+          <div class="setup-check"></div>
+          <div>
+            보안그룹 설정
+            <span class="setup-detail">22 (SSH), 80 (HTTP), 443 (HTTPS) 인바운드 허용</span>
+          </div>
+        </div>
+        <div class="setup-step">
+          <div class="setup-check"></div>
+          <div>
+            Elastic IP 할당 & 연결
+            <span class="setup-detail">인스턴스 재시작해도 IP 유지</span>
+          </div>
+        </div>
+        <div class="setup-step">
+          <div class="setup-check"></div>
+          <div>
+            키 페어 생성 & SSH 접속 확인
+            <code class="setup-cmd">ssh -i key.pem ubuntu@[EC2-IP]</code>
+          </div>
+        </div>
+      </div>
+
+      <!-- Phase 3: Billing -->
+      <div class="setup-phase reveal">
+        <div class="setup-phase-title">
+          <span class="setup-phase-num">3</span>
+          AWS 비용 관리
+        </div>
+        <div class="setup-step">
+          <div class="setup-check"></div>
+          <div>
+            Billing 알림 활성화 — AWS Console → Billing → Billing Preferences
+            <span class="setup-detail">"Receive Free Tier Usage Alerts" + "Receive Billing Alerts" 체크</span>
+          </div>
+        </div>
+        <div class="setup-step">
+          <div class="setup-check"></div>
+          <div>
+            Budget 생성 — AWS Console → Billing → Budgets → Create Budget
+            <span class="setup-detail">Monthly cost budget: $30 (약 4만원). 50%, 80%, 100% 도달 시 이메일 알림.</span>
+          </div>
+        </div>
+        <div class="setup-step">
+          <div class="setup-check"></div>
+          <div>
+            CloudWatch 비용 알람 → EC2 자동 중지
+            <span class="setup-detail">EstimatedCharges > $70 (약 10만원) 시 SNS 알림 + Lambda로 EC2 stop 자동 실행</span>
+          </div>
+        </div>
+        <div class="setup-step">
+          <div class="setup-check"></div>
+          <div>
+            간단 대안: AWS Instance Scheduler 또는 cron 기반 야간 중지
+            <span class="setup-detail">새벽 2시~8시 자동 중지로 월 ~25% 절감 가능. 실험 단계에서는 선택사항.</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Phase 4 -->
+      <div class="setup-phase reveal">
+        <div class="setup-phase-title">
+          <span class="setup-phase-num">4</span>
+          서버 기본 셋팅
+        </div>
+        <div class="setup-step">
+          <div class="setup-check"></div>
+          <div>
+            시스템 업데이트
+            <code class="setup-cmd">sudo apt update && sudo apt upgrade -y</code>
+          </div>
+        </div>
+        <div class="setup-step">
+          <div class="setup-check"></div>
+          <div>
+            nginx 설치 & 기본 설정
+            <span class="setup-detail">포트폴리오 정적 파일 서빙 + Spring Boot 리버스 프록시</span>
+          </div>
+        </div>
+        <div class="setup-step">
+          <div class="setup-check"></div>
+          <div>
+            Java 17 (OpenJDK) 설치
+            <code class="setup-cmd">sudo apt install openjdk-17-jdk -y</code>
+          </div>
+        </div>
+        <div class="setup-step">
+          <div class="setup-check"></div>
+          <div>
+            Python 3 + pip + venv 설치
+            <code class="setup-cmd">sudo apt install python3 python3-pip python3-venv -y</code>
+          </div>
+        </div>
+        <div class="setup-step">
+          <div class="setup-check"></div>
+          <div>
+            MySQL 설치 & DB 생성
+            <code class="setup-cmd">sudo apt install mysql-server -y</code>
+          </div>
+        </div>
+        <div class="setup-step">
+          <div class="setup-check"></div>
+          <div>
+            Git 설치 & GitHub SSH 키 등록
+            <span class="setup-detail">private 레포 clone을 위해 필요</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Phase 4 -->
+      <div class="setup-phase reveal">
+        <div class="setup-phase-title">
+          <span class="setup-phase-num">5</span>
+          도메인 & SSL
+        </div>
+        <div class="setup-step">
+          <div class="setup-check"></div>
+          <div>
+            Cloudflare DNS — kyuwan.kim → EC2 Elastic IP
+            <span class="setup-detail">A 레코드 추가, Proxy 꺼두기 (DNS only)</span>
+          </div>
+        </div>
+        <div class="setup-step">
+          <div class="setup-check"></div>
+          <div>
+            Let's Encrypt SSL 인증서 발급
+            <code class="setup-cmd">sudo apt install certbot python3-certbot-nginx -y</code>
+          </div>
+        </div>
+        <div class="setup-step">
+          <div class="setup-check"></div>
+          <div>
+            nginx HTTPS 설정 & 자동 갱신 확인
+          </div>
+        </div>
+      </div>
+
+      <!-- Phase 5 -->
+      <div class="setup-phase reveal">
+        <div class="setup-phase-title">
+          <span class="setup-phase-num">6</span>
+          포트폴리오 배포
+        </div>
+        <div class="setup-step">
+          <div class="setup-check"></div>
+          <div>
+            portfolio 레포 clone → nginx 서빙 디렉토리에 연결
+            <code class="setup-cmd">sudo ln -s /home/ubuntu/portfolio /var/www/portfolio</code>
+          </div>
+        </div>
+        <div class="setup-step">
+          <div class="setup-check"></div>
+          <div>
+            kyuwan.kim 접속 시 포트폴리오 페이지 표시 확인
+          </div>
+        </div>
+      </div>
+
+      <!-- Phase 6 -->
+      <div class="setup-phase reveal">
+        <div class="setup-phase-title">
+          <span class="setup-phase-num">7</span>
+          백엔드 배포
+        </div>
+        <div class="setup-step">
+          <div class="setup-check"></div>
+          <div>
+            tda-api 레포 clone
+            <span class="setup-detail">backend/ (Spring Boot) + tda-engine/ (FastAPI)</span>
+          </div>
+        </div>
+        <div class="setup-step">
+          <div class="setup-check"></div>
+          <div>
+            Python 가상환경 생성 & 패키지 설치
+            <code class="setup-cmd">python3 -m venv venv && pip install fastapi uvicorn gudhi opencv-python numpy</code>
+          </div>
+        </div>
+        <div class="setup-step">
+          <div class="setup-check"></div>
+          <div>
+            Spring Boot 빌드 & 실행
+            <code class="setup-cmd">./gradlew build && java -jar build/libs/app.jar</code>
+          </div>
+        </div>
+        <div class="setup-step">
+          <div class="setup-check"></div>
+          <div>
+            FastAPI 실행
+            <code class="setup-cmd">uvicorn main:app --host 127.0.0.1 --port 8000</code>
+          </div>
+        </div>
+        <div class="setup-step">
+          <div class="setup-check"></div>
+          <div>
+            systemd 서비스 등록 — 재부팅 시 자동 시작
+            <span class="setup-detail">spring-boot.service + fastapi.service</span>
+          </div>
+        </div>
+        <div class="setup-step">
+          <div class="setup-check"></div>
+          <div>
+            nginx 리버스 프록시 — api.kyuwan.kim → Spring Boot :8080
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">&copy; 2026 Kyuwan Kim</div>
+  </footer>
+
+  <script>
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+  </script>
+
+</body>
+</html>

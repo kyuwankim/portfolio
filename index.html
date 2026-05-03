@@ -1,0 +1,1057 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kyuwan Kim</title>
+  <meta name="description" content="10년차 백엔드 엔지니어. Java/Spring Boot 기반 물류솔루션 COLO를 처음부터 6년간 설계·개발. 현재 응용수학 석사과정에서 TDA 연구 중.">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://kyuwan.kim/">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Kyuwan Kim">
+  <meta property="og:description" content="10년차 백엔드 엔지니어. Java/Spring Boot 기반 물류솔루션 COLO를 처음부터 6년간 설계·개발.">
+  <meta property="og:url" content="https://kyuwan.kim/">
+  <meta property="og:locale" content="ko_KR">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0f1620;
+      --bg-card: #151d2b;
+      --bg-card-hover: #1a2435;
+      --border: #1e2a3a;
+      --border-light: #253245;
+      --text: #a3b3c6;
+      --text-light: #d4dde8;
+      --text-white: #f1f5f9;
+      --accent: #38bdf8;
+      --accent-dim: rgba(56, 189, 248, 0.08);
+      --accent-border: rgba(56, 189, 248, 0.15);
+      --mono: 'JetBrains Mono', monospace;
+      --sans: 'Noto Sans KR', sans-serif;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    ::selection { background: rgba(56,189,248,0.25); color: #fff; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--sans);
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      overflow-x: hidden;
+      word-break: keep-all;
+      overflow-wrap: break-word;
+    }
+
+    ::-webkit-scrollbar { width: 5px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: #253245; border-radius: 3px; }
+
+    /* ── Nav ── */
+    nav {
+      position: fixed; top: 0; width: 100%; z-index: 100;
+      padding: 1rem 2rem;
+      transition: all 0.3s;
+    }
+    nav.scrolled {
+      background: rgba(15,22,32,0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-inner {
+      max-width: 1000px; margin: 0 auto;
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .nav-name {
+      font-weight: 700; font-size: 0.95rem; color: var(--text-white);
+      text-decoration: none; letter-spacing: -0.02em;
+    }
+    .nav-links { display: flex; gap: 1.75rem; list-style: none; }
+    .nav-links a {
+      color: #4a5568; text-decoration: none; font-size: 0.8rem;
+      font-weight: 500; transition: color 0.2s; letter-spacing: 0.01em;
+    }
+    .nav-links a:hover { color: var(--accent); }
+
+    /* ── Hero ── */
+    .hero {
+      min-height: 100vh;
+      display: flex; align-items: center;
+      padding: 0 2rem;
+      position: relative;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 0; right: 0;
+      width: 50%; height: 100%;
+      background: radial-gradient(ellipse at 80% 30%, rgba(56,189,248,0.04) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .hero-inner {
+      max-width: 1000px; margin: 0 auto; width: 100%;
+      position: relative;
+    }
+    .hero-tag {
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      color: var(--accent);
+      letter-spacing: 0.08em;
+      margin-bottom: 1.25rem;
+      opacity: 0.8;
+    }
+    .hero-name {
+      font-size: clamp(2.8rem, 6vw, 4.5rem);
+      font-weight: 900;
+      color: var(--text-white);
+      letter-spacing: -0.04em;
+      line-height: 1.1;
+      margin-bottom: 1.25rem;
+    }
+    .hero-sub {
+      font-size: 1.15rem;
+      color: var(--text-light);
+      font-weight: 300;
+      max-width: 540px;
+      line-height: 1.9;
+      margin-bottom: 2.5rem;
+    }
+    .hero-facts {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    .hero-fact {
+      background: var(--bg-card);
+      padding: 1.25rem 1.5rem;
+      transition: background 0.3s;
+    }
+    .hero-fact:hover {
+      background: var(--bg-card-hover);
+    }
+    .hero-fact-label {
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: #4a5568;
+      margin-bottom: 0.3rem;
+    }
+    .hero-fact-value {
+      font-size: 0.9rem;
+      color: var(--text-light);
+      font-weight: 600;
+    }
+
+    /* ── Sections ── */
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+    section { padding: 5rem 0; }
+    .divider {
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--border), transparent);
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 2.5rem;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+    .section-title {
+      font-size: 0.75rem;
+      font-family: var(--mono);
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: var(--accent);
+      padding-left: 0.75rem;
+      border-left: 2px solid var(--accent);
+    }
+    .section-count {
+      font-size: 0.7rem;
+      font-family: var(--mono);
+      color: #3a4a5e;
+    }
+
+    /* (Numbers section removed — merged into Experience) */
+
+    /* ── Experience ── */
+    .exp-group {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      margin-bottom: 1.25rem;
+      border-left: 3px solid transparent;
+      transition: border-color 0.3s;
+      overflow: hidden;
+    }
+    .exp-group:hover {
+      border-left-color: var(--accent);
+    }
+    .exp-group-header {
+      display: grid;
+      grid-template-columns: 180px 1fr;
+      gap: 2rem;
+      padding: 2rem 2rem 1.5rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .exp-group-header:last-child {
+      border-bottom: none;
+      padding-bottom: 2rem;
+    }
+    .exp-group-summary {
+      font-size: 0.92rem;
+      color: var(--text-light);
+      line-height: 1.7;
+      margin-bottom: 0.75rem;
+    }
+    .exp-item {
+      padding: 2rem 2rem;
+      border-bottom: 1px solid var(--border);
+      display: grid;
+      grid-template-columns: 40px 1fr;
+      gap: 1.25rem;
+      align-items: start;
+    }
+    .exp-item:last-child { border-bottom: none; }
+    .exp-item-num {
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      color: var(--accent);
+      background: var(--accent-dim);
+      border: 1px solid var(--accent-border);
+      border-radius: 50%;
+      width: 28px; height: 28px;
+      display: flex; align-items: center; justify-content: center;
+      margin-top: 0.1rem;
+    }
+    .exp-period {
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      color: #4a5568;
+      margin-bottom: 0.3rem;
+    }
+    .exp-company {
+      font-size: 0.95rem;
+      color: var(--text-white);
+      font-weight: 700;
+    }
+    .exp-role {
+      font-size: 0.78rem;
+      color: #4a5568;
+      margin-top: 0.1rem;
+    }
+    .exp-title {
+      font-size: 1.1rem;
+      color: var(--text-white);
+      font-weight: 700;
+      margin-bottom: 0.75rem;
+    }
+    .exp-desc {
+      font-size: 0.9rem;
+      color: var(--text);
+      line-height: 1.85;
+    }
+    .exp-desc li {
+      margin-bottom: 0.5rem;
+      list-style: none;
+      padding-left: 1.1rem;
+      position: relative;
+    }
+    .exp-desc li:last-child { margin-bottom: 0; }
+    .exp-desc li::before {
+      content: '';
+      position: absolute;
+      left: 0; top: 0.6em;
+      width: 5px; height: 5px;
+      border-radius: 50%;
+      background: var(--accent);
+      opacity: 0.4;
+    }
+
+    /* Result chips */
+    .exp-results {
+      margin-top: 1.25rem;
+      display: flex; gap: 0.6rem; flex-wrap: wrap;
+    }
+    .exp-chip {
+      display: flex; align-items: baseline; gap: 0.4rem;
+      background: var(--accent-dim);
+      border: 1px solid var(--accent-border);
+      border-radius: 6px;
+      padding: 0.4rem 0.85rem;
+    }
+    .exp-chip-value {
+      font-family: var(--mono);
+      font-size: 0.9rem;
+      color: var(--accent);
+      font-weight: 700;
+    }
+    .exp-chip-label {
+      font-size: 0.72rem;
+      color: var(--text);
+    }
+
+    .exp-links {
+      display: flex; flex-wrap: wrap; gap: 0.5rem;
+      margin-top: 1rem;
+    }
+    .exp-link {
+      font-size: 0.75rem;
+      color: var(--accent);
+      text-decoration: none;
+      display: flex; align-items: center; gap: 0.3rem;
+      padding: 0.25rem 0.6rem;
+      background: var(--accent-dim);
+      border: 1px solid var(--accent-border);
+      border-radius: 4px;
+      transition: background 0.2s;
+    }
+    .exp-link:hover { background: rgba(56, 189, 248, 0.15); }
+    .exp-link svg {
+      width: 12px; height: 12px;
+      stroke: currentColor; fill: none;
+      stroke-width: 2;
+    }
+
+    /* ── Collapse ── */
+    .exp-collapse {
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      margin-top: 0.5rem;
+      overflow: hidden;
+    }
+    .exp-collapse-toggle {
+      width: 100%;
+      background: var(--bg-card);
+      border: none;
+      padding: 1rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
+      color: var(--text);
+      font-family: var(--sans);
+      font-size: 0.85rem;
+      transition: background 0.2s;
+    }
+    .exp-collapse-toggle:hover { background: var(--bg-card-hover); }
+    .exp-collapse-toggle .arrow {
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      color: #4a5568;
+      transition: transform 0.3s;
+    }
+    .exp-collapse[open] .arrow { transform: rotate(180deg); }
+    .exp-collapse-content {
+      padding: 0 1rem 1rem;
+      background: var(--bg-card);
+    }
+    .exp-collapse-content .exp-item {
+      display: block;
+      padding: 1.25rem;
+      margin-bottom: 0.5rem;
+      background: rgba(255,255,255,0.02);
+      border: 1px solid var(--border);
+      border-left: 3px solid transparent;
+    }
+    .exp-collapse-content .exp-item:hover {
+      border-left-color: var(--accent);
+    }
+    .exp-collapse-content .exp-item:last-child {
+      margin-bottom: 0;
+    }
+
+    .exp-tags {
+      display: flex; flex-wrap: wrap; gap: 0.4rem;
+      margin-top: 1.25rem;
+    }
+    .exp-tag {
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      color: #5a7090;
+      padding: 0.25rem 0.6rem;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid var(--border-light);
+      border-radius: 4px;
+    }
+
+    /* Evolution block */
+    .evolution {
+      margin-top: 1.25rem;
+      padding: 1.25rem 1.5rem;
+      background: rgba(56,189,248,0.03);
+      border: 1px solid var(--accent-border);
+      border-radius: 8px;
+      border-left: 3px solid var(--accent);
+    }
+    .evolution-title {
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 0.75rem;
+    }
+    .evolution-steps {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+    .evo-step {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      font-size: 0.85rem;
+      color: var(--text);
+      line-height: 1.7;
+    }
+    .evo-num {
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      color: var(--accent);
+      background: var(--accent-dim);
+      border-radius: 50%;
+      min-width: 22px; height: 22px;
+      display: flex; align-items: center; justify-content: center;
+      margin-top: 0.1rem;
+    }
+    .evo-arrow {
+      color: #3a4a5e;
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      padding-left: 2rem;
+    }
+
+    /* ── Stack ── */
+    .stack-row {
+      display: grid;
+      grid-template-columns: 130px 1fr;
+      gap: 1.25rem;
+      padding: 1rem 0;
+      border-bottom: 1px solid var(--border);
+      align-items: baseline;
+    }
+    .stack-row:last-child { border-bottom: none; }
+    .stack-label {
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      color: #5a7090;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .stack-values {
+      font-size: 0.92rem;
+      color: var(--text-light);
+    }
+
+    /* ── Education ── */
+    .edu-item {
+      padding: 1.5rem 0;
+      border-bottom: 1px solid var(--border);
+      display: grid;
+      grid-template-columns: 180px 1fr;
+      gap: 2rem;
+    }
+    .edu-item:last-child { border-bottom: none; }
+    .edu-year {
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      color: #5a7090;
+    }
+    .edu-info h3 {
+      color: var(--text-white);
+      font-size: 0.95rem;
+      font-weight: 600;
+    }
+    .edu-info p {
+      color: var(--text);
+      font-size: 0.85rem;
+    }
+    .edu-struck {
+      text-decoration: line-through;
+      color: #4a5e75;
+      font-size: 0.85rem;
+      margin-bottom: 0.4rem;
+    }
+    .cert-row {
+      padding-top: 1.5rem;
+      display: flex; flex-wrap: wrap; gap: 0.5rem;
+    }
+    .cert-badge {
+      font-size: 0.78rem;
+      color: var(--text);
+      padding: 0.35rem 0.75rem;
+      background: var(--bg-card);
+      border: 1px solid var(--border-light);
+      border-radius: 4px;
+    }
+
+    /* ── Contact ── */
+    .contact {
+      padding: 5rem 0;
+    }
+    .contact-links {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+    .contact-link {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 1.25rem 1.75rem;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      text-decoration: none;
+      transition: border-color 0.3s, background 0.3s;
+    }
+    .contact-link:hover {
+      border-color: var(--accent-border);
+      background: var(--bg-card-hover);
+    }
+    .contact-link svg {
+      width: 22px; height: 22px;
+      stroke: var(--accent);
+      fill: none;
+      stroke-width: 1.8;
+      flex-shrink: 0;
+    }
+    .contact-link-text {
+      display: flex;
+      flex-direction: column;
+    }
+    .contact-link-label {
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      color: #5a7090;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+    .contact-link-value {
+      font-size: 0.95rem;
+      color: var(--text-white);
+      font-weight: 600;
+    }
+
+    /* ── Footer ── */
+    footer {
+      padding: 2.5rem 0;
+      font-size: 0.72rem;
+      color: #2a3545;
+    }
+
+    /* ── Reveal ── */
+    .reveal {
+      opacity: 0; transform: translateY(16px);
+      transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    /* ── Mobile ── */
+    @media (max-width: 768px) {
+      nav { padding: 0.8rem 1.25rem; }
+      .nav-links { display: none; }
+      .hero { padding: 0 1.25rem; }
+      .hero-name { font-size: 2.4rem; }
+      .container { padding: 0 1.25rem; }
+      section { padding: 3.5rem 0; }
+      .exp-group-header { grid-template-columns: 1fr; gap: 0.75rem; padding: 1.5rem 1.25rem 1.25rem; }
+      .exp-item { grid-template-columns: 28px 1fr; gap: 0.75rem; padding: 1.25rem; }
+      .edu-item { grid-template-columns: 1fr; gap: 0.4rem; }
+      .stack-row { grid-template-columns: 1fr; gap: 0.3rem; }
+      .hero-facts { grid-template-columns: repeat(2, 1fr); }
+      .contact-links { flex-direction: column; }
+      .contact-link-value { font-size: 0.88rem; }
+      .evolution { padding: 1rem; }
+    }
+    @media (max-width: 480px) {
+      .hero-name { font-size: 2rem; }
+      .hero-facts { grid-template-columns: 1fr; }
+      .numbers-grid { grid-template-columns: repeat(2, 1fr); }
+      .now-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav id="navbar">
+    <div class="nav-inner">
+      <a href="#" class="nav-name">Kyuwan Kim</a>
+      <ul class="nav-links">
+        <li><a href="#experience">Experience</a></li>
+        <li><a href="research.html">Research</a></li>
+        <li><a href="#stack">Stack</a></li>
+        <li><a href="#education">Education</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-inner">
+      <p class="hero-tag">Java / Spring Boot &middot; Backend Engineer &middot; Mathematics</p>
+      <p class="hero-sub">
+        하나의 물류솔루션을 처음부터 6년간 만들었습니다.<br>
+        시스템을 설계하고, ML 파이프라인을 구축하다가<br>
+        작동하는 원리가 궁금해져 수학과에 갔습니다.
+      </p>
+      <div class="hero-facts">
+        <div class="hero-fact">
+          <div class="hero-fact-label">Experience</div>
+          <div class="hero-fact-value">10년차</div>
+        </div>
+        <div class="hero-fact">
+          <div class="hero-fact-label">Domain</div>
+          <div class="hero-fact-value">Logistics · WMS/OMS</div>
+        </div>
+        <div class="hero-fact">
+          <div class="hero-fact-label">Focus</div>
+          <div class="hero-fact-value">Java · Spring Boot</div>
+        </div>
+        <div class="hero-fact">
+          <div class="hero-fact-label">Currently</div>
+          <div class="hero-fact-value">수학과 석사과정</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- Experience -->
+  <section id="experience">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="section-title">Experience</span>
+        <span class="section-count">3 companies &middot; 10 yrs</span>
+      </div>
+
+      <!-- 콜로세움 -->
+      <div class="exp-group reveal">
+        <div class="exp-group-header">
+          <div>
+            <div class="exp-period">2020.02 — 2026.03</div>
+            <div class="exp-company">콜로세움코퍼레이션</div>
+            <div class="exp-role">정규직 &middot; 6년 2개월</div>
+          </div>
+          <div>
+            <p class="exp-group-summary">OMS · WMS · TMS를 통합한 물류솔루션 COLO를 처음부터 개발에 참여하여 6년간 성장시킴</p>
+            <div class="exp-results">
+              <div class="exp-chip">
+                <span class="exp-chip-value">1,300억</span>
+                <span class="exp-chip-label">연 매출</span>
+              </div>
+              <div class="exp-chip">
+                <span class="exp-chip-value">시리즈 B 270억</span>
+                <span class="exp-chip-label">투자유치</span>
+              </div>
+              <div class="exp-chip">
+                <span class="exp-chip-value">아태 물류 1위</span>
+                <span class="exp-chip-label">고성장 기업 2026</span>
+              </div>
+              <div class="exp-chip">
+                <span class="exp-chip-value">IPO</span>
+                <span class="exp-chip-label">2027 하반기 목표</span>
+              </div>
+            </div>
+            <div class="exp-links">
+              <a href="https://zdnet.co.kr/view/?no=20250618225847" target="_blank" rel="noopener" class="exp-link"><svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>시리즈 B 270억 투자유치</a>
+              <a href="https://www.venturesquare.net/1072169" target="_blank" rel="noopener" class="exp-link"><svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>아태 고성장 기업 물류 1위</a>
+              <a href="https://www.klnews.co.kr/news/articleView.html?idxno=317834" target="_blank" rel="noopener" class="exp-link"><svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>IPO 추진 - 물류신문</a>
+            </div>
+          </div>
+        </div>
+
+      <!-- 콜로세움: Transformer -->
+      <div class="exp-item">
+        <div class="exp-item-num">1</div>
+        <div>
+          <div class="exp-title">Transformer 매핑 추천 파이프라인</div>
+          <ul class="exp-desc">
+            <li>외부 매핑 API의 커버리지 한계를 확인하고, 반자동 추천 방식으로 전환을 결정</li>
+            <li>e5(intfloat/multilingual-e5-large) 임베딩 기반 PoC 수행<br>7,247건 대상 Recall@1 57%, Recall@3 73% 달성</li>
+            <li>표본을 3,810건으로 확대하여 MeCab 대비 정량 비교 — Transformer Top-1 78.4%, Top-5 92.1%</li>
+            <li>배치 오프라인 임베딩 + 온라인 추천 + WordBase 폴백 하이브리드 아키텍처 설계</li>
+            <li>Docker → ECR → AWS Batch → Jenkins CI/CD 엔드투엔드 파이프라인 단독 구축</li>
+          </ul>
+
+          <div class="evolution">
+            <div class="evolution-title">Problem → Solution 과정</div>
+            <div class="evolution-steps">
+              <div class="evo-step">
+                <span class="evo-num">1</span>
+                <span>외부 매핑 API 기반 자동화 시도<br>사전/인덱스 미등록 상품 89.8% 무후보</span>
+              </div>
+              <div class="evo-arrow">↓ 완전 자동화는 어렵다. 반자동은?</div>
+              <div class="evo-step">
+                <span class="evo-num">2</span>
+                <span>Transformer 임베딩 PoC<br>Coverage 100%, Recall@1 57%</span>
+              </div>
+              <div class="evo-arrow">↓ 표본 확대로 개선 가능한가?</div>
+              <div class="evo-step">
+                <span class="evo-num">3</span>
+                <span>MeCab 대비 비교 분석<br>MeCab 실패 건의 70% 커버, Top-5 92.1%</span>
+              </div>
+              <div class="evo-arrow">↓ 두 방식을 결합하면?</div>
+              <div class="evo-step">
+                <span class="evo-num">4</span>
+                <span>하이브리드 아키텍처 설계<br>배치 임베딩 + 온라인 추천 + 룰 기반 후처리</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="exp-results">
+            <div class="exp-chip">
+              <span class="exp-chip-value">78.4%</span>
+              <span class="exp-chip-label">Top-1 정확도</span>
+            </div>
+            <div class="exp-chip">
+              <span class="exp-chip-value">92.1%</span>
+              <span class="exp-chip-label">Top-5 정확도</span>
+            </div>
+            <div class="exp-chip">
+              <span class="exp-chip-value">70%</span>
+              <span class="exp-chip-label">MeCab 실패 건 커버</span>
+            </div>
+          </div>
+          <div class="exp-tags">
+            <span class="exp-tag">Transformer</span>
+            <span class="exp-tag">e5-large</span>
+            <span class="exp-tag">Docker</span>
+            <span class="exp-tag">AWS Batch</span>
+            <span class="exp-tag">ECR</span>
+            <span class="exp-tag">Jenkins</span>
+            <span class="exp-tag">Python</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 콜로세움: 고도화 -->
+      <div class="exp-item">
+        <div class="exp-item-num">2</div>
+        <div>
+          <div class="exp-title">COLO 고도화</div>
+          <ul class="exp-desc">
+            <li>셀러/센터/관리자가 하나의 앱에서 if문 분기로 동작하여
+              결합도가 높았고,
+              출고신청만 했는데 피킹 전에 재고가 차감되는 등
+              도메인 간 역설이 발생</li>
+            <li>분리 원칙 수립 —
+              각 권한은 메소드를 공유하지 않고 RESTful로만 통신,
+              서로의 도메인을 직접 건드리지 않는다</li>
+            <li>셀러단 분리를 첫 단계로 실행.
+              JSP → React 전환 + 공통 RESTful API 설계.
+              주문수집과 출고신청 프로세스를 독립적으로 분리</li>
+            <li>플레이오토 연동을 기획·개발하여
+              주문수집 가능한 쇼핑몰을 75개로 확대</li>
+            <li>기획, 설계, 개발 전 과정을 주도</li>
+          </ul>
+          <div class="exp-tags">
+            <span class="exp-tag">Spring Boot</span>
+            <span class="exp-tag">MySQL</span>
+            <span class="exp-tag">AWS</span>
+            <span class="exp-tag">Redis</span>
+            <span class="exp-tag">React</span>
+            <span class="exp-tag">JIRA</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 콜로세움: Global -->
+      <div class="exp-item">
+        <div class="exp-item-num">3</div>
+        <div>
+          <div class="exp-title">COLO Global — 미국 버전</div>
+          <ul class="exp-desc">
+            <li>국내 COLO는 센터 작업 프로세스, 로케이션 관리,
+              작업자 리포트 기능이 취약했음<br>미국 현지 운영을 위해
+              이 기능들을 갖춘 글로벌 버전을 개발</li>
+            <li>입고 전체 프로세스를 담당 —
+              UPC 기반 입고 세분화, 데이터 불일치 시 실시간 알림 및 CS 프로세스,
+              분리적재 라벨 시스템</li>
+            <li>미국 CTK USA 센터에서 실서비스 운영,
+              이후 CTK가 콜로세움에 시리즈A 투자</li>
+          </ul>
+          <div class="exp-results">
+            <div class="exp-chip">
+              <span class="exp-chip-value">Series A</span>
+              <span class="exp-chip-label">투자유치 기여</span>
+            </div>
+          </div>
+          <div class="exp-links">
+            <a href="https://www.youtube.com/watch?v=J1wTtEk9U74" target="_blank" rel="noopener" class="exp-link"><svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>CTK USA 센터 영상</a>
+            <a href="https://newsis.com/view/?id=NISX20220622_0001916058&cID=13001&pID=13000" target="_blank" rel="noopener" class="exp-link"><svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>CTK 풀필먼트 - 뉴시스</a>
+            <a href="https://www.mk.co.kr/news/business/10862484" target="_blank" rel="noopener" class="exp-link"><svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>투자유치 - 매일경제</a>
+          </div>
+          <div class="exp-tags">
+            <span class="exp-tag">Spring Boot</span>
+            <span class="exp-tag">MySQL</span>
+            <span class="exp-tag">AWS</span>
+            <span class="exp-tag">React</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 콜로세움: 런칭 -->
+      <div class="exp-item">
+        <div class="exp-item-num">4</div>
+        <div>
+          <div class="exp-title">COLO 정규버전 런칭</div>
+          <ul class="exp-desc">
+            <li>실제 서비스에 필요한 전반적 기능이 들어간 첫 정규 버전</li>
+            <li>상품등록, 입고, 상품매핑을 필두로
+              대부분의 핵심 기능을 설계·구현</li>
+          </ul>
+        </div>
+      </div>
+      </div>
+
+      <!-- 동양미래대 -->
+      <div class="exp-group reveal">
+        <div class="exp-group-header">
+          <div>
+            <div class="exp-period">2025.03 —</div>
+            <div class="exp-company">동양미래대학교</div>
+            <div class="exp-role">계약직 강사</div>
+          </div>
+          <div>
+            <p class="exp-group-summary">컴퓨터공학부 컴퓨터정보공학과 — 알고리즘, Java, 시스템서버운영 강의</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 데이터킹 -->
+      <div class="exp-group reveal">
+        <div class="exp-group-header">
+          <div>
+            <div class="exp-period">2017.09 — 2020.01</div>
+            <div class="exp-company">데이터킹</div>
+            <div class="exp-role">정규직 &middot; 2년 5개월</div>
+          </div>
+          <div>
+            <p class="exp-group-summary">Android 앱 · VR 앱 · 3D 콘텐츠 개발 — 전국 국립박물관 전시물 3D 스캔·촬영부터 앱 개발까지</p>
+            <details class="exp-collapse">
+            <summary class="exp-collapse-toggle">
+              <span>프로젝트 상세 보기</span>
+              <span class="arrow">▼</span>
+            </summary>
+            <div class="exp-collapse-content">
+
+              <div class="exp-item">
+                <div>
+                  <div class="exp-title">360SCOPE</div>
+                  <ul class="exp-desc">
+                    <li>3D 가상박물관 VR 올인원 장비 개발</li>
+                    <li>Android 태블릿 + HMD 연동,
+                      전시 선택 → VR 자동 재생</li>
+                  </ul>
+                  <div class="exp-links">
+                    <a href="https://www.youtube.com/watch?v=HLH1BRMnhEY" target="_blank" rel="noopener" class="exp-link"><svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>홍보 영상</a>
+                  </div>
+                  <div class="exp-tags">
+                    <span class="exp-tag">Android</span>
+                    <span class="exp-tag">Java</span>
+                    <span class="exp-tag">Unity</span>
+                    <span class="exp-tag">VR</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="exp-item">
+                <div>
+                  <div class="exp-title">3D 가상박물관</div>
+                  <ul class="exp-desc">
+                    <li>국립중앙박물관 및 전국 13개 국립박물관
+                      상설/특별전 3D 구성</li>
+                    <li>웹, 앱, TV 셋톱박스
+                      멀티플랫폼 제공</li>
+                  </ul>
+                  <div class="exp-links">
+                    <a href="https://360vrmuseum.com/" target="_blank" rel="noopener" class="exp-link"><svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>360vrmuseum.com (운영 중)</a>
+                  </div>
+                </div>
+              </div>
+
+              <div class="exp-item" style="border-bottom:none;">
+                <div>
+                  <div class="exp-title">Bideomap</div>
+                  <ul class="exp-desc">
+                    <li>360도 영상 지도 서비스
+                      Android 앱 개발</li>
+                    <li>VR 플레이어 Unity 개발,
+                      앱에서 APK 호출 연동</li>
+                  </ul>
+                  <div class="exp-links">
+                    <a href="https://www.youtube.com/watch?v=Im8VWpGox1k" target="_blank" rel="noopener" class="exp-link"><svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>서비스 영상</a>
+                    <a href="https://www.youtube.com/watch?v=XmX75pf1RsI" target="_blank" rel="noopener" class="exp-link"><svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>VR 플레이어 영상</a>
+                    <a href="https://www.newswire.co.kr/newsRead.php?no=857162" target="_blank" rel="noopener" class="exp-link"><svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>BideoMap 2.0 출시 기사</a>
+                  </div>
+                  <div class="exp-tags">
+                    <span class="exp-tag">Android</span>
+                    <span class="exp-tag">Kotlin</span>
+                    <span class="exp-tag">Unity</span>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </details>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- Stack -->
+  <section id="stack">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="section-title">Stack</span>
+      </div>
+      <div class="stack-row reveal">
+        <span class="stack-label">Backend</span>
+        <span class="stack-values">Java, Spring Boot, Kotlin, NodeJS, Python</span>
+      </div>
+      <div class="stack-row reveal">
+        <span class="stack-label">Data / ML</span>
+        <span class="stack-values">Transformer, MySQL, MongoDB, Redis</span>
+      </div>
+      <div class="stack-row reveal">
+        <span class="stack-label">Infra</span>
+        <span class="stack-values">AWS (EC2, Batch, ECR), Docker, Jenkins, Nginx, Linux</span>
+      </div>
+      <div class="stack-row reveal">
+        <span class="stack-label">Frontend</span>
+        <span class="stack-values">React, Android</span>
+      </div>
+      <div class="stack-row reveal">
+        <span class="stack-label">Process</span>
+        <span class="stack-values">JIRA, Confluence, Git, Scrum</span>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- Education -->
+  <section id="education">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="section-title">Education</span>
+      </div>
+      <div class="edu-item reveal">
+        <div class="edu-year">2026 —</div>
+        <div class="edu-info">
+          <h3>고려대학교 대학원</h3>
+          <p>응용수학과 위상기하학 및 확률론 전공 (석사과정)</p>
+        </div>
+      </div>
+      <div class="edu-item reveal">
+        <div class="edu-year">2010 — 2016</div>
+        <div class="edu-info">
+          <h3>삼육대학교</h3>
+          <p>컴퓨터학부 소프트웨어전공 (공학사)</p>
+        </div>
+      </div>
+      <div class="cert-row reveal">
+        <span class="cert-badge">SQLD</span>
+        <span class="cert-badge">정보처리기사</span>
+        <span class="cert-badge">OCJP</span>
+        <span class="cert-badge">리눅스마스터 2급</span>
+        <span class="cert-badge">정보처리산업기사</span>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- Contact -->
+  <section class="contact" id="contact">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="section-title">Contact</span>
+      </div>
+      <div class="contact-links reveal">
+        <a href="mailto:lpnids@gmail.com" class="contact-link">
+          <svg viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><polyline points="22,4 12,13 2,4"/></svg>
+          <div class="contact-link-text">
+            <span class="contact-link-label">Email</span>
+            <span class="contact-link-value">lpnids@gmail.com</span>
+          </div>
+        </a>
+        <a href="https://www.linkedin.com/in/kyuwan-kim-081190186/" target="_blank" rel="noopener" class="contact-link">
+          <svg viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+          <div class="contact-link-text">
+            <span class="contact-link-label">LinkedIn</span>
+            <span class="contact-link-value">Kyuwan Kim</span>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">&copy; 2026 Kyuwan Kim</div>
+  </footer>
+
+  <script>
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      navbar.classList.toggle('scrolled', window.scrollY > 50);
+    });
+
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    document.querySelectorAll('.number-value[data-target]').forEach(el => {
+      const obs = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+          if (!entry.isIntersecting) return;
+          const target = parseInt(el.dataset.target);
+          const suffix = el.dataset.suffix || '';
+          const display = el.dataset.display;
+          const start = performance.now();
+          (function step(now) {
+            const p = Math.min((now - start) / 1500, 1);
+            const ease = 1 - Math.pow(1 - p, 3);
+            if (display) {
+              el.textContent = p >= 1 ? display : Math.floor(parseInt(display) * ease).toLocaleString();
+            } else {
+              el.textContent = Math.floor(target * ease).toLocaleString() + suffix;
+            }
+            if (p < 1) requestAnimationFrame(step);
+          })(start);
+          obs.unobserve(el);
+        });
+      }, { threshold: 0.5 });
+      obs.observe(el);
+    });
+
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+      a.addEventListener('click', e => {
+        e.preventDefault();
+        document.querySelector(a.getAttribute('href'))?.scrollIntoView({ behavior: 'smooth' });
+      });
+    });
+  </script>
+
+</body>
+</html>
