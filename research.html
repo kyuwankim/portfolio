@@ -570,8 +570,22 @@
       .week-toggle { padding: 1.25rem; font-size: 0.88rem; }
       .week-content { padding: 0 1.25rem 1.5rem; }
       .figure-grid { grid-template-columns: 1fr; }
-      .data-table { font-size: 0.75rem; }
-      .data-table th, .data-table td { padding: 0.4rem 0.5rem; }
+      .data-table-wrap {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        margin: 1.25rem -0.5rem;
+        padding: 0 0.5rem;
+      }
+      .data-table { font-size: 0.7rem; min-width: 420px; }
+      .data-table th, .data-table td { padding: 0.35rem 0.4rem; }
+      .stat-row { grid-template-columns: repeat(2, 1fr); }
+      .stat-value { font-size: 0.9rem; }
+      .arch-flow { flex-direction: column; align-items: center; gap: 0.5rem; }
+      .arch-arrow { transform: rotate(90deg); padding: 0; }
+      .arch-ec2-inner { min-width: auto; width: 100%; }
+      .arch-note { font-size: 0.68rem; }
+      .pipeline-flow { font-size: 0.7rem; }
+      .why-block p { font-size: 0.82rem; }
     }
   </style>
 </head>
@@ -728,6 +742,7 @@
           </div>
 
           <!-- Per-image stats table -->
+          <div class="data-table-wrap">
           <table class="data-table">
             <thead>
               <tr>
@@ -751,6 +766,7 @@
               <tr><td>img_10</td><td class="num">4,654</td><td class="num">4,377</td><td class="num highlight">246</td><td class="num">27</td></tr>
             </tbody>
           </table>
+          </div>
 
           <!-- L2 distance stats -->
           <div class="stat-row">
