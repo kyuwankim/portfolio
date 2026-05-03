@@ -2,7 +2,7 @@
 <html lang="ko">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>Kyuwan Kim</title>
   <meta name="description" content="10년차 백엔드 엔지니어. Java/Spring Boot 기반 물류솔루션 COLO를 처음부터 6년간 설계·개발. 현재 응용수학 석사과정에서 TDA 연구 중.">
   <meta name="robots" content="index, follow">
@@ -60,7 +60,7 @@
     /* ── Nav ── */
     nav {
       position: fixed; top: 0; width: 100%; z-index: 100;
-      padding: 1rem 2rem;
+      padding: calc(1rem + env(safe-area-inset-top, 0px)) 2rem 1rem;
       transition: all 0.3s;
     }
     nav.scrolled {
@@ -111,8 +111,9 @@
     /* ── Hero ── */
     .hero {
       min-height: 100vh;
+      min-height: 100svh;
       display: flex; align-items: center;
-      padding: 0 2rem;
+      padding: 5rem 2rem 2rem;
       position: relative;
     }
     .hero::before {
@@ -733,7 +734,7 @@
 
     /* ── Mobile ── */
     @media (max-width: 768px) {
-      nav { padding: 0.8rem 1.25rem; }
+      nav { padding: calc(0.8rem + env(safe-area-inset-top, 0px)) 1.25rem 0.8rem; }
       .nav-toggle { display: flex; }
       .nav-links {
         display: none;
@@ -747,7 +748,7 @@
       }
       .nav-links.open { display: flex; }
       .nav-links a { font-size: 0.85rem; }
-      .hero { padding: 0 1.25rem; }
+      .hero { padding: 5rem 1.25rem 2rem; }
       .hero-name { font-size: 2.4rem; }
       .container { padding: 0 1.25rem; }
       section { padding: 3.5rem 0; }
