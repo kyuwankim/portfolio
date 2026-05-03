@@ -333,9 +333,14 @@
     }
 
     /* ── Architecture ── */
-    .arch-diagram {
+    .arch-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
       margin-top: 2rem;
-      padding: 2rem;
+    }
+    .arch-diagram {
+      padding: 1.5rem;
       background: rgba(56,189,248,0.02);
       border: 1px solid var(--border);
       border-radius: 8px;
@@ -580,6 +585,7 @@
       .data-table th, .data-table td { padding: 0.35rem 0.4rem; }
       .stat-row { grid-template-columns: repeat(2, 1fr); }
       .stat-value { font-size: 0.9rem; }
+      .arch-row { grid-template-columns: 1fr; }
       .arch-flow { flex-direction: column; align-items: center; gap: 0.5rem; }
       .arch-arrow { transform: rotate(90deg); padding: 0; }
       .arch-ec2-inner { min-width: auto; width: 100%; }
@@ -656,41 +662,85 @@
             </div>
           </div>
 
-          <div class="arch-diagram">
-            <div class="arch-label">Infrastructure</div>
-            <div class="arch-flow">
-              <div class="arch-node">
-                <div class="arch-box arch-box-icon">
-                  <img class="arch-icon" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/android/android-original.svg" alt="Android">
-                  Android
+          <div class="arch-row">
+            <!-- As-Is -->
+            <div class="arch-diagram">
+              <div class="arch-label">As-Is (현재)</div>
+              <div class="arch-flow">
+                <div class="arch-node">
+                  <div class="arch-box arch-box-icon">
+                    <img class="arch-icon" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/android/android-original.svg" alt="Android">
+                    Android
+                  </div>
+                  <div class="arch-box-sub">촬영 &amp; 요청</div>
                 </div>
-                <div class="arch-box-sub">촬영 &amp; 요청</div>
-              </div>
-              <div class="arch-arrow">→</div>
-              <div class="arch-node">
-                <div class="arch-ec2-inner">
-                  <div class="arch-ec2-title">EC2 · kyuwan.kim</div>
-                  <div class="arch-ec2-item">
-                    <img class="arch-icon" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nginx/nginx-original.svg" alt="nginx">
-                    nginx
+                <div class="arch-arrow">→</div>
+                <div class="arch-node">
+                  <div class="arch-ec2-inner">
+                    <div class="arch-ec2-title">EC2 · kyuwan.kim</div>
+                    <div class="arch-ec2-item">
+                      <img class="arch-icon" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nginx/nginx-original.svg" alt="nginx">
+                      nginx
+                    </div>
+                    <div class="arch-ec2-item">
+                      <img class="arch-icon" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/spring/spring-original.svg" alt="Spring">
+                      Spring Boot API
+                    </div>
+                    <div class="arch-ec2-item">
+                      <img class="arch-icon" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" alt="Python">
+                      Python TDA
+                    </div>
+                    <div class="arch-ec2-item">
+                      <img class="arch-icon" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg" alt="MySQL">
+                      MySQL
+                    </div>
+                    <div class="arch-ec2-item">Local Storage</div>
                   </div>
-                  <div class="arch-ec2-item">
-                    <img class="arch-icon" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/spring/spring-original.svg" alt="Spring">
-                    Spring Boot API
-                  </div>
-                  <div class="arch-ec2-item">
-                    <img class="arch-icon" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" alt="Python">
-                    Python TDA
-                  </div>
-                  <div class="arch-ec2-item">
-                    <img class="arch-icon" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg" alt="MySQL">
-                    MySQL
-                  </div>
-                  <div class="arch-ec2-item">Local Storage</div>
                 </div>
               </div>
+              <div class="arch-note">EC2 단일 구성 · kyuwan.kim (Cloudflare DNS)</div>
             </div>
-            <div class="arch-note">도메인: kyuwan.kim (Cloudflare DNS) · 현재 EC2 단일 구성 — 규모 확장 시 RDS, S3 분리 예정</div>
+
+            <!-- To-Be -->
+            <div class="arch-diagram">
+              <div class="arch-label">To-Be (확장)</div>
+              <div class="arch-flow">
+                <div class="arch-node">
+                  <div class="arch-box arch-box-icon">
+                    <img class="arch-icon" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/android/android-original.svg" alt="Android">
+                    Android
+                  </div>
+                  <div class="arch-box-sub">촬영 &amp; 요청</div>
+                </div>
+                <div class="arch-arrow">→</div>
+                <div class="arch-node">
+                  <div class="arch-ec2-inner">
+                    <div class="arch-ec2-title">EC2</div>
+                    <div class="arch-ec2-item">
+                      <img class="arch-icon" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nginx/nginx-original.svg" alt="nginx">
+                      nginx
+                    </div>
+                    <div class="arch-ec2-item">
+                      <img class="arch-icon" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/spring/spring-original.svg" alt="Spring">
+                      Spring Boot API
+                    </div>
+                    <div class="arch-ec2-item">
+                      <img class="arch-icon" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" alt="Python">
+                      Python TDA
+                    </div>
+                  </div>
+                </div>
+                <div class="arch-arrow">→</div>
+                <div class="arch-node" style="display:flex;flex-direction:column;gap:0.4rem;">
+                  <div class="arch-box arch-box-icon">
+                    <img class="arch-icon" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg" alt="RDS">
+                    RDS
+                  </div>
+                  <div class="arch-box arch-box-icon">S3</div>
+                </div>
+              </div>
+              <div class="arch-note">DB · 스토리지 분리 · 독립 스케일링</div>
+            </div>
           </div>
 
           <div class="tags">
