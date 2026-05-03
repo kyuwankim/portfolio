@@ -13,6 +13,7 @@
   <meta property="og:url" content="https://kyuwan.kim/">
   <meta property="og:locale" content="ko_KR">
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%230f1620'/%3E%3Cpath d='M11 8v16M11 16l9-8M11 16l9 8' stroke='%2338bdf8' stroke-width='2.8' stroke-linecap='round' stroke-linejoin='round' fill='none'/%3E%3C/svg%3E">
   <style>
     :root {
       --bg: #0f1620;
@@ -42,6 +43,8 @@
       overflow-x: hidden;
       word-break: keep-all;
       overflow-wrap: break-word;
+      background-image: radial-gradient(rgba(56,189,248,0.03) 1px, transparent 1px);
+      background-size: 24px 24px;
     }
 
     ::-webkit-scrollbar { width: 5px; }
@@ -71,8 +74,19 @@
     .nav-links a {
       color: #4a5568; text-decoration: none; font-size: 0.8rem;
       font-weight: 500; transition: color 0.2s; letter-spacing: 0.01em;
+      position: relative;
+    }
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -4px; left: 0; right: 0;
+      height: 1px;
+      background: var(--accent);
+      transform: scaleX(0);
+      transition: transform 0.3s;
     }
     .nav-links a:hover { color: var(--accent); }
+    .nav-links a:hover::after { transform: scaleX(1); }
     .nav-toggle {
       display: none;
       background: none; border: none; cursor: pointer;
@@ -98,10 +112,11 @@
     .hero::before {
       content: '';
       position: absolute;
-      top: 0; right: 0;
-      width: 50%; height: 100%;
-      background: radial-gradient(ellipse at 80% 30%, rgba(56,189,248,0.04) 0%, transparent 70%);
+      top: -20%; right: -10%;
+      width: 60%; height: 120%;
+      background: radial-gradient(ellipse at 60% 40%, rgba(56,189,248,0.06) 0%, rgba(56,189,248,0.02) 40%, transparent 70%);
       pointer-events: none;
+      filter: blur(40px);
     }
     .hero-inner {
       max-width: 1000px; margin: 0 auto; width: 100%;
@@ -109,11 +124,15 @@
     }
     .hero-tag {
       font-family: var(--mono);
-      font-size: 0.75rem;
+      font-size: 0.72rem;
       color: var(--accent);
-      letter-spacing: 0.08em;
-      margin-bottom: 1.25rem;
-      opacity: 0.8;
+      letter-spacing: 0.1em;
+      margin-bottom: 1.5rem;
+      padding: 0.35rem 0.85rem;
+      background: var(--accent-dim);
+      border: 1px solid var(--accent-border);
+      border-radius: 20px;
+      display: inline-block;
     }
     .hero-name {
       font-size: clamp(2.8rem, 6vw, 4.5rem);
@@ -137,16 +156,18 @@
       gap: 1px;
       background: var(--border);
       border: 1px solid var(--border);
-      border-radius: 8px;
+      border-radius: 10px;
       overflow: hidden;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.2), 0 0 0 1px rgba(56,189,248,0.04);
     }
     .hero-fact {
-      background: var(--bg-card);
+      background: rgba(21,29,43,0.8);
+      backdrop-filter: blur(8px);
       padding: 1.25rem 1.5rem;
       transition: background 0.3s;
     }
     .hero-fact:hover {
-      background: var(--bg-card-hover);
+      background: rgba(26,36,53,0.9);
     }
     .hero-fact-label {
       font-family: var(--mono);
@@ -191,6 +212,7 @@
       color: var(--accent);
       padding-left: 0.75rem;
       border-left: 2px solid var(--accent);
+      text-shadow: 0 0 20px rgba(56,189,248,0.15);
     }
     .section-count {
       font-size: 0.7rem;
@@ -202,16 +224,19 @@
 
     /* ── Experience ── */
     .exp-group {
-      background: var(--bg-card);
+      background: rgba(21,29,43,0.6);
+      backdrop-filter: blur(8px);
       border: 1px solid var(--border);
-      border-radius: 8px;
-      margin-bottom: 1.25rem;
+      border-radius: 10px;
+      margin-bottom: 1.5rem;
       border-left: 3px solid transparent;
-      transition: border-color 0.3s;
+      transition: border-color 0.3s, box-shadow 0.3s;
       overflow: hidden;
+      box-shadow: 0 2px 16px rgba(0,0,0,0.15);
     }
     .exp-group:hover {
       border-left-color: var(--accent);
+      box-shadow: 0 4px 24px rgba(0,0,0,0.25), 0 0 0 1px rgba(56,189,248,0.06);
     }
     .exp-group-header {
       display: grid;
@@ -449,15 +474,25 @@
     }
 
     /* ── Stack ── */
+    .stack-grid {
+      background: rgba(21,29,43,0.6);
+      backdrop-filter: blur(8px);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 2px 16px rgba(0,0,0,0.15);
+    }
     .stack-row {
       display: grid;
       grid-template-columns: 130px 1fr;
       gap: 1.25rem;
-      padding: 1rem 0;
+      padding: 1rem 1.5rem;
       border-bottom: 1px solid var(--border);
       align-items: baseline;
+      transition: background 0.3s;
     }
     .stack-row:last-child { border-bottom: none; }
+    .stack-row:hover { background: rgba(56,189,248,0.03); }
     .stack-label {
       font-family: var(--mono);
       font-size: 0.72rem;
@@ -471,14 +506,24 @@
     }
 
     /* ── Education ── */
+    .edu-grid {
+      background: rgba(21,29,43,0.6);
+      backdrop-filter: blur(8px);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 2px 16px rgba(0,0,0,0.15);
+    }
     .edu-item {
-      padding: 1.5rem 0;
+      padding: 1.5rem 1.5rem;
       border-bottom: 1px solid var(--border);
       display: grid;
       grid-template-columns: 180px 1fr;
       gap: 2rem;
+      transition: background 0.3s;
     }
     .edu-item:last-child { border-bottom: none; }
+    .edu-item:hover { background: rgba(56,189,248,0.03); }
     .edu-year {
       font-family: var(--mono);
       font-size: 0.75rem;
@@ -510,6 +555,12 @@
       background: var(--bg-card);
       border: 1px solid var(--border-light);
       border-radius: 4px;
+      transition: border-color 0.3s, background 0.3s, color 0.3s;
+    }
+    .cert-badge:hover {
+      border-color: var(--accent-border);
+      background: var(--accent-dim);
+      color: var(--accent);
     }
 
     /* ── Contact ── */
@@ -526,15 +577,18 @@
       align-items: center;
       gap: 0.75rem;
       padding: 1.25rem 1.75rem;
-      background: var(--bg-card);
+      background: rgba(21,29,43,0.6);
+      backdrop-filter: blur(8px);
       border: 1px solid var(--border);
-      border-radius: 8px;
+      border-radius: 10px;
       text-decoration: none;
-      transition: border-color 0.3s, background 0.3s;
+      transition: border-color 0.3s, background 0.3s, box-shadow 0.3s;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.1);
     }
     .contact-link:hover {
       border-color: var(--accent-border);
-      background: var(--bg-card-hover);
+      background: rgba(26,36,53,0.8);
+      box-shadow: 0 4px 20px rgba(56,189,248,0.08);
     }
     .contact-link svg {
       width: 22px; height: 22px;
@@ -564,7 +618,8 @@
     footer {
       padding: 2.5rem 0;
       font-size: 0.72rem;
-      color: #2a3545;
+      color: #3a4a5e;
+      border-top: 1px solid var(--border);
     }
 
     /* ── Reveal ── */
@@ -954,25 +1009,27 @@
       <div class="section-header reveal">
         <span class="section-title">Stack</span>
       </div>
-      <div class="stack-row reveal">
-        <span class="stack-label">Backend</span>
-        <span class="stack-values">Java, Spring Boot, Kotlin, NodeJS, Python</span>
-      </div>
-      <div class="stack-row reveal">
-        <span class="stack-label">Data / ML</span>
-        <span class="stack-values">Transformer, MySQL, MongoDB, Redis</span>
-      </div>
-      <div class="stack-row reveal">
-        <span class="stack-label">Infra</span>
-        <span class="stack-values">AWS (EC2, Batch, ECR), Docker, Jenkins, Nginx, Linux</span>
-      </div>
-      <div class="stack-row reveal">
-        <span class="stack-label">Frontend</span>
-        <span class="stack-values">React, Android</span>
-      </div>
-      <div class="stack-row reveal">
-        <span class="stack-label">Process</span>
-        <span class="stack-values">JIRA, Confluence, Git, Scrum</span>
+      <div class="stack-grid reveal">
+        <div class="stack-row">
+          <span class="stack-label">Backend</span>
+          <span class="stack-values">Java, Spring Boot, Kotlin, NodeJS, Python</span>
+        </div>
+        <div class="stack-row">
+          <span class="stack-label">Data / ML</span>
+          <span class="stack-values">Transformer, MySQL, MongoDB, Redis</span>
+        </div>
+        <div class="stack-row">
+          <span class="stack-label">Infra</span>
+          <span class="stack-values">AWS (EC2, Batch, ECR), Docker, Jenkins, Nginx, Linux</span>
+        </div>
+        <div class="stack-row">
+          <span class="stack-label">Frontend</span>
+          <span class="stack-values">React, Android</span>
+        </div>
+        <div class="stack-row">
+          <span class="stack-label">Process</span>
+          <span class="stack-values">JIRA, Confluence, Git, Scrum</span>
+        </div>
       </div>
     </div>
   </section>
@@ -985,18 +1042,20 @@
       <div class="section-header reveal">
         <span class="section-title">Education</span>
       </div>
-      <div class="edu-item reveal">
-        <div class="edu-year">2026 —</div>
-        <div class="edu-info">
-          <h3>고려대학교 대학원</h3>
-          <p>응용수학과 위상기하학 및 확률론 전공 (석사과정)</p>
+      <div class="edu-grid reveal">
+        <div class="edu-item">
+          <div class="edu-year">2026 —</div>
+          <div class="edu-info">
+            <h3>고려대학교 대학원</h3>
+            <p>응용수학과 위상기하학 및 확률론 전공 (석사과정)</p>
+          </div>
         </div>
-      </div>
-      <div class="edu-item reveal">
-        <div class="edu-year">2010 — 2016</div>
-        <div class="edu-info">
-          <h3>삼육대학교</h3>
-          <p>컴퓨터학부 소프트웨어전공 (공학사)</p>
+        <div class="edu-item">
+          <div class="edu-year">2010 — 2016</div>
+          <div class="edu-info">
+            <h3>삼육대학교</h3>
+            <p>컴퓨터학부 소프트웨어전공 (공학사)</p>
+          </div>
         </div>
       </div>
       <div class="cert-row reveal">
