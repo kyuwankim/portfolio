@@ -336,7 +336,7 @@
     .arch-row {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 1rem;
+      gap: 1.25rem;
       margin-top: 2rem;
     }
     .arch-diagram {
@@ -351,105 +351,114 @@
       color: var(--accent);
       text-transform: uppercase;
       letter-spacing: 0.1em;
-      margin-bottom: 1.5rem;
-    }
-    .arch-flow {
-      display: flex;
-      align-items: flex-start;
-      gap: 0;
-      justify-content: center;
-      flex-wrap: wrap;
-    }
-    .arch-node {
+      margin-bottom: 1.25rem;
       text-align: center;
-      flex-shrink: 0;
     }
-    .arch-box {
-      padding: 0.7rem 1.2rem;
+    .arch-flow-v {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0;
+    }
+    .arch-node-v {
+      text-align: center;
+      width: 100%;
+      max-width: 220px;
+    }
+    .arch-box-v {
+      padding: 0.6rem 1rem;
       border: 1px solid var(--border-light);
       border-radius: 6px;
       background: var(--bg-card);
       font-family: var(--mono);
-      font-size: 0.78rem;
+      font-size: 0.8rem;
       color: var(--text-light);
-      white-space: nowrap;
-    }
-    .arch-box.accent {
-      border-color: var(--accent-border);
-      background: var(--accent-dim);
-      color: var(--accent);
-    }
-    .arch-box-sub {
-      font-size: 0.65rem;
-      color: #5a7090;
-      margin-top: 0.25rem;
-    }
-    .arch-arrow {
       display: flex;
       align-items: center;
-      padding: 0 0.5rem;
-      font-family: var(--mono);
-      font-size: 0.75rem;
-      color: #3a4a5e;
-      padding-top: 0.7rem;
+      justify-content: center;
+      gap: 0.5rem;
     }
-    .arch-ec2-inner {
+    .arch-box-v .arch-icon {
+      width: 20px;
+      height: 20px;
+    }
+    .arch-box-sub {
+      font-size: 0.62rem;
+      color: #5a7090;
+      margin-top: 0.2rem;
+      text-align: center;
+    }
+    .arch-arrow-v {
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      color: #3a4a5e;
+      padding: 0.4rem 0;
+    }
+    .arch-server {
       display: flex;
       flex-direction: column;
-      gap: 0.4rem;
-      padding: 1rem;
+      gap: 0.35rem;
+      padding: 0.85rem;
       border: 1px dashed var(--accent-border);
       border-radius: 6px;
-      min-width: 180px;
+      width: 100%;
+      max-width: 220px;
     }
-    .arch-ec2-title {
+    .arch-server-title {
       font-family: var(--mono);
-      font-size: 0.65rem;
+      font-size: 0.62rem;
       color: var(--accent);
       text-align: center;
-      margin-bottom: 0.25rem;
+      margin-bottom: 0.15rem;
     }
-    .arch-ec2-item {
-      padding: 0.4rem 0.75rem;
+    .arch-server-item {
+      padding: 0.35rem 0.5rem;
       background: var(--bg-card);
       border: 1px solid var(--border);
       border-radius: 4px;
       font-family: var(--mono);
       font-size: 0.72rem;
       color: var(--text);
-      text-align: center;
       display: flex;
       align-items: center;
       justify-content: center;
       gap: 0.4rem;
     }
-    .arch-icon {
-      width: 16px;
-      height: 16px;
-      flex-shrink: 0;
+    .arch-server-item .arch-icon {
+      width: 15px;
+      height: 15px;
     }
-    .arch-box-icon {
+    .arch-external {
+      display: flex;
+      gap: 0.5rem;
+      justify-content: center;
+      width: 100%;
+      max-width: 220px;
+    }
+    .arch-external-item {
+      flex: 1;
+      padding: 0.5rem;
+      border: 1px solid var(--border-light);
+      border-radius: 6px;
+      background: var(--bg-card);
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      color: var(--text-light);
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 0.5rem;
+      gap: 0.35rem;
     }
-    .arch-box-icon .arch-icon {
-      width: 20px;
-      height: 20px;
+    .arch-external-item .arch-icon {
+      width: 15px;
+      height: 15px;
     }
     .arch-note {
       margin-top: 1rem;
-      font-size: 0.75rem;
+      font-size: 0.72rem;
       color: #5a7090;
       text-align: center;
       line-height: 1.6;
-    }
-    @media (max-width: 768px) {
-      .arch-flow { gap: 0.5rem; }
-      .arch-arrow { padding: 0 0.25rem; font-size: 0.65rem; }
-      .arch-box { font-size: 0.7rem; padding: 0.5rem 0.8rem; }
-      .arch-ec2-inner { min-width: 140px; }
     }
 
     /* ── Weekly Log ── */
@@ -586,9 +595,6 @@
       .stat-row { grid-template-columns: repeat(2, 1fr); }
       .stat-value { font-size: 0.9rem; }
       .arch-row { grid-template-columns: 1fr; }
-      .arch-flow { flex-direction: column; align-items: center; gap: 0.5rem; }
-      .arch-arrow { transform: rotate(90deg); padding: 0; }
-      .arch-ec2-inner { min-width: auto; width: 100%; }
       .arch-note { font-size: 0.68rem; }
       .pipeline-flow { font-size: 0.7rem; }
       .why-block p { font-size: 0.82rem; }
@@ -666,80 +672,82 @@
             <!-- As-Is -->
             <div class="arch-diagram">
               <div class="arch-label">As-Is (현재)</div>
-              <div class="arch-flow">
-                <div class="arch-node">
-                  <div class="arch-box arch-box-icon">
+              <div class="arch-flow-v">
+                <div class="arch-node-v">
+                  <div class="arch-box-v">
                     <img class="arch-icon" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/android/android-original.svg" alt="Android">
                     Android
                   </div>
                   <div class="arch-box-sub">촬영 &amp; 요청</div>
                 </div>
-                <div class="arch-arrow">→</div>
-                <div class="arch-node">
-                  <div class="arch-ec2-inner">
-                    <div class="arch-ec2-title">EC2 · kyuwan.kim</div>
-                    <div class="arch-ec2-item">
+                <div class="arch-arrow-v">↓</div>
+                <div class="arch-node-v">
+                  <div class="arch-server">
+                    <div class="arch-server-title">EC2 · kyuwan.kim</div>
+                    <div class="arch-server-item">
                       <img class="arch-icon" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nginx/nginx-original.svg" alt="nginx">
                       nginx
                     </div>
-                    <div class="arch-ec2-item">
+                    <div class="arch-server-item">
                       <img class="arch-icon" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/spring/spring-original.svg" alt="Spring">
-                      Spring Boot API
+                      Spring Boot
                     </div>
-                    <div class="arch-ec2-item">
+                    <div class="arch-server-item">
                       <img class="arch-icon" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" alt="Python">
-                      Python TDA
+                      FastAPI TDA
                     </div>
-                    <div class="arch-ec2-item">
+                    <div class="arch-server-item">
                       <img class="arch-icon" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg" alt="MySQL">
                       MySQL
                     </div>
-                    <div class="arch-ec2-item">Local Storage</div>
+                    <div class="arch-server-item">Local Storage</div>
                   </div>
                 </div>
               </div>
-              <div class="arch-note">EC2 단일 구성 · kyuwan.kim (Cloudflare DNS)</div>
+              <div class="arch-note">EC2 단일 구성</div>
             </div>
 
             <!-- To-Be -->
             <div class="arch-diagram">
               <div class="arch-label">To-Be (확장)</div>
-              <div class="arch-flow">
-                <div class="arch-node">
-                  <div class="arch-box arch-box-icon">
+              <div class="arch-flow-v">
+                <div class="arch-node-v">
+                  <div class="arch-box-v">
                     <img class="arch-icon" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/android/android-original.svg" alt="Android">
                     Android
                   </div>
                   <div class="arch-box-sub">촬영 &amp; 요청</div>
                 </div>
-                <div class="arch-arrow">→</div>
-                <div class="arch-node">
-                  <div class="arch-ec2-inner">
-                    <div class="arch-ec2-title">EC2</div>
-                    <div class="arch-ec2-item">
+                <div class="arch-arrow-v">↓</div>
+                <div class="arch-node-v">
+                  <div class="arch-server">
+                    <div class="arch-server-title">EC2</div>
+                    <div class="arch-server-item">
                       <img class="arch-icon" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nginx/nginx-original.svg" alt="nginx">
                       nginx
                     </div>
-                    <div class="arch-ec2-item">
+                    <div class="arch-server-item">
                       <img class="arch-icon" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/spring/spring-original.svg" alt="Spring">
-                      Spring Boot API
+                      Spring Boot
                     </div>
-                    <div class="arch-ec2-item">
+                    <div class="arch-server-item">
                       <img class="arch-icon" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" alt="Python">
-                      Python TDA
+                      FastAPI TDA
                     </div>
                   </div>
                 </div>
-                <div class="arch-arrow">→</div>
-                <div class="arch-node" style="display:flex;flex-direction:column;gap:0.4rem;">
-                  <div class="arch-box arch-box-icon">
-                    <img class="arch-icon" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg" alt="RDS">
-                    RDS
+                <div class="arch-arrow-v">↓</div>
+                <div class="arch-node-v">
+                  <div class="arch-external">
+                    <div class="arch-external-item">
+                      <img class="arch-icon" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg" alt="RDS">
+                      RDS
+                    </div>
+                    <div class="arch-external-item">S3</div>
                   </div>
-                  <div class="arch-box arch-box-icon">S3</div>
                 </div>
               </div>
-              <div class="arch-note">DB · 스토리지 분리 · 독립 스케일링</div>
+              <div class="arch-note">DB · 스토리지 분리</div>
             </div>
           </div>
 
