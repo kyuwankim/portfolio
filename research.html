@@ -731,30 +731,44 @@
         <div class="project-header">
           <div class="project-status"><span class="dot"></span> In Progress</div>
           <h2 class="project-title">TDA 기반 상품 식별</h2>
-          <p class="project-subtitle">Persistent Homology를 활용한 PH 바코드 실험</p>
+          <p class="project-subtitle">사진 한 장으로 상품의 "지문"을 만들 수 있을까?</p>
+
+          <div class="project-desc">
+            <p>물류센터에서 상품을 구분하는 거의 유일한 수단은 바코드다. 그런데 바코드가 찢어지거나, 떨어져 나가거나, 인쇄가 번지면 작업자는 포장 외관을 보고 직접 판단해야 한다. 이 과정에서 오분류가 발생하고, 작업 속도가 떨어진다.</p>
+            <p>이 연구는 상품 포장을 스마트폰으로 촬영하는 것만으로 상품을 식별할 수 있는지 실험한다. 핵심 아이디어는 이미지에서 수학적 "지문"을 추출하는 것이다. 같은 상품이라면 각도나 조명이 달라도 비슷한 지문이 나올 것이라는 가설을 검증한다.</p>
+          </div>
 
           <div class="why-block" style="margin-top:1.25rem;">
-            <div class="why-block-title">What — 무엇을 하는가</div>
-            <p>물류센터에서 바코드가 훼손되거나 누락된 상품의 포장 정면을 스마트폰으로 촬영하고, Persistent Homology 기반의 PH 바코드를 생성하여 상품을 식별할 수 있는지 실험적으로 검증한다.</p>
-            <p>PH 바코드란 이미지에서 추출한 위상적 특징(연결 성분, 구멍, 공동)의 생성-소멸 구간을 막대 그래프로 표현한 것으로, 동일 상품이면 촬영 조건이 달라도 유사한 패턴을 보인다는 가설을 검증하는 것이 핵심이다.</p>
+            <div class="why-block-title">왜 기존 방법으로는 안 되는가</div>
+            <p><strong>RFID</strong> — 태그를 상품마다 붙여야 해서 단가가 올라간다. 중소 창고에서는 도입 자체가 부담이다.</p>
+            <p><strong>AI 이미지 인식(CNN)</strong> — GPU가 필요하고, 상품별로 수백~수천 장의 학습 데이터를 모아야 한다. 신규 상품이 들어올 때마다 재학습도 필요하다.</p>
+            <p>학습 데이터 없이, GPU 없이, 사진 한 장에서 바로 특징을 뽑을 수 있는 방법이 필요하다.</p>
           </div>
 
           <div class="why-block">
-            <div class="why-block-title">Why — 왜 필요한가</div>
-            <p>물류센터에서 상품 구분은 거의 전적으로 바코드에 의존한다. 바코드가 훼손되면 작업자가 육안으로 확인해야 하고, 이 과정에서 오분류와 속도 저하가 발생한다.</p>
-            <p>대안으로 RFID는 태그 단가 문제, CNN 기반 비전처리는 GPU 비용과 대량의 학습 데이터가 필요해 중소 물류창고에서 도입하기 어렵다. 학습 데이터 없이 사진 한 장에서 바로 특징을 뽑을 수 있는 경량 방법이 필요하다.</p>
+            <div class="why-block-title">TDA가 뭔가요</div>
+            <p><strong>TDA(Topological Data Analysis)</strong>는 데이터의 "모양"을 수학적으로 분석하는 방법이다. 이미지를 흑백으로 바꾼 뒤, 밝기 값을 기준으로 점점 영역을 넓혀가면서 어떤 구조가 나타나고(birth) 사라지는지(death) 추적한다.</p>
+            <p>이때 발견되는 구조는 세 종류다:</p>
+            <p><strong>H₀</strong> — 연결 덩어리 (밝은 영역이 몇 개인가)<br>
+            <strong>H₁</strong> — 구멍 (글자나 로고의 닫힌 고리)<br>
+            <strong>H₂</strong> — 빈 공간 (입체적 구조)</p>
+            <p>각 구조가 언제 나타나고 언제 사라졌는지를 (birth, death) 좌표로 기록하면, 그것이 이 상품만의 고유한 패턴 — <strong>PH 바코드</strong>가 된다.</p>
           </div>
 
           <div class="why-block">
-            <div class="why-block-title">How — 어떻게 해결하는가</div>
-            <p>TDA(위상적 데이터 분석)의 Persistent Homology를 사용한다. 이미지를 Grayscale로 변환한 뒤 픽셀 값을 Filtration 파라미터로 삼아 Simplicial Complex를 구성하고, 스케일이 변하면서 나타나고 사라지는 위상적 특징을 추적한다.</p>
-            <p>H₀는 연결 성분(밝기 덩어리), H₁은 루프(구멍), H₂는 공동(빈 공간)을 의미하며, 각 특징의 birth-death 쌍을 모은 것이 Persistence Diagram이다. 여기서 count, max/mean/std persistence, 구간별 Betti number 등 18차원 특징 벡터를 추출하고, 상품 간 L2 거리를 비교하여 동일 상품 여부를 판별한다.</p>
-            <p>학습이 필요 없고 GPU 없이 CPU만으로 계산 가능하므로 중소 창고에서도 스마트폰 하나로 도입할 수 있다.</p>
+            <div class="why-block-title">어떻게 비교하는가</div>
+            <p>PH 바코드에서 H₀/H₁의 개수, 최대·평균·표준편차 persistence, 구간별 Betti number 등 <strong>18개 수치</strong>를 뽑아 하나의 특징 벡터로 만든다. 두 상품의 특징 벡터 사이의 <strong>L2 거리</strong>(유클리드 거리)가 가까우면 같은 상품, 멀면 다른 상품으로 판별한다.</p>
+            <p>학습이 필요 없고 CPU만으로 계산 가능하므로, 스마트폰 하나면 현장에서 바로 쓸 수 있다.</p>
           </div>
 
           <div class="figure" style="margin-top:1.5rem;">
             <img src="research/pipeline_sample.png" alt="PH Pipeline: Original → Crop → Grayscale → Persistence Diagram → Barcode">
-            <div class="figure-caption">원본 촬영 → Grayscale → Persistence Diagram → PH 바코드 생성 예시</div>
+            <div class="figure-caption">실제 변환 과정 — 상품 촬영 → 흑백 변환 → Persistence Diagram(birth-death 좌표) → PH 바코드(막대 그래프)</div>
+          </div>
+
+          <div class="figure">
+            <img src="research/ph_chart.png" alt="Persistence Diagram & PH Barcode">
+            <div class="figure-caption">같은 상품에서 추출한 PH Diagram과 Barcode — H₀(파랑: 밝기 덩어리), H₁(주황: 구멍/루프) 분포</div>
           </div>
 
           <div class="tags">
