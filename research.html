@@ -714,83 +714,58 @@
             </div>
           </div>
 
-          <div class="arch-row">
-            <!-- As-Is -->
-            <div class="arch-diagram">
-              <div class="arch-label">As-Is (현재)</div>
-              <div class="arch-flow-v">
-                <div class="arch-node-v">
-                  <div class="arch-box-v">
-                    <img class="arch-icon" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/android/android-original.svg" alt="Android">
-                    Android
-                  </div>
-                  <div class="arch-box-sub">촬영 &amp; Multipart 업로드</div>
+          <div class="arch-diagram" style="max-width:420px;margin:2rem auto 0;">
+            <div class="arch-label">System Architecture</div>
+            <div class="arch-flow-v">
+              <!-- tda-android -->
+              <div class="arch-node-v" style="max-width:100%;">
+                <div class="arch-box-v">
+                  <img class="arch-icon" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/android/android-original.svg" alt="Android">
+                  tda-android
                 </div>
-                <div class="arch-arrow-v">↓ HTTPS</div>
-                <div class="arch-node-v">
-                  <div class="arch-server">
-                    <div class="arch-server-title">EC2 · kyuwan.kim</div>
-                    <div class="arch-server-item">
-                      <img class="arch-icon" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nginx/nginx-original.svg" alt="nginx">
-                      nginx (SSL + Proxy)
-                    </div>
-                    <div class="arch-server-item">
-                      <img class="arch-icon" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/spring/spring-original.svg" alt="Spring">
-                      Spring Boot + Javaplex
-                    </div>
-                    <div class="arch-server-item">
+                <div class="arch-box-sub">카메라 촬영 · Retrofit 2 · Nexus 6P (API 27)</div>
+              </div>
+              <div class="arch-arrow-v">↓ Multipart POST (HTTPS)</div>
+              <!-- EC2 Server -->
+              <div class="arch-node-v" style="max-width:100%;">
+                <div class="arch-server" style="max-width:100%;">
+                  <div class="arch-server-title">EC2 t3.medium · kyuwan.kim (3.35.21.82)</div>
+                  <div class="arch-server-item">
+                    <img class="arch-icon" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nginx/nginx-original.svg" alt="nginx">
+                    nginx — SSL 종단 + /api/* 리버스 프록시
+                  </div>
+                  <div class="arch-server-item">
+                    <img class="arch-icon" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/spring/spring-original.svg" alt="Spring">
+                    tda-api — Spring Boot 3.5 + Javaplex 4.3.4
+                  </div>
+                  <div class="arch-server-item" style="font-size:0.62rem;color:#5a7090;padding-left:2rem;">
+                    POST /api/tda/analyze · GET /api/tda/results · GET /health
+                  </div>
+                  <div style="display:flex;gap:0.35rem;">
+                    <div class="arch-server-item" style="flex:1;">
                       <img class="arch-icon" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg" alt="MySQL">
-                      MySQL (tda_db)
+                      MySQL 8.4
                     </div>
-                    <div class="arch-server-item">Local Storage</div>
+                    <div class="arch-server-item" style="flex:1;">
+                      Local Storage
+                    </div>
+                  </div>
+                  <div class="arch-server-item" style="font-size:0.62rem;color:#5a7090;">
+                    tda_analysis · tda_persistence_pair (H₀/H₁/H₂)
                   </div>
                 </div>
               </div>
-              <div class="arch-note">EC2 단일 구성 · Javaplex 동일 JVM 실행</div>
-            </div>
-
-            <!-- To-Be -->
-            <div class="arch-diagram">
-              <div class="arch-label">To-Be (확장)</div>
-              <div class="arch-flow-v">
-                <div class="arch-node-v">
-                  <div class="arch-box-v">
-                    <img class="arch-icon" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/android/android-original.svg" alt="Android">
-                    Android
-                  </div>
-                  <div class="arch-box-sub">촬영 &amp; 요청</div>
+              <div class="arch-arrow-v">↓ JSON Response</div>
+              <!-- Result -->
+              <div class="arch-node-v" style="max-width:100%;">
+                <div class="arch-box-v">
+                  <img class="arch-icon" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/android/android-original.svg" alt="Android">
+                  분석 결과 표시
                 </div>
-                <div class="arch-arrow-v">↓</div>
-                <div class="arch-node-v">
-                  <div class="arch-server">
-                    <div class="arch-server-title">EC2</div>
-                    <div class="arch-server-item">
-                      <img class="arch-icon" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nginx/nginx-original.svg" alt="nginx">
-                      nginx
-                    </div>
-                    <div class="arch-server-item">
-                      <img class="arch-icon" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/spring/spring-original.svg" alt="Spring">
-                      Spring Boot
-                    </div>
-                    <div class="arch-server-item">
-                      <img class="arch-icon" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" alt="Python">
-                      FastAPI TDA
-                    </div>
-                  </div>
-                </div>
-                <div class="arch-arrow-v">↓</div>
-                <div class="arch-node-v">
-                  <div class="arch-external">
-                    <div class="arch-external-item">
-                      <img class="arch-icon" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg" alt="RDS">
-                      RDS
-                    </div>
-                    <div class="arch-external-item">S3</div>
-                  </div>
-                </div>
+                <div class="arch-box-sub">Betti Numbers · Persistence Pairs · PH 바코드</div>
               </div>
-              <div class="arch-note">DB · 스토리지 분리</div>
             </div>
+            <div class="arch-note">단일 EC2 구성 · Javaplex를 Spring Boot 동일 JVM에서 실행 — 별도 프로세스 없음</div>
           </div>
 
           <div class="tags">
