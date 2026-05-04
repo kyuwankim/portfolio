@@ -732,99 +732,42 @@
           <div class="project-status"><span class="dot"></span> In Progress</div>
           <h2 class="project-title">TDA 기반 상품 식별</h2>
           <p class="project-subtitle">Persistent Homology를 활용한 PH 바코드 실험</p>
-          <div class="project-desc">
+
+          <div class="why-block" style="margin-top:1.25rem;">
+            <div class="why-block-title">What — 무엇을 하는가</div>
             <p>물류센터에서 바코드가 훼손되거나 누락된 경우,
               상품 포장 정면을 스마트폰으로 촬영하여
               Persistent Homology 기반의 PH 바코드를 생성하고,
               이를 통해 상품을 식별할 수 있는지 실험적으로 검증한다.</p>
-            <p>학습 데이터 불필요, GPU 없이 CPU만으로 계산 가능 —
-              중소 창고에서도 도입할 수 있는 경량 시스템이 목표.</p>
           </div>
 
           <div class="why-block">
-            <div class="why-block-title">Why — 현업 배경</div>
+            <div class="why-block-title">Why — 왜 필요한가</div>
             <p>물류센터에서 상품 구분은 거의 전적으로 바코드에 의존한다.
               바코드가 훼손되면 작업자가 육안으로 확인해야 하고,
               오분류와 속도 저하가 발생한다.
-              RFID는 태그 단가, 비전처리는 GPU 비용 문제로
-              중소 창고에서는 도입이 어렵다.
-              TDA는 학습 데이터 없이 사진 한 장에서 바로 특징을 추출할 수 있다.</p>
+              RFID는 태그 단가, 비전처리(CNN 등)는 GPU 비용과 학습 데이터 문제로
+              중소 창고에서는 도입이 어렵다.</p>
           </div>
 
-          <div class="pipeline">
-            <div class="pipeline-label">Pipeline</div>
-            <div class="pipeline-flow">
-              촬영 → Grayscale → Simplicial Complex → Filtration<br>
-              → Persistent Homology → PH 바코드 → 특징 벡터 → 유사도 비교 → 상품 식별
-            </div>
-          </div>
-
-          <div class="arch-diagram" style="margin:2rem auto 0;">
-            <div class="arch-label">System Architecture</div>
-            <div class="arch-flow-h">
-              <!-- tda-android -->
-              <div class="arch-node-h">
-                <div class="arch-box-v">
-                  <img class="arch-icon" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/android/android-original.svg" alt="Android">
-                  tda-android
-                </div>
-                <div class="arch-box-sub">카메라 촬영<br>Retrofit 2<br>Nexus 6P</div>
-              </div>
-              <!-- Arrow -->
-              <div class="arch-arrow-h">
-                <span class="arch-arrow-line"></span>
-                <span class="arch-arrow-text">HTTPS<br>Multipart</span>
-                <span class="arch-arrow-line"></span>
-              </div>
-              <!-- EC2 Server -->
-              <div class="arch-node-h" style="flex:2;">
-                <div class="arch-server" style="max-width:100%;">
-                  <div class="arch-server-title">EC2 t3.medium · kyuwan.kim</div>
-                  <div class="arch-server-item">
-                    <img class="arch-icon" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nginx/nginx-original.svg" alt="nginx">
-                    nginx (SSL + Proxy)
-                  </div>
-                  <div class="arch-server-item">
-                    <img class="arch-icon" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/spring/spring-original.svg" alt="Spring">
-                    Spring Boot 3.5 + Javaplex
-                  </div>
-                  <div style="display:flex;gap:0.35rem;">
-                    <div class="arch-server-item" style="flex:1;">
-                      <img class="arch-icon" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg" alt="MySQL">
-                      MySQL 8.4
-                    </div>
-                    <div class="arch-server-item" style="flex:1;">
-                      Storage
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <!-- Arrow -->
-              <div class="arch-arrow-h">
-                <span class="arch-arrow-line"></span>
-                <span class="arch-arrow-text">JSON</span>
-                <span class="arch-arrow-line"></span>
-              </div>
-              <!-- Result -->
-              <div class="arch-node-h">
-                <div class="arch-box-v">
-                  <img class="arch-icon" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/android/android-original.svg" alt="Android">
-                  결과 표시
-                </div>
-                <div class="arch-box-sub">Betti Numbers<br>Persistence Pairs<br>PH 바코드</div>
-              </div>
-            </div>
-            <div class="arch-note">단일 EC2 · Javaplex를 Spring Boot 동일 JVM에서 실행</div>
+          <div class="why-block">
+            <div class="why-block-title">How — 어떻게 해결하는가</div>
+            <p>TDA(위상적 데이터 분석)는 학습 데이터 없이 이미지 한 장에서
+              위상적 특징(연결 성분, 루프, 공동)을 추출한다.
+              GPU 없이 CPU만으로 계산 가능하며, 촬영 조건이 달라져도
+              동일 상품의 PH 바코드가 일정 범위 안에 분포하는 성질을 이용한다.</p>
+            <p style="margin-top:0.5rem;font-family:var(--mono);font-size:0.8rem;color:var(--text-light);">
+              촬영 → Grayscale → Simplicial Complex → Filtration
+              → Persistent Homology → PH 바코드 → 특징 벡터 → 유사도 비교</p>
           </div>
 
           <div class="tags">
-            <span class="tag">Python</span>
-            <span class="tag">GUDHI</span>
             <span class="tag">JavaPlex</span>
-            <span class="tag">OpenCV</span>
             <span class="tag">Spring Boot</span>
             <span class="tag">Android</span>
-            <span class="tag">AWS</span>
+            <span class="tag">MySQL</span>
+            <span class="tag">AWS EC2</span>
+            <span class="tag">nginx</span>
           </div>
         </div>
       </div>
@@ -874,6 +817,61 @@
               ▸ 환경 구축 상세
             </summary>
             <div style="padding-top:0.75rem;">
+
+              <!-- System Architecture (좌→우) -->
+              <div class="arch-diagram" style="margin:0 auto 1.25rem;">
+                <div class="arch-label">System Architecture</div>
+                <div class="arch-flow-h">
+                  <div class="arch-node-h">
+                    <div class="arch-box-v">
+                      <img class="arch-icon" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/android/android-original.svg" alt="Android">
+                      tda-android
+                    </div>
+                    <div class="arch-box-sub">카메라 촬영<br>Retrofit 2<br>Nexus 6P</div>
+                  </div>
+                  <div class="arch-arrow-h">
+                    <span class="arch-arrow-line"></span>
+                    <span class="arch-arrow-text">HTTPS<br>Multipart</span>
+                    <span class="arch-arrow-line"></span>
+                  </div>
+                  <div class="arch-node-h" style="flex:2;">
+                    <div class="arch-server" style="max-width:100%;">
+                      <div class="arch-server-title">EC2 t3.medium · kyuwan.kim</div>
+                      <div class="arch-server-item">
+                        <img class="arch-icon" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nginx/nginx-original.svg" alt="nginx">
+                        nginx (SSL + Proxy)
+                      </div>
+                      <div class="arch-server-item">
+                        <img class="arch-icon" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/spring/spring-original.svg" alt="Spring">
+                        Spring Boot 3.5 + Javaplex
+                      </div>
+                      <div style="display:flex;gap:0.35rem;">
+                        <div class="arch-server-item" style="flex:1;">
+                          <img class="arch-icon" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg" alt="MySQL">
+                          MySQL 8.4
+                        </div>
+                        <div class="arch-server-item" style="flex:1;">
+                          Storage
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="arch-arrow-h">
+                    <span class="arch-arrow-line"></span>
+                    <span class="arch-arrow-text">JSON</span>
+                    <span class="arch-arrow-line"></span>
+                  </div>
+                  <div class="arch-node-h">
+                    <div class="arch-box-v">
+                      <img class="arch-icon" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/android/android-original.svg" alt="Android">
+                      결과 표시
+                    </div>
+                    <div class="arch-box-sub">Betti Numbers<br>Persistence Pairs<br>PH 바코드</div>
+                  </div>
+                </div>
+                <div class="arch-note">단일 EC2 · Javaplex를 Spring Boot 동일 JVM에서 실행</div>
+              </div>
+
               <ul class="week-desc">
                 <li>AWS EC2(t3.medium, Seoul) 인스턴스 생성 — nginx, Java 17, MySQL 8.4, Python 3.14 설치</li>
                 <li>도메인(kyuwan.kim) 연결, Let's Encrypt SSL 인증서 발급, HTTPS 자동 갱신 설정</li>
@@ -920,7 +918,6 @@
                   <tr><td>tda-api</td><td>Spring Boot 3.5 · Java 17 · Javaplex</td><td>REST API + TDA 계산</td></tr>
                   <tr><td>tda-android</td><td>Java · Android SDK 34 · Retrofit 2</td><td>촬영 + 업로드 클라이언트</td></tr>
                   <tr><td>EC2</td><td>Ubuntu 26.04 · nginx · MySQL 8.4</td><td>서버 인프라</td></tr>
-                  <tr><td>portfolio</td><td>HTML/CSS/JS · nginx</td><td>프로젝트 문서 공개</td></tr>
                 </tbody>
               </table>
               </div>
