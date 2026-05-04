@@ -549,6 +549,39 @@
       line-height: 1.7;
     }
 
+    /* ── Horizontal Architecture ── */
+    .arch-flow-h {
+      display: flex;
+      align-items: center;
+      gap: 0;
+    }
+    .arch-node-h {
+      flex: 1;
+      text-align: center;
+    }
+    .arch-arrow-h {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.2rem;
+      padding: 0 0.5rem;
+      min-width: 60px;
+    }
+    .arch-arrow-line {
+      display: block;
+      width: 100%;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, #3a4a5e, transparent);
+    }
+    .arch-arrow-text {
+      font-family: var(--mono);
+      font-size: 0.58rem;
+      color: #5a7090;
+      white-space: nowrap;
+      line-height: 1.3;
+      text-align: center;
+    }
+
     /* ── Sub-details toggle ── */
     .week-content > details > summary {
       list-style: none;
@@ -607,6 +640,18 @@
       .data-table th, .data-table td { padding: 0.35rem 0.4rem; }
       .stat-row { grid-template-columns: repeat(2, 1fr); }
       .stat-value { font-size: 0.9rem; }
+      .arch-flow-h {
+        flex-direction: column;
+      }
+      .arch-arrow-h {
+        flex-direction: row;
+        padding: 0.4rem 0;
+        min-width: auto;
+      }
+      .arch-arrow-line {
+        width: 1px;
+        height: 20px;
+      }
       .arch-row { grid-template-columns: 1fr; }
       .arch-diagram { padding: 1.25rem; }
       .arch-server { max-width: 100%; }
@@ -714,32 +759,34 @@
             </div>
           </div>
 
-          <div class="arch-diagram" style="max-width:420px;margin:2rem auto 0;">
+          <div class="arch-diagram" style="margin:2rem auto 0;">
             <div class="arch-label">System Architecture</div>
-            <div class="arch-flow-v">
+            <div class="arch-flow-h">
               <!-- tda-android -->
-              <div class="arch-node-v" style="max-width:100%;">
+              <div class="arch-node-h">
                 <div class="arch-box-v">
                   <img class="arch-icon" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/android/android-original.svg" alt="Android">
                   tda-android
                 </div>
-                <div class="arch-box-sub">카메라 촬영 · Retrofit 2 · Nexus 6P (API 27)</div>
+                <div class="arch-box-sub">카메라 촬영<br>Retrofit 2<br>Nexus 6P</div>
               </div>
-              <div class="arch-arrow-v">↓ Multipart POST (HTTPS)</div>
+              <!-- Arrow -->
+              <div class="arch-arrow-h">
+                <span class="arch-arrow-line"></span>
+                <span class="arch-arrow-text">HTTPS<br>Multipart</span>
+                <span class="arch-arrow-line"></span>
+              </div>
               <!-- EC2 Server -->
-              <div class="arch-node-v" style="max-width:100%;">
+              <div class="arch-node-h" style="flex:2;">
                 <div class="arch-server" style="max-width:100%;">
-                  <div class="arch-server-title">EC2 t3.medium · kyuwan.kim (3.35.21.82)</div>
+                  <div class="arch-server-title">EC2 t3.medium · kyuwan.kim</div>
                   <div class="arch-server-item">
                     <img class="arch-icon" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nginx/nginx-original.svg" alt="nginx">
-                    nginx — SSL 종단 + /api/* 리버스 프록시
+                    nginx (SSL + Proxy)
                   </div>
                   <div class="arch-server-item">
                     <img class="arch-icon" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/spring/spring-original.svg" alt="Spring">
-                    tda-api — Spring Boot 3.5 + Javaplex 4.3.4
-                  </div>
-                  <div class="arch-server-item" style="font-size:0.62rem;color:#5a7090;padding-left:2rem;">
-                    POST /api/tda/analyze · GET /api/tda/results · GET /health
+                    Spring Boot 3.5 + Javaplex
                   </div>
                   <div style="display:flex;gap:0.35rem;">
                     <div class="arch-server-item" style="flex:1;">
@@ -747,25 +794,27 @@
                       MySQL 8.4
                     </div>
                     <div class="arch-server-item" style="flex:1;">
-                      Local Storage
+                      Storage
                     </div>
                   </div>
-                  <div class="arch-server-item" style="font-size:0.62rem;color:#5a7090;">
-                    tda_analysis · tda_persistence_pair (H₀/H₁/H₂)
-                  </div>
                 </div>
               </div>
-              <div class="arch-arrow-v">↓ JSON Response</div>
+              <!-- Arrow -->
+              <div class="arch-arrow-h">
+                <span class="arch-arrow-line"></span>
+                <span class="arch-arrow-text">JSON</span>
+                <span class="arch-arrow-line"></span>
+              </div>
               <!-- Result -->
-              <div class="arch-node-v" style="max-width:100%;">
+              <div class="arch-node-h">
                 <div class="arch-box-v">
                   <img class="arch-icon" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/android/android-original.svg" alt="Android">
-                  분석 결과 표시
+                  결과 표시
                 </div>
-                <div class="arch-box-sub">Betti Numbers · Persistence Pairs · PH 바코드</div>
+                <div class="arch-box-sub">Betti Numbers<br>Persistence Pairs<br>PH 바코드</div>
               </div>
             </div>
-            <div class="arch-note">단일 EC2 구성 · Javaplex를 Spring Boot 동일 JVM에서 실행 — 별도 프로세스 없음</div>
+            <div class="arch-note">단일 EC2 · Javaplex를 Spring Boot 동일 JVM에서 실행</div>
           </div>
 
           <div class="tags">
