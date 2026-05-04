@@ -735,30 +735,29 @@
 
           <div class="why-block" style="margin-top:1.25rem;">
             <div class="why-block-title">What — 무엇을 하는가</div>
-            <p>물류센터에서 바코드가 훼손되거나 누락된 경우,
-              상품 포장 정면을 스마트폰으로 촬영하여
-              Persistent Homology 기반의 PH 바코드를 생성하고,
-              이를 통해 상품을 식별할 수 있는지 실험적으로 검증한다.</p>
+            <p>물류센터에서 바코드가 훼손되거나 누락된 상품의 포장 정면을 스마트폰으로 촬영하고, Persistent Homology 기반의 PH 바코드를 생성하여 상품을 식별할 수 있는지 실험적으로 검증한다.</p>
+            <p>PH 바코드란 이미지에서 추출한 위상적 특징(연결 성분, 구멍, 공동)의 생성-소멸 구간을 막대 그래프로 표현한 것으로, 동일 상품이면 촬영 조건이 달라도 유사한 패턴을 보인다는 가설을 검증하는 것이 핵심이다.</p>
           </div>
 
           <div class="why-block">
             <div class="why-block-title">Why — 왜 필요한가</div>
-            <p>물류센터에서 상품 구분은 거의 전적으로 바코드에 의존한다.
-              바코드가 훼손되면 작업자가 육안으로 확인해야 하고,
-              오분류와 속도 저하가 발생한다.
-              RFID는 태그 단가, 비전처리(CNN 등)는 GPU 비용과 학습 데이터 문제로
-              중소 창고에서는 도입이 어렵다.</p>
+            <p>물류센터에서 상품 구분은 거의 전적으로 바코드에 의존한다. 바코드가 훼손되면 작업자가 육안으로 확인해야 하고, 이 과정에서 오분류와 속도 저하가 발생한다.</p>
+            <p>대안으로 RFID는 태그 단가 문제, CNN 기반 비전처리는 GPU 비용과 대량의 학습 데이터가 필요해 중소 물류창고에서 도입하기 어렵다. 학습 데이터 없이 사진 한 장에서 바로 특징을 뽑을 수 있는 경량 방법이 필요하다.</p>
           </div>
 
           <div class="why-block">
             <div class="why-block-title">How — 어떻게 해결하는가</div>
-            <p>TDA(위상적 데이터 분석)는 학습 데이터 없이 이미지 한 장에서
-              위상적 특징(연결 성분, 루프, 공동)을 추출한다.
-              GPU 없이 CPU만으로 계산 가능하며, 촬영 조건이 달라져도
-              동일 상품의 PH 바코드가 일정 범위 안에 분포하는 성질을 이용한다.</p>
-            <p style="margin-top:0.5rem;font-family:var(--mono);font-size:0.8rem;color:var(--text-light);">
-              촬영 → Grayscale → Simplicial Complex → Filtration
-              → Persistent Homology → PH 바코드 → 특징 벡터 → 유사도 비교</p>
+            <p>TDA(위상적 데이터 분석)의 Persistent Homology를 사용한다. 이미지를 Grayscale로 변환한 뒤 픽셀 값을 Filtration 파라미터로 삼아 Simplicial Complex를 구성하고, 스케일이 변하면서 나타나고 사라지는 위상적 특징을 추적한다.</p>
+            <p>H₀는 연결 성분(밝기 덩어리), H₁은 루프(구멍), H₂는 공동(빈 공간)을 의미하며, 각 특징의 birth-death 쌍을 모은 것이 Persistence Diagram이다. 여기서 count, max/mean/std persistence, 구간별 Betti number 등 18차원 특징 벡터를 추출하고, 상품 간 L2 거리를 비교하여 동일 상품 여부를 판별한다.</p>
+            <p>학습이 필요 없고 GPU 없이 CPU만으로 계산 가능하므로 중소 창고에서도 스마트폰 하나로 도입할 수 있다.</p>
+          </div>
+
+          <div class="pipeline">
+            <div class="pipeline-label">Pipeline</div>
+            <div class="pipeline-flow">
+              촬영 → Grayscale → Simplicial Complex → Filtration → Persistent Homology<br>
+              → Persistence Diagram → 특징 벡터(18차원) → L2 거리 비교 → 상품 식별
+            </div>
           </div>
 
           <div class="tags">
