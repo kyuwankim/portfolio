@@ -754,10 +754,7 @@
 
           <div class="pipeline">
             <div class="pipeline-label">Pipeline</div>
-            <div class="pipeline-flow">
-              촬영 → Grayscale → Simplicial Complex → Filtration → Persistent Homology<br>
-              → Persistence Diagram → 특징 벡터(18차원) → L2 거리 비교 → 상품 식별
-            </div>
+            <div class="pipeline-flow">촬영 → Grayscale → Simplicial Complex → Filtration → Persistent Homology → Persistence Diagram → 특징 벡터(18차원) → L2 거리 비교 → 상품 식별</div>
           </div>
 
           <div class="tags">
@@ -789,18 +786,11 @@
           </div>
         </summary>
         <div class="week-content">
-          <p class="week-desc" style="margin-bottom:1rem;">
-            1주차 파이프라인 검증을 바탕으로, Android 앱에서 촬영한 이미지를
-            서버로 전송하고 TDA 분석 결과를 저장·조회할 수 있는 End-to-End 시스템을 구축했다.
-          </p>
+          <p class="week-desc" style="margin-bottom:1rem;">1주차 파이프라인 검증을 바탕으로, Android 앱에서 촬영한 이미지를 서버로 전송하고 TDA 분석 결과를 저장·조회할 수 있는 End-to-End 시스템을 구축했다.</p>
 
           <div class="pipeline">
             <div class="pipeline-label">End-to-End Pipeline</div>
-            <div class="pipeline-flow">
-              Android 사진 촬영 → Multipart POST → nginx (SSL 종단)<br>
-              → Spring Boot API → 이미지 저장 → Javaplex TDA 분석<br>
-              → tda_persistence_pair 저장 → JSON 응답 → 앱 결과 표시
-            </div>
+            <div class="pipeline-flow">Android 사진 촬영 → Multipart POST → nginx (SSL 종단) → Spring Boot API → 이미지 저장 → Javaplex TDA 분석 → tda_persistence_pair 저장 → JSON 응답 → 앱 결과 표시</div>
           </div>
 
           <!-- TDA 분석 결과 — 앱 데이터 수집 후 채워질 영역 -->
@@ -872,17 +862,13 @@
               </div>
 
               <ul class="week-desc">
-                <li>AWS EC2(t3.medium, Seoul) 인스턴스 생성 — nginx, Java 17, MySQL 8.4, Python 3.14 설치</li>
-                <li>도메인(kyuwan.kim) 연결, Let's Encrypt SSL 인증서 발급, HTTPS 자동 갱신 설정</li>
-                <li>Spring Boot 3.5.0 API 서버 구현 — Javaplex 4.3.4를 같은 JVM에서 실행하는 구조 채택.
-                  별도 Python 서비스(FastAPI) 없이 단일 프로세스로 TDA 계산 처리</li>
-                <li>REST API 설계 및 구현: 이미지 업로드(POST /api/tda/analyze),
-                  분석 결과 조회(GET /api/tda/results), 서버 상태 확인(GET /health)</li>
-                <li>MySQL 데이터베이스 설계 — tda_analysis(분석 레코드, TDA 파라미터),
-                  tda_persistence_pair(H₀/H₁/H₂ birth-death 쌍) 2개 테이블</li>
-                <li>systemd 서비스 등록(tda-api.service), nginx 리버스 프록시(kyuwan.kim/api/* → :8080) 구성</li>
-                <li>Android 클라이언트 앱 개발 — 카메라 촬영 → Multipart 업로드 → 결과 목록 조회.
-                  Retrofit 2 + OkHttp로 API 통신, Nexus 6P(API 27) 타겟</li>
+                <li>AWS EC2(t3.medium, Seoul) 인스턴스에 nginx, Java 17, MySQL 8.4, Python 3.14 설치</li>
+                <li>도메인(kyuwan.kim) 연결, Let's Encrypt SSL 인증서 발급 및 자동 갱신 설정</li>
+                <li>Spring Boot 3.5.0 API 서버 구현 — Javaplex 4.3.4를 같은 JVM에서 실행하여 별도 프로세스 없이 TDA 계산 처리</li>
+                <li>REST API 3종 구현: POST /api/tda/analyze, GET /api/tda/results, GET /health</li>
+                <li>MySQL DB 설계 — tda_analysis + tda_persistence_pair(H₀/H₁/H₂ birth-death 쌍) 2개 테이블</li>
+                <li>systemd 서비스 등록, nginx 리버스 프록시(kyuwan.kim/api/* → :8080) 구성</li>
+                <li>Android 앱 개발 — 카메라 촬영, Multipart 업로드, 결과 목록 조회 (Retrofit 2 + OkHttp, Nexus 6P 타겟)</li>
               </ul>
 
               <div class="stat-row">
@@ -935,14 +921,9 @@
         <div class="week-content">
           <ul class="week-desc">
             <li>Python + JavaPlex 기반 PH 바코드 파이프라인 구현</li>
-            <li>같은 상품 10장 촬영 —
-              조건(각도, 거리, 조명)별 PH 바코드 일관성 검증</li>
-            <li>Canny 엣지 자동 크롭 실패(5/10) →
-              고정 크롭 1816×2420으로 해결.
-              향후 Android 앱 프레임 오버레이로 대체 예정</li>
-            <li>18차원 특징 벡터 설계 — H₀/H₁ 각각의 count,
-              total/max/mean/std persistence,
-              4개 구간별 Betti number</li>
+            <li>같은 상품 10장 촬영 — 조건(각도, 거리, 조명)별 PH 바코드 일관성 검증</li>
+            <li>Canny 엣지 자동 크롭 실패(5/10) → 고정 크롭 1816×2420으로 해결</li>
+            <li>18차원 특징 벡터 설계 — H₀/H₁ count, total/max/mean/std persistence, 구간별 Betti number</li>
           </ul>
 
           <!-- Fig 1: Pipeline -->
