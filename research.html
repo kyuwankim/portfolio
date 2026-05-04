@@ -713,33 +713,29 @@
                     <img class="arch-icon" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/android/android-original.svg" alt="Android">
                     Android
                   </div>
-                  <div class="arch-box-sub">촬영 &amp; 요청</div>
+                  <div class="arch-box-sub">촬영 &amp; Multipart 업로드</div>
                 </div>
-                <div class="arch-arrow-v">↓</div>
+                <div class="arch-arrow-v">↓ HTTPS</div>
                 <div class="arch-node-v">
                   <div class="arch-server">
                     <div class="arch-server-title">EC2 · kyuwan.kim</div>
                     <div class="arch-server-item">
                       <img class="arch-icon" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nginx/nginx-original.svg" alt="nginx">
-                      nginx
+                      nginx (SSL + Proxy)
                     </div>
                     <div class="arch-server-item">
                       <img class="arch-icon" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/spring/spring-original.svg" alt="Spring">
-                      Spring Boot
-                    </div>
-                    <div class="arch-server-item">
-                      <img class="arch-icon" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" alt="Python">
-                      FastAPI TDA
+                      Spring Boot + Javaplex
                     </div>
                     <div class="arch-server-item">
                       <img class="arch-icon" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg" alt="MySQL">
-                      MySQL
+                      MySQL (tda_db)
                     </div>
                     <div class="arch-server-item">Local Storage</div>
                   </div>
                 </div>
               </div>
-              <div class="arch-note">EC2 단일 구성</div>
+              <div class="arch-note">EC2 단일 구성 · Javaplex 동일 JVM 실행</div>
             </div>
 
             <!-- To-Be -->
@@ -809,9 +805,87 @@
 
       <details class="week-item reveal" open>
         <summary class="week-toggle">
-          <span>1주차 — 환경 구축 및 파이프라인 검증</span>
+          <span>2주차 — 서버 인프라 구축 및 앱 개발</span>
           <div class="week-toggle-right">
             <span class="week-badge">Latest</span>
+            <span class="week-arrow">▼</span>
+          </div>
+        </summary>
+        <div class="week-content">
+          <ul class="week-desc">
+            <li>1주차 Python 파이프라인 검증 결과를 바탕으로, 실�� 서비스 가능한 ��스템 구축에 착수</li>
+            <li>AWS EC2(t3.medium, Seoul) 인스턴스 생성 — nginx, Java 17, MySQL 8.4, Python 3.14 설치</li>
+            <li>도메인(kyuwan.kim) 연결, Let's Encrypt SSL 인증서 발급, HTTPS 자동 갱신 설정</li>
+            <li>Spring Boot 3.5.0 API 서버 구현 — Javaplex 4.3.4를 같은 JVM에서 실행하는 구조 채택.
+              별도 Python 서비스(FastAPI) 없이 단일 프로세스로 TDA 계산 처리</li>
+            <li>REST API 설계 �� 구현: 이미지 업로드(POST /api/tda/analyze),
+              분석 결과 조회(GET /api/tda/results), 서버 상태 확인(GET /health)</li>
+            <li>MySQL 데이터베이스 설계 — tda_analysis(분석 레코드, TDA 파라미터),
+              tda_persistence_pair(H₀/H₁/H₂ birth-death 쌍) 2개 테이블</li>
+            <li>systemd 서비스 등록(tda-api.service), nginx 리버스 프록시(kyuwan.kim/api/* → :8080) 구성</li>
+            <li>Android 클라이언트 앱 개발 — 카메라 촬영 → Multipart 업로드 → 결과 목록 조회.
+              Retrofit 2 + OkHttp로 API 통신, Nexus 6P(API 27) 타겟</li>
+          </ul>
+
+          <div class="pipeline">
+            <div class="pipeline-label">End-to-End Pipeline (구현 완료)</div>
+            <div class="pipeline-flow">
+              Android 사진 촬영 → Multipart POST → nginx (SSL 종단)<br>
+              → Spring Boot API → 이미지 저장 → Javaplex TDA 분석<br>
+              → tda_persistence_pair 저장 → JSON 응답 → 앱 결과 표시
+            </div>
+          </div>
+
+          <div class="stat-row">
+            <div class="stat-card">
+              <div class="stat-value">3</div>
+              <div class="stat-label">GitHub 레포지토리</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-value">4</div>
+              <div class="stat-label">REST API 엔드포인트</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-value">2</div>
+              <div class="stat-label">DB 테이블</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-value">HTTPS</div>
+              <div class="stat-label">보안 통신</div>
+            </div>
+          </div>
+
+          <div class="data-table-wrap">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Component</th>
+                <th>Stack</th>
+                <th>Role</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>tda-api</td><td>Spring Boot 3.5 · Java 17 · Javaplex</td><td>REST API + TDA 계산</td></tr>
+              <tr><td>tda-android</td><td>Java · Android SDK 34 · Retrofit 2</td><td>촬영 + 업로드 클라이언트</td></tr>
+              <tr><td>EC2</td><td>Ubuntu 26.04 · nginx · MySQL 8.4</td><td>서버 인프라</td></tr>
+              <tr><td>portfolio</td><td>HTML/CSS/JS · nginx</td><td>프로젝트 문서 공개</td></tr>
+            </tbody>
+          </table>
+          </div>
+
+          <div class="week-result">
+            FastAPI 별도 프로세스 대신 Javaplex를 Spring Boot 동일 JVM에서 실행 — ���로세스 간 통신 오버헤드 제거, 메모리 절약<br>
+            Android → HTTPS → Spring Boot → MySQL 전 구간 연결 완료<br>
+            https://kyuwan.kim/health → {"status":"UP"} 확인<br>
+            → 3주차��터 실제 Javaplex 분석 로직 연동 및 다중 상품 비교 실험 예정
+          </div>
+        </div>
+      </details>
+
+      <details class="week-item reveal">
+        <summary class="week-toggle">
+          <span>1주차 — 환경 구축 및 파이프라인 검증</span>
+          <div class="week-toggle-right">
             <span class="week-arrow">▼</span>
           </div>
         </summary>
