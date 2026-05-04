@@ -94,6 +94,15 @@
     }
     .nav-links a:hover { color: var(--accent); }
     .nav-links a:hover::after { transform: scaleX(1); }
+    .nav-highlight {
+      background: linear-gradient(135deg, rgba(56,189,248,0.1), rgba(129,140,248,0.1));
+      border: 1px solid rgba(56,189,248,0.2);
+      border-radius: 14px;
+      padding: 0.25rem 0.7rem !important;
+      color: var(--accent) !important;
+    }
+    .nav-highlight::after { display: none !important; }
+    .nav-highlight:hover { background: linear-gradient(135deg, rgba(56,189,248,0.18), rgba(129,140,248,0.18)); }
     .nav-toggle {
       display: none;
       background: none; border: none; cursor: pointer;
@@ -781,7 +790,7 @@
       </button>
       <ul class="nav-links">
         <li><a href="#experience">Experience</a></li>
-        <li><a href="research.html">Research</a></li>
+        <li><a href="research.html" class="nav-highlight">Research</a></li>
         <li><a href="#stack">Stack</a></li>
         <li><a href="#education">Education</a></li>
         <li><a href="#contact">Contact</a></li>
