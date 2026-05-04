@@ -600,6 +600,120 @@
       color: #2a3545;
     }
 
+    /* ── Pipeline Steps ── */
+    .pipeline-steps {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      margin: 1.5rem 0;
+      padding: 1rem 1.25rem;
+      background: rgba(56,189,248,0.03);
+      border: 1px solid var(--accent-border);
+      border-radius: 6px;
+      overflow-x: auto;
+    }
+    .pipeline-step {
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      color: var(--text-light);
+      white-space: nowrap;
+      padding: 0.4rem 0.75rem;
+      background: var(--bg-card);
+      border: 1px solid var(--border-light);
+      border-radius: 4px;
+    }
+    .pipeline-step-arrow {
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      color: var(--accent);
+      padding: 0 0.5rem;
+      opacity: 0.5;
+    }
+
+    /* ── Homology Cards ── */
+    .homology-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.75rem;
+      margin: 0.75rem 0;
+    }
+    .homology-card {
+      padding: 0.85rem 1rem;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      border-top: 2px solid var(--accent);
+    }
+    .homology-card.h1 {
+      border-top-color: #a78bfa;
+    }
+    .homology-card-title {
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--text-white);
+      margin-bottom: 0.35rem;
+    }
+    .homology-card-desc {
+      font-size: 0.78rem;
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    /* ── Advantage Pills ── */
+    .advantage-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 0.75rem;
+    }
+    .advantage-pill {
+      font-family: var(--mono);
+      font-size: 0.68rem;
+      color: #34d399;
+      padding: 0.3rem 0.75rem;
+      background: rgba(52, 211, 153, 0.08);
+      border: 1px solid rgba(52, 211, 153, 0.2);
+      border-radius: 12px;
+    }
+
+    /* ── Research Progress ── */
+    .research-progress {
+      display: flex;
+      gap: 0;
+      margin-top: 1rem;
+      border-radius: 6px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+    }
+    .progress-step {
+      flex: 1;
+      padding: 0.6rem 0.5rem;
+      background: var(--bg-card);
+      border-right: 1px solid var(--border);
+      font-size: 0.7rem;
+      color: var(--text);
+      text-align: center;
+      font-family: var(--mono);
+    }
+    .progress-step:last-child { border-right: none; }
+    .progress-step.done {
+      background: rgba(56,189,248,0.08);
+      color: var(--accent);
+    }
+    .progress-step.current {
+      background: rgba(52,211,153,0.08);
+      color: #34d399;
+    }
+    .progress-step-label {
+      display: block;
+      font-size: 0.58rem;
+      color: #5a7090;
+      margin-top: 0.15rem;
+    }
+    .progress-step.done .progress-step-label { color: var(--accent); opacity: 0.7; }
+    .progress-step.current .progress-step-label { color: #34d399; opacity: 0.7; }
+
     /* ── Reveal ── */
     .reveal {
       opacity: 0; transform: translateY(16px);
@@ -664,6 +778,13 @@
       .why-block p { font-size: 0.82rem; }
       .project-desc { font-size: 0.85rem; }
       .project-subtitle { font-size: 0.78rem; }
+      .homology-grid { grid-template-columns: 1fr; }
+      .pipeline-steps { padding: 0.75rem 1rem; }
+      .pipeline-step { font-size: 0.65rem; padding: 0.3rem 0.6rem; }
+      .pipeline-step-arrow { padding: 0 0.3rem; font-size: 0.65rem; }
+      .research-progress { flex-direction: column; }
+      .progress-step { border-right: none; border-bottom: 1px solid var(--border); padding: 0.5rem; }
+      .progress-step:last-child { border-bottom: none; }
     }
     @media (max-width: 400px) {
       .container { padding: 0 1rem; }
@@ -743,9 +864,33 @@
             <p>이 연구는 <strong>TDA(위상 데이터 분석)</strong>를 활용해<br>상품 포장 이미지에서 고유한 수학적 패턴을 추출한다.</p>
             <p>TDA는 데이터의 형태(topology)를 다양한 스케일에서 분석하는 수학적 프레임워크다.<br>노이즈에 강하고, 회전·스케일 변화에 안정적이다.</p>
             <p>구체적으로 <strong>Persistent Homology</strong>를 사용한다.<br>이미지를 grayscale로 변환한 뒤 밝기 threshold를 0→255로 올리면서<br>위상적 구조의 변화를 추적한다.</p>
-            <p><strong>H₀ (연결 성분)</strong><br>밝은 영역이 나타나고(birth) 합쳐지는(death) 과정.<br>포장의 전체적인 밝기 분포를 반영한다.</p>
-            <p><strong>H₁ (루프)</strong><br>글자·로고·패턴 안의 닫힌 고리가 생성되고 소멸하는 과정.<br>디자인의 구조적 특징을 포착한다.</p>
+
+            <div class="homology-grid">
+              <div class="homology-card">
+                <div class="homology-card-title">H₀ — 연결 성분</div>
+                <div class="homology-card-desc">밝은 영역이 나타나고(birth)<br>합쳐지는(death) 과정.<br>포장의 전체 밝기 분포를 반영.</div>
+              </div>
+              <div class="homology-card h1">
+                <div class="homology-card-title">H₁ — 루프</div>
+                <div class="homology-card-desc">글자·로고·패턴의 닫힌 고리가<br>생성되고 소멸하는 과정.<br>디자인의 구조적 특징을 포착.</div>
+              </div>
+            </div>
+
             <p>각 구조의 (birth, death) 쌍을 모으면 <strong>Persistence Diagram</strong>이 만들어진다.<br>이것이 해당 상품의 위상적 지문이다.<br>오래 살아남는(high persistence) 구조일수록 실제 특징일 가능성이 높다.</p>
+          </div>
+
+          <div class="pipeline-steps">
+            <span class="pipeline-step">촬영</span>
+            <span class="pipeline-step-arrow">→</span>
+            <span class="pipeline-step">Grayscale</span>
+            <span class="pipeline-step-arrow">→</span>
+            <span class="pipeline-step">Filtration</span>
+            <span class="pipeline-step-arrow">→</span>
+            <span class="pipeline-step">PH Diagram</span>
+            <span class="pipeline-step-arrow">→</span>
+            <span class="pipeline-step">특징 벡터</span>
+            <span class="pipeline-step-arrow">→</span>
+            <span class="pipeline-step">거리 비교</span>
           </div>
 
           <div class="why-block">
@@ -753,14 +898,23 @@
             <p>Persistence Diagram에서 <strong>18차원 특징 벡터</strong>를 추출한다.</p>
             <p>H₀/H₁ 각각의 count, total/max/mean/std persistence,<br>4개 구간의 Betti number curve 값으로 구성된다.</p>
             <p>두 상품의 벡터 사이 <strong>L2 거리</strong>를 계산하여<br>임계값 이하이면 같은 상품으로 판별한다.</p>
-            <p>학습 과정이 없으므로 신규 상품 등록 즉시 비교 가능하며,<br>CPU만으로 실시간 계산된다.</p>
+            <div class="advantage-row">
+              <span class="advantage-pill">학습 데이터 불필요</span>
+              <span class="advantage-pill">CPU 실시간 계산</span>
+              <span class="advantage-pill">신규 상품 즉시 비교</span>
+            </div>
           </div>
 
           <div class="why-block">
             <div class="why-block-title">가설 & 검증</div>
             <p>같은 상품의 포장은 촬영 각도·거리·조명이 달라지더라도<br>유사한 위상적 특징 벡터를 생성할 것이며,<br>서로 다른 상품과는 유의미한 L2 거리 차이를 보일 것이다.</p>
-            <p>검증: 동일 상품을 다양한 조건에서 N장 촬영하여<br>intra-class(같은 상품 간) 거리와 inter-class(다른 상품 간) 거리를 비교한다.<br>두 분포가 통계적으로 분리되면 가설을 지지하는 것으로 판단한다.</p>
-            <p>현재 단일 상품 10장에 대해 파이프라인 검증을 완료했으며,<br>다수 상품 데이터를 수집하여 상품 간 비교 실험을 진행할 단계에 있다.</p>
+            <p>검증: 동일 상품을 다양한 조건에서 N장 촬영하여<br>intra-class(같은 상품 간) / inter-class(다른 상품 간) 거리를 비교한다.<br>두 분포가 통계적으로 분리되면 가설을 지지하는 것으로 판단한다.</p>
+            <div class="research-progress">
+              <div class="progress-step done">파이프라인 구현<span class="progress-step-label">완료</span></div>
+              <div class="progress-step done">단일 상품 검증<span class="progress-step-label">10장</span></div>
+              <div class="progress-step current">다수 상품 수집<span class="progress-step-label">진행 중</span></div>
+              <div class="progress-step">상품 간 비교<span class="progress-step-label">예정</span></div>
+            </div>
           </div>
 
           <div class="tags">
