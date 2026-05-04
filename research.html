@@ -734,29 +734,30 @@
           <p class="project-subtitle">사진 한 장으로 상품의 "지문"을 만들 수 있을까?</p>
 
           <div class="project-desc">
-            <p>물류센터에서 바코드가 손상되거나 떨어져 나가면, 작업자는 포장 외관을 보고 직접 상품을 판단해야 한다. 이 과정에서 오분류가 발생하고 작업 속도가 떨어진다.</p>
-            <p>기존 대안에는 한계가 있다. <strong>RFID</strong>는 태그 단가 때문에 중소 창고에 도입이 어렵고, <strong>딥러닝(CNN) 기반 이미지 인식</strong>은 상품별 수백~수천 장의 학습 데이터와 GPU 인프라가 필요하다. 신규 상품이 입고될 때마다 모델을 재학습해야 하는 운영 부담도 크다.</p>
+            <p>물류센터에서 바코드가 손상되거나 떨어져 나가면, 작업자는 포장 외관을 보고 직접 상품을 판단해야 한다.</p>
+            <p>기존 대안에는 한계가 있다. <strong>RFID</strong>는 태그 단가 문제로 중소 창고에 도입이 어렵다. <strong>딥러닝(CNN)</strong>은 상품별 수백 장의 학습 데이터와 GPU가 필요하고, 신규 상품마다 재학습해야 한다.</p>
           </div>
 
           <div class="why-block" style="margin-top:1.5rem;">
             <div class="why-block-title">접근 — Topological Data Analysis</div>
-            <p>이 연구는 <strong>TDA(위상 데이터 분석)</strong>를 활용해 상품 포장 이미지에서 고유한 수학적 패턴을 추출한다. TDA는 데이터의 "형태(topology)"를 다양한 스케일에서 분석하는 수학적 프레임워크로, 노이즈에 강하고 회전·스케일 변화에 안정적인 특성을 가진다.</p>
-            <p>구체적으로 <strong>Persistent Homology</strong>를 사용한다. 이미지를 grayscale로 변환한 뒤, 밝기 threshold를 0에서 255까지 점진적으로 올리면서 나타나는 위상적 구조의 변화를 추적한다:</p>
-            <p><strong>H₀ (연결 성분)</strong> — 밝은 영역이 나타나고(birth) 다른 영역과 합쳐지는(death) 과정. 포장의 전체적인 밝기 분포를 반영한다.<br>
-            <strong>H₁ (루프)</strong> — 글자, 로고, 패턴 안의 닫힌 고리가 생성되고 소멸하는 과정. 디자인의 구조적 특징을 포착한다.</p>
-            <p>각 구조의 (birth, death) 쌍을 모으면 <strong>Persistence Diagram</strong>이 만들어지고, 이것이 해당 상품의 위상적 지문이 된다. 오래 살아남는(high persistence) 구조일수록 노이즈가 아닌 실제 특징일 가능성이 높다.</p>
+            <p>이 연구는 <strong>TDA(위상 데이터 분석)</strong>를 활용해 상품 포장 이미지에서 고유한 수학적 패턴을 추출한다.</p>
+            <p>TDA는 데이터의 형태(topology)를 다양한 스케일에서 분석하는 수학적 프레임워크다. 노이즈에 강하고, 회전·스케일 변화에 안정적이다.</p>
+            <p>구체적으로 <strong>Persistent Homology</strong>를 사용한다. 이미지를 grayscale로 변환한 뒤 밝기 threshold를 0→255로 올리면서 위상적 구조의 변화를 추적한다.</p>
+            <p><strong>H₀ (연결 성분)</strong> — 밝은 영역이 나타나고(birth) 합쳐지는(death) 과정.<br>포장의 전체적인 밝기 분포를 반영한다.</p>
+            <p><strong>H₁ (루프)</strong> — 글자·로고·패턴 안의 닫힌 고리가 생성되고 소멸하는 과정.<br>디자인의 구조적 특징을 포착한다.</p>
+            <p>각 구조의 (birth, death) 쌍을 모으면 <strong>Persistence Diagram</strong>이 만들어진다. 이것이 해당 상품의 위상적 지문이다. 오래 살아남는(high persistence) 구조일수록 실제 특징일 가능성이 높다.</p>
           </div>
 
           <div class="why-block">
             <div class="why-block-title">비교 — 특징 벡터 & 거리 측정</div>
-            <p>Persistence Diagram에서 다음 <strong>18차원 특징 벡터</strong>를 추출한다:</p>
-            <p>H₀/H₁ 각각의 개수, total persistence, max persistence, mean persistence, std persistence, 그리고 4개 구간의 Betti number curve 값.</p>
-            <p>두 상품의 특징 벡터 사이 <strong>L2 거리(유클리드 거리)</strong>를 계산하여, 임계값 이하이면 같은 상품으로 판별한다. 별도의 학습 과정이 없으므로 신규 상품을 등록하는 즉시 비교가 가능하고, GPU 없이 CPU만으로 실시간 계산된다.</p>
+            <p>Persistence Diagram에서 <strong>18차원 특징 벡터</strong>를 추출한다.</p>
+            <p>H₀/H₁ 각각의 count, total/max/mean/std persistence, 4개 구간의 Betti number curve 값으로 구성된다.</p>
+            <p>두 상품의 벡터 사이 <strong>L2 거리</strong>를 계산하여 임계값 이하이면 같은 상품으로 판별한다. 학습 과정이 없으므로 신규 상품 등록 즉시 비교 가능하며, CPU만으로 실시간 계산된다.</p>
           </div>
 
           <div class="why-block">
             <div class="why-block-title">가설</div>
-            <p>같은 상품의 포장은 촬영 각도, 거리, 조명 조건이 달라지더라도 유사한 위상적 특징 벡터를 생성할 것이며, 서로 다른 상품과는 통계적으로 유의미한 거리 차이를 보일 것이다.</p>
+            <p>같은 상품의 포장은 촬영 각도·거리·조명이 달라지더라도 유사한 위상적 특징 벡터를 생성할 것이며, 서로 다른 상품과는 유의미한 거리 차이를 보일 것이다.</p>
           </div>
 
           <div class="tags">
