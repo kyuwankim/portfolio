@@ -937,22 +937,64 @@
     <div class="container">
       <div class="section-label reveal">Weekly Log</div>
 
-      <details class="week-item reveal">
+      <details class="week-item reveal" open>
         <summary class="week-toggle">
-          <span>2주차 — 서버 인프라 구축 및 앱 개발</span>
+          <span>2주차 — 서버 인프라 구축 및 다중 상품 식별 검증</span>
           <div class="week-toggle-right">
             <span class="week-badge">Latest</span>
             <span class="week-arrow">▼</span>
           </div>
         </summary>
         <div class="week-content">
-          <p class="week-desc" style="margin-bottom:1rem;">1주차 파이프라인 검증을 바탕으로, Android 앱에서 촬영한 이미지를 서버로 전송하고 TDA 분석 결과를 저장·조회할 수 있는 End-to-End 시스템을 구축했다.</p>
+          <p class="week-desc" style="margin-bottom:1rem;">End-to-End 시스템(Android → EC2 → GUDHI → MySQL)을 구축하고, 3종 상품 30장으로 PH 바코드 기반 상품 식별을 정량 검증하였다. Sublevel Set Filtration(Proposal 방법론)으로 Top-1 정확도 93.3% 달성.</p>
 
-          <!-- TDA 분석 결과 — 앱 데이터 수집 후 채워질 영역 -->
+          <!-- 핵심 결과 -->
+          <div class="stat-row">
+            <div class="stat-card">
+              <div class="stat-value">93.3%</div>
+              <div class="stat-label">Top-1 Accuracy</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-value">96.7%</div>
+              <div class="stat-label">Top-3 Accuracy</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-value">750ms</div>
+              <div class="stat-label">Avg Compute Time</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-value">3 / 30</div>
+              <div class="stat-label">Products / Images</div>
+            </div>
+          </div>
+
+          <!-- 상품별 PH 통계 테이블 -->
+          <div class="data-table-wrap">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Product</th>
+                <th class="num">H&#8320; count</th>
+                <th class="num">H&#8321; count</th>
+                <th class="num">H&#8320; max pers.</th>
+                <th class="num">H&#8321; max pers.</th>
+                <th class="num">Time</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>Airpods Pro</td><td class="num">1,872</td><td class="num">2,307</td><td class="num">134~166</td><td class="num highlight">172~211</td><td class="num">678ms</td></tr>
+              <tr><td>pokemon go ++</td><td class="num">1,888</td><td class="num">2,336</td><td class="num">159~177</td><td class="num highlight">179~223</td><td class="num">691ms</td></tr>
+              <tr><td>Philips JC302</td><td class="num">1,735</td><td class="num">2,524</td><td class="num">106~206</td><td class="num highlight">91~156</td><td class="num">767ms</td></tr>
+            </tbody>
+          </table>
+          </div>
+
+          <!-- L2 거리 분석 결과 -->
           <div class="week-result">
-            Android → HTTPS → Spring Boot → MySQL 전 구간 연결 완료<br>
-            https://kyuwan.kim/health → {"status":"UP"} 확인<br>
-            → 앱으로 실제 촬영 데이터 수집 및 Javaplex 분석 결과 추가 예정
+            Philips JC302의 H&#8321; Max Persistence(91~156)가 다른 상품(172~223)과 확연히 분리됨<br>
+            정규화 L2 + 최근접 이웃: Top-1 28/30(93.3%), Top-3 29/30(96.7%)<br>
+            오분류 2건: 원형 구조 유사성(Airpods&#8596;pokemon) — 텍스트 중심 Philips는 100% 분리<br>
+            GUDHI Sublevel Set Filtration = Proposal 방법론과 완전 일치, 처리 속도 32배 향상
           </div>
 
           <!-- 환경 구축 상세 (접기) -->
@@ -987,7 +1029,7 @@
                       </div>
                       <div class="arch-server-item">
                         <img class="arch-icon" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/spring/spring-original.svg" alt="Spring">
-                        Spring Boot 3.5 + Javaplex
+                        Spring Boot 3.5 + GUDHI
                       </div>
                       <div style="display:flex;gap:0.35rem;">
                         <div class="arch-server-item" style="flex:1;">
@@ -1013,13 +1055,13 @@
                     <div class="arch-box-sub">Betti Numbers<br>Persistence Pairs<br>PH 바코드</div>
                   </div>
                 </div>
-                <div class="arch-note">단일 EC2 · Javaplex를 Spring Boot 동일 JVM에서 실행</div>
+                <div class="arch-note">단일 EC2 · GUDHI(Python)를 Spring Boot에서 subprocess로 호출</div>
               </div>
 
               <ul class="week-desc">
                 <li>AWS EC2(t3.medium, Seoul) 인스턴스에 nginx, Java 17, MySQL 8.4, Python 3.14 설치</li>
                 <li>도메인(kyuwan.kim) 연결, Let's Encrypt SSL 인증서 발급 및 자동 갱신 설정</li>
-                <li>Spring Boot 3.5.0 API 서버 구현 — Javaplex 4.3.4를 같은 JVM에서 실행하여 별도 프로세스 없이 TDA 계산 처리</li>
+                <li>Spring Boot 3.5.0 API 서버 구현 — GUDHI(Python subprocess)로 Sublevel Set Filtration PH 계산</li>
                 <li>REST API 3종 구현: POST /api/tda/analyze, GET /api/tda/results, GET /health</li>
                 <li>MySQL DB 설계 — tda_analysis + tda_persistence_pair(H₀/H₁/H₂ birth-death 쌍) 2개 테이블</li>
                 <li>systemd 서비스 등록, nginx 리버스 프록시(kyuwan.kim/api/* → :8080) 구성</li>
@@ -1055,7 +1097,7 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr><td>tda-api</td><td>Spring Boot 3.5 · Java 17 · Javaplex</td><td>REST API + TDA 계산</td></tr>
+                  <tr><td>tda-api</td><td>Spring Boot 3.5 · Java 17 · GUDHI</td><td>REST API + TDA 계산</td></tr>
                   <tr><td>tda-android</td><td>Java · Android SDK 34 · Retrofit 2</td><td>촬영 + 업로드 클라이언트</td></tr>
                   <tr><td>EC2</td><td>Ubuntu 26.04 · nginx · MySQL 8.4</td><td>서버 인프라</td></tr>
                 </tbody>
