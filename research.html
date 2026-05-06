@@ -563,6 +563,57 @@
       line-height: 1.7;
     }
 
+    /* ── Inner Collapsible ── */
+    .inner-collapse {
+      margin-top: 1.25rem;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: var(--bg-card);
+      overflow: hidden;
+    }
+    .inner-collapse > summary {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      padding: 0.85rem 1.25rem;
+      cursor: pointer;
+      font-family: var(--mono);
+      font-size: 0.78rem;
+      color: var(--text-light);
+      background: rgba(56,189,248,0.03);
+      border-bottom: 1px solid transparent;
+      transition: background 0.2s, border-color 0.2s;
+      user-select: none;
+      list-style: none;
+    }
+    .inner-collapse > summary::-webkit-details-marker { display: none; }
+    .inner-collapse > summary::before {
+      content: '▸';
+      font-size: 0.7rem;
+      color: var(--accent);
+      transition: transform 0.25s;
+      display: inline-block;
+      width: 0.8em;
+    }
+    .inner-collapse[open] > summary::before { transform: rotate(90deg); }
+    .inner-collapse > summary:hover { background: rgba(56,189,248,0.06); }
+    .inner-collapse[open] > summary {
+      border-bottom-color: var(--border);
+      background: rgba(56,189,248,0.05);
+    }
+    .inner-collapse > summary .collapse-count {
+      margin-left: auto;
+      font-size: 0.65rem;
+      color: #5a7090;
+      background: rgba(255,255,255,0.04);
+      padding: 0.1rem 0.5rem;
+      border-radius: 3px;
+      border: 1px solid var(--border);
+    }
+    .inner-collapse > .inner-collapse-body {
+      padding: 1.25rem;
+    }
+
     /* ── Horizontal Architecture ── */
     .arch-flow-h {
       display: flex;
@@ -1108,11 +1159,9 @@
           </div>
 
           <!-- 상품별 상세 (접기) -->
-          <details style="margin-top:1.25rem;">
-            <summary style="cursor:pointer;font-family:var(--mono);font-size:0.75rem;color:var(--accent);padding:0.5rem 0;user-select:none;">
-              ▸ 상품별 상세 데이터 (이미지 + 개별 수치)
-            </summary>
-            <div style="padding-top:0.75rem;">
+          <details class="inner-collapse" style="margin-top:1.25rem;">
+            <summary>상품별 상세 데이터 (이미지 + 개별 수치)<span class="collapse-count">6 products</span></summary>
+            <div class="inner-collapse-body">
 
               <!-- Philips JC302 -->
               <div style="margin-bottom:2rem;">
@@ -1292,11 +1341,9 @@
           </details>
 
           <!-- 환경 구축 상세 (접기) -->
-          <details style="margin-top:1.25rem;">
-            <summary style="cursor:pointer;font-family:var(--mono);font-size:0.75rem;color:var(--accent);padding:0.5rem 0;user-select:none;">
-              ▸ 환경 구축 상세
-            </summary>
-            <div style="padding-top:0.75rem;">
+          <details class="inner-collapse">
+            <summary>환경 구축 상세<span class="collapse-count">infra</span></summary>
+            <div class="inner-collapse-body">
 
               <!-- System Architecture (좌→우) -->
               <div class="arch-diagram" style="margin:0 auto 1.25rem;">
