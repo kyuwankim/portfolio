@@ -1107,6 +1107,190 @@
             Top-5 96.7% → PH 바코드를 1차 필터로 사용하고 보조 특징(색상/OCR) 결합 시 실용적 식별 가능
           </div>
 
+          <!-- 상품별 상세 (접기) -->
+          <details style="margin-top:1.25rem;">
+            <summary style="cursor:pointer;font-family:var(--mono);font-size:0.75rem;color:var(--accent);padding:0.5rem 0;user-select:none;">
+              ▸ 상품별 상세 데이터 (이미지 + 개별 수치)
+            </summary>
+            <div style="padding-top:0.75rem;">
+
+              <!-- Philips JC302 -->
+              <div style="margin-bottom:2rem;">
+                <div style="font-family:var(--mono);font-size:0.8rem;color:var(--text-white);font-weight:600;margin-bottom:0.5rem;">Philips JC302 <span style="color:#34d399;font-weight:400;font-size:0.7rem;">90% Top-1</span></div>
+                <div style="display:flex;gap:0.5rem;margin-bottom:0.75rem;flex-wrap:wrap;">
+                  <img src="research/products/philips_1.jpg" alt="Philips sample 1" style="width:100px;border-radius:4px;border:1px solid var(--border);">
+                  <img src="research/products/philips_2.jpg" alt="Philips sample 2" style="width:100px;border-radius:4px;border:1px solid var(--border);">
+                  <img src="research/products/philips_3.jpg" alt="Philips sample 3" style="width:100px;border-radius:4px;border:1px solid var(--border);">
+                  <img src="research/products/philips_gray.jpg" alt="Philips grayscale" style="width:100px;border-radius:4px;border:1px solid var(--accent-border);opacity:0.85;" title="256x256 grayscale (TDA input)">
+                </div>
+                <div style="font-size:0.72rem;color:#5a7090;margin-bottom:0.5rem;">H&#8321; Max Pers. 91~156 — 다른 상품(172~229)과 완전 분리. 텍스트 중심 디자인으로 큰 루프 구조가 적다.</div>
+                <div class="data-table-wrap">
+                <table class="data-table" style="font-size:0.75rem;">
+                  <thead><tr><th>#</th><th class="num">H&#8320;</th><th class="num">H&#8321;</th><th class="num">H&#8320; max</th><th class="num">H&#8321; max</th><th class="num">ms</th></tr></thead>
+                  <tbody>
+                    <tr><td>1</td><td class="num">1,471</td><td class="num">2,255</td><td class="num">145</td><td class="num">124</td><td class="num">740</td></tr>
+                    <tr><td>2</td><td class="num">1,898</td><td class="num">2,898</td><td class="num">190</td><td class="num">151</td><td class="num">662</td></tr>
+                    <tr><td>3</td><td class="num">1,934</td><td class="num">2,583</td><td class="num">149</td><td class="num">118</td><td class="num">716</td></tr>
+                    <tr><td>4</td><td class="num">2,048</td><td class="num">3,523</td><td class="num">150</td><td class="num">150</td><td class="num">711</td></tr>
+                    <tr><td>5</td><td class="num">1,714</td><td class="num">2,638</td><td class="num">202</td><td class="num highlight">91</td><td class="num">939</td></tr>
+                    <tr><td>6</td><td class="num">1,614</td><td class="num">2,076</td><td class="num">186</td><td class="num">132</td><td class="num">1010</td></tr>
+                    <tr><td>7</td><td class="num">1,756</td><td class="num">2,570</td><td class="num">120</td><td class="num">143</td><td class="num">689</td></tr>
+                    <tr><td>8</td><td class="num">1,289</td><td class="num">1,802</td><td class="num">137</td><td class="num">127</td><td class="num">704</td></tr>
+                    <tr><td>9</td><td class="num">1,879</td><td class="num">2,778</td><td class="num">206</td><td class="num highlight">156</td><td class="num">726</td></tr>
+                    <tr><td>10</td><td class="num">1,750</td><td class="num">2,122</td><td class="num highlight">106</td><td class="num">147</td><td class="num">776</td></tr>
+                  </tbody>
+                </table>
+                </div>
+              </div>
+
+              <!-- pokemon go ++ -->
+              <div style="margin-bottom:2rem;">
+                <div style="font-family:var(--mono);font-size:0.8rem;color:var(--text-white);font-weight:600;margin-bottom:0.5rem;">pokemon go ++ <span style="color:#34d399;font-weight:400;font-size:0.7rem;">100% Top-1</span></div>
+                <div style="display:flex;gap:0.5rem;margin-bottom:0.75rem;flex-wrap:wrap;">
+                  <img src="research/products/pokemon_1.jpg" alt="pokemon sample 1" style="width:100px;border-radius:4px;border:1px solid var(--border);">
+                  <img src="research/products/pokemon_2.jpg" alt="pokemon sample 2" style="width:100px;border-radius:4px;border:1px solid var(--border);">
+                  <img src="research/products/pokemon_3.jpg" alt="pokemon sample 3" style="width:100px;border-radius:4px;border:1px solid var(--border);">
+                  <img src="research/products/pokemon_gray.jpg" alt="pokemon grayscale" style="width:100px;border-radius:4px;border:1px solid var(--accent-border);opacity:0.85;" title="256x256 grayscale (TDA input)">
+                </div>
+                <div style="font-size:0.72rem;color:#5a7090;margin-bottom:0.5rem;">H&#8320; Max Pers. 범위 159~177 (std 6.0) — 가장 안정적 위상 지문. 화려한 그래픽의 반복 패턴이 일관된 구조를 만든다.</div>
+                <div class="data-table-wrap">
+                <table class="data-table" style="font-size:0.75rem;">
+                  <thead><tr><th>#</th><th class="num">H&#8320;</th><th class="num">H&#8321;</th><th class="num">H&#8320; max</th><th class="num">H&#8321; max</th><th class="num">ms</th></tr></thead>
+                  <tbody>
+                    <tr><td>1</td><td class="num">1,949</td><td class="num">2,468</td><td class="num">175</td><td class="num">179</td><td class="num">752</td></tr>
+                    <tr><td>2</td><td class="num">1,830</td><td class="num">2,277</td><td class="num">165</td><td class="num">208</td><td class="num">677</td></tr>
+                    <tr><td>3</td><td class="num">1,727</td><td class="num">2,040</td><td class="num">159</td><td class="num">199</td><td class="num">782</td></tr>
+                    <tr><td>4</td><td class="num">1,585</td><td class="num">1,889</td><td class="num">163</td><td class="num">187</td><td class="num">685</td></tr>
+                    <tr><td>5</td><td class="num">1,972</td><td class="num">2,543</td><td class="num">176</td><td class="num">216</td><td class="num">725</td></tr>
+                    <tr><td>6</td><td class="num">2,260</td><td class="num">2,828</td><td class="num">174</td><td class="num">223</td><td class="num">676</td></tr>
+                    <tr><td>7</td><td class="num">1,899</td><td class="num">2,336</td><td class="num">176</td><td class="num">181</td><td class="num">648</td></tr>
+                    <tr><td>8</td><td class="num">1,780</td><td class="num">2,176</td><td class="num">172</td><td class="num">204</td><td class="num">669</td></tr>
+                    <tr><td>9</td><td class="num">1,914</td><td class="num">2,308</td><td class="num">173</td><td class="num">209</td><td class="num">648</td></tr>
+                    <tr><td>10</td><td class="num">1,968</td><td class="num">2,500</td><td class="num">177</td><td class="num">184</td><td class="num">648</td></tr>
+                  </tbody>
+                </table>
+                </div>
+              </div>
+
+              <!-- Airpods Pro -->
+              <div style="margin-bottom:2rem;">
+                <div style="font-family:var(--mono);font-size:0.8rem;color:var(--text-white);font-weight:600;margin-bottom:0.5rem;">Airpods Pro <span style="color:#34d399;font-weight:400;font-size:0.7rem;">90% Top-1</span></div>
+                <div style="display:flex;gap:0.5rem;margin-bottom:0.75rem;flex-wrap:wrap;">
+                  <img src="research/products/airpods_1.jpg" alt="Airpods sample 1" style="width:100px;border-radius:4px;border:1px solid var(--border);">
+                  <img src="research/products/airpods_2.jpg" alt="Airpods sample 2" style="width:100px;border-radius:4px;border:1px solid var(--border);">
+                  <img src="research/products/airpods_3.jpg" alt="Airpods sample 3" style="width:100px;border-radius:4px;border:1px solid var(--border);">
+                  <img src="research/products/airpods_gray.jpg" alt="Airpods grayscale" style="width:100px;border-radius:4px;border:1px solid var(--accent-border);opacity:0.85;" title="256x256 grayscale (TDA input)">
+                </div>
+                <div style="font-size:0.72rem;color:#5a7090;margin-bottom:0.5rem;">미니멀 디자인, 원형 구조. H&#8321; Max Pers. 172~211. pokemon과 원형 요소가 겹치나 중심점 거리 3.30으로 대부분 구분된다.</div>
+                <div class="data-table-wrap">
+                <table class="data-table" style="font-size:0.75rem;">
+                  <thead><tr><th>#</th><th class="num">H&#8320;</th><th class="num">H&#8321;</th><th class="num">H&#8320; max</th><th class="num">H&#8321; max</th><th class="num">ms</th></tr></thead>
+                  <tbody>
+                    <tr><td>1</td><td class="num">1,820</td><td class="num">2,170</td><td class="num">166</td><td class="num">203</td><td class="num">656</td></tr>
+                    <tr><td>2</td><td class="num">1,759</td><td class="num">2,189</td><td class="num">166</td><td class="num">203</td><td class="num">825</td></tr>
+                    <tr><td>3</td><td class="num">1,969</td><td class="num">2,460</td><td class="num">166</td><td class="num">208</td><td class="num">719</td></tr>
+                    <tr><td>4</td><td class="num">1,471</td><td class="num">1,651</td><td class="num">156</td><td class="num">203</td><td class="num">675</td></tr>
+                    <tr><td>5</td><td class="num">2,071</td><td class="num">2,471</td><td class="num">138</td><td class="num">196</td><td class="num">670</td></tr>
+                    <tr><td>6</td><td class="num">1,944</td><td class="num">2,347</td><td class="num">134</td><td class="num">207</td><td class="num">648</td></tr>
+                    <tr><td>7</td><td class="num">2,151</td><td class="num">2,703</td><td class="num">157</td><td class="num">195</td><td class="num">657</td></tr>
+                    <tr><td>8</td><td class="num">1,990</td><td class="num">2,679</td><td class="num">139</td><td class="num highlight">173</td><td class="num">651</td></tr>
+                    <tr><td>9</td><td class="num">1,582</td><td class="num">1,951</td><td class="num">137</td><td class="num highlight">172</td><td class="num">637</td></tr>
+                    <tr><td>10</td><td class="num">1,961</td><td class="num">2,447</td><td class="num">140</td><td class="num">211</td><td class="num">647</td></tr>
+                  </tbody>
+                </table>
+                </div>
+              </div>
+
+              <!-- stanley -->
+              <div style="margin-bottom:2rem;">
+                <div style="font-family:var(--mono);font-size:0.8rem;color:var(--text-white);font-weight:600;margin-bottom:0.5rem;">stanley <span style="color:#ef4444;font-weight:400;font-size:0.7rem;">20% Top-1 — 최저</span></div>
+                <div style="display:flex;gap:0.5rem;margin-bottom:0.75rem;flex-wrap:wrap;">
+                  <img src="research/products/stanley_1.jpg" alt="stanley sample 1" style="width:100px;border-radius:4px;border:1px solid var(--border);">
+                  <img src="research/products/stanley_2.jpg" alt="stanley sample 2" style="width:100px;border-radius:4px;border:1px solid var(--border);">
+                  <img src="research/products/stanley_3.jpg" alt="stanley sample 3" style="width:100px;border-radius:4px;border:1px solid var(--border);">
+                  <img src="research/products/stanley_gray.jpg" alt="stanley grayscale" style="width:100px;border-radius:4px;border:1px solid var(--accent-border);opacity:0.85;" title="256x256 grayscale (TDA input)">
+                </div>
+                <div style="font-size:0.72rem;color:#ef4444;margin-bottom:0.5rem;">kavalan과 중심점 거리 1.95 — 금속 질감+텍스트 라벨의 위상적 유사성으로 8/10 오분류. H&#8321; Max Pers. 198~225가 kavalan(205~226)과 거의 동일.</div>
+                <div class="data-table-wrap">
+                <table class="data-table" style="font-size:0.75rem;">
+                  <thead><tr><th>#</th><th class="num">H&#8320;</th><th class="num">H&#8321;</th><th class="num">H&#8320; max</th><th class="num">H&#8321; max</th><th class="num">ms</th></tr></thead>
+                  <tbody>
+                    <tr><td>1</td><td class="num">1,421</td><td class="num">1,876</td><td class="num">117</td><td class="num">200</td><td class="num">638</td></tr>
+                    <tr><td>2</td><td class="num">2,019</td><td class="num">2,664</td><td class="num">135</td><td class="num">203</td><td class="num">683</td></tr>
+                    <tr><td>3</td><td class="num">2,273</td><td class="num">2,928</td><td class="num">117</td><td class="num">214</td><td class="num">776</td></tr>
+                    <tr><td>4</td><td class="num">2,233</td><td class="num">2,882</td><td class="num">175</td><td class="num">205</td><td class="num">692</td></tr>
+                    <tr><td>5</td><td class="num">2,408</td><td class="num">3,169</td><td class="num">154</td><td class="num">213</td><td class="num">695</td></tr>
+                    <tr><td>6</td><td class="num">2,239</td><td class="num">2,739</td><td class="num">118</td><td class="num">225</td><td class="num">680</td></tr>
+                    <tr><td>7</td><td class="num">1,412</td><td class="num">1,698</td><td class="num">122</td><td class="num">198</td><td class="num">624</td></tr>
+                    <tr><td>8</td><td class="num">1,645</td><td class="num">2,128</td><td class="num">123</td><td class="num">212</td><td class="num">634</td></tr>
+                    <tr><td>9</td><td class="num">2,408</td><td class="num">3,177</td><td class="num">159</td><td class="num">212</td><td class="num">663</td></tr>
+                    <tr><td>10</td><td class="num">2,228</td><td class="num">3,116</td><td class="num">114</td><td class="num">211</td><td class="num">657</td></tr>
+                  </tbody>
+                </table>
+                </div>
+              </div>
+
+              <!-- tubing band -->
+              <div style="margin-bottom:2rem;">
+                <div style="font-family:var(--mono);font-size:0.8rem;color:var(--text-white);font-weight:600;margin-bottom:0.5rem;">tubing band <span style="color:#f59e0b;font-weight:400;font-size:0.7rem;">80% Top-1</span></div>
+                <div style="display:flex;gap:0.5rem;margin-bottom:0.75rem;flex-wrap:wrap;">
+                  <img src="research/products/tubing_1.jpg" alt="tubing sample 1" style="width:100px;border-radius:4px;border:1px solid var(--border);">
+                  <img src="research/products/tubing_2.jpg" alt="tubing sample 2" style="width:100px;border-radius:4px;border:1px solid var(--border);">
+                  <img src="research/products/tubing_3.jpg" alt="tubing sample 3" style="width:100px;border-radius:4px;border:1px solid var(--border);">
+                  <img src="research/products/tubing_gray.jpg" alt="tubing grayscale" style="width:100px;border-radius:4px;border:1px solid var(--accent-border);opacity:0.85;" title="256x256 grayscale (TDA input)">
+                </div>
+                <div style="font-size:0.72rem;color:#5a7090;margin-bottom:0.5rem;">고대비 반복 패턴. 내부 응집도 3.62로 양호. H&#8321; Max Pers. 188~229가 kavalan/stanley와 겹쳐 2건 오분류.</div>
+                <div class="data-table-wrap">
+                <table class="data-table" style="font-size:0.75rem;">
+                  <thead><tr><th>#</th><th class="num">H&#8320;</th><th class="num">H&#8321;</th><th class="num">H&#8320; max</th><th class="num">H&#8321; max</th><th class="num">ms</th></tr></thead>
+                  <tbody>
+                    <tr><td>1</td><td class="num">1,846</td><td class="num">2,312</td><td class="num">155</td><td class="num">206</td><td class="num">1660</td></tr>
+                    <tr><td>2</td><td class="num">1,820</td><td class="num">2,349</td><td class="num">160</td><td class="num">221</td><td class="num">721</td></tr>
+                    <tr><td>3</td><td class="num">1,649</td><td class="num">2,198</td><td class="num">168</td><td class="num">217</td><td class="num">683</td></tr>
+                    <tr><td>4</td><td class="num">2,037</td><td class="num">2,722</td><td class="num">158</td><td class="num">227</td><td class="num">707</td></tr>
+                    <tr><td>5</td><td class="num">1,975</td><td class="num">2,684</td><td class="num">160</td><td class="num">202</td><td class="num">710</td></tr>
+                    <tr><td>6</td><td class="num">1,989</td><td class="num">2,546</td><td class="num">152</td><td class="num">229</td><td class="num">664</td></tr>
+                    <tr><td>7</td><td class="num">1,255</td><td class="num">1,608</td><td class="num">159</td><td class="num">209</td><td class="num">634</td></tr>
+                    <tr><td>8</td><td class="num">1,583</td><td class="num">2,200</td><td class="num">159</td><td class="num">223</td><td class="num">655</td></tr>
+                    <tr><td>9</td><td class="num">1,581</td><td class="num">2,156</td><td class="num">153</td><td class="num highlight">188</td><td class="num">649</td></tr>
+                    <tr><td>10</td><td class="num">1,906</td><td class="num">2,444</td><td class="num">158</td><td class="num">221</td><td class="num">661</td></tr>
+                  </tbody>
+                </table>
+                </div>
+              </div>
+
+              <!-- kavalan -->
+              <div style="margin-bottom:0.5rem;">
+                <div style="font-family:var(--mono);font-size:0.8rem;color:var(--text-white);font-weight:600;margin-bottom:0.5rem;">kavalan <span style="color:#f59e0b;font-weight:400;font-size:0.7rem;">50% Top-1</span></div>
+                <div style="display:flex;gap:0.5rem;margin-bottom:0.75rem;flex-wrap:wrap;">
+                  <img src="research/products/kavalan_1.jpg" alt="kavalan sample 1" style="width:100px;border-radius:4px;border:1px solid var(--border);">
+                  <img src="research/products/kavalan_2.jpg" alt="kavalan sample 2" style="width:100px;border-radius:4px;border:1px solid var(--border);">
+                  <img src="research/products/kavalan_3.jpg" alt="kavalan sample 3" style="width:100px;border-radius:4px;border:1px solid var(--border);">
+                  <img src="research/products/kavalan_gray.jpg" alt="kavalan grayscale" style="width:100px;border-radius:4px;border:1px solid var(--accent-border);opacity:0.85;" title="256x256 grayscale (TDA input)">
+                </div>
+                <div style="font-size:0.72rem;color:#f59e0b;margin-bottom:0.5rem;">stanley와 중심점 거리 1.95로 가장 가까움. 라벨 텍스트+금속 질감이 stanley와 유사한 위상 구조를 만든다. H&#8321; Max Pers. 205~226.</div>
+                <div class="data-table-wrap">
+                <table class="data-table" style="font-size:0.75rem;">
+                  <thead><tr><th>#</th><th class="num">H&#8320;</th><th class="num">H&#8321;</th><th class="num">H&#8320; max</th><th class="num">H&#8321; max</th><th class="num">ms</th></tr></thead>
+                  <tbody>
+                    <tr><td>1</td><td class="num">2,601</td><td class="num">3,748</td><td class="num highlight">91</td><td class="num">215</td><td class="num">683</td></tr>
+                    <tr><td>2</td><td class="num">2,425</td><td class="num">3,425</td><td class="num highlight">84</td><td class="num">217</td><td class="num">686</td></tr>
+                    <tr><td>3</td><td class="num">2,205</td><td class="num">2,944</td><td class="num">145</td><td class="num">222</td><td class="num">716</td></tr>
+                    <tr><td>4</td><td class="num">1,463</td><td class="num">1,899</td><td class="num">164</td><td class="num">217</td><td class="num">744</td></tr>
+                    <tr><td>5</td><td class="num">2,410</td><td class="num">3,280</td><td class="num">158</td><td class="num">205</td><td class="num">709</td></tr>
+                    <tr><td>6</td><td class="num">2,150</td><td class="num">2,968</td><td class="num">155</td><td class="num">205</td><td class="num">669</td></tr>
+                    <tr><td>7</td><td class="num">2,253</td><td class="num">2,901</td><td class="num highlight">94</td><td class="num">225</td><td class="num">662</td></tr>
+                    <tr><td>8</td><td class="num">1,443</td><td class="num">1,929</td><td class="num">155</td><td class="num">218</td><td class="num">636</td></tr>
+                    <tr><td>9</td><td class="num">2,424</td><td class="num">3,228</td><td class="num">150</td><td class="num">226</td><td class="num">662</td></tr>
+                    <tr><td>10</td><td class="num">2,264</td><td class="num">3,058</td><td class="num">164</td><td class="num">206</td><td class="num">672</td></tr>
+                  </tbody>
+                </table>
+                </div>
+              </div>
+
+            </div>
+          </details>
+
           <!-- 환경 구축 상세 (접기) -->
           <details style="margin-top:1.25rem;">
             <summary style="cursor:pointer;font-family:var(--mono);font-size:0.75rem;color:var(--accent);padding:0.5rem 0;user-select:none;">
@@ -1330,9 +1514,10 @@
       if (!target) return;
       // 모든 주차 닫기
       document.querySelectorAll('.week-item').forEach(d => d.removeAttribute('open'));
-      // 대상 주차 열기
+      // 대상 주차 열기 + 내부 details 모두 펼치기
       target.setAttribute('open', '');
       target.classList.add('visible');
+      target.querySelectorAll('details').forEach(d => d.setAttribute('open', ''));
       // 스크롤
       setTimeout(() => target.scrollIntoView({ behavior: 'smooth', block: 'start' }), 100);
     }
