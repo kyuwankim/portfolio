@@ -497,6 +497,20 @@
       align-items: center;
       gap: 0.75rem;
     }
+    .week-link-btn {
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      color: var(--text-dim);
+      background: none;
+      border: 1px solid var(--border);
+      padding: 0.15rem 0.45rem;
+      border-radius: 3px;
+      cursor: pointer;
+      transition: all 0.2s;
+      line-height: 1;
+    }
+    .week-link-btn:hover { color: var(--accent); border-color: var(--accent); }
+    .week-link-btn.copied { color: var(--accent); border-color: var(--accent); }
     .week-badge {
       font-family: var(--mono);
       font-size: 0.65rem;
@@ -941,6 +955,7 @@
         <summary class="week-toggle">
           <span>2주차 — 서버 인프라 구축 및 다중 상품 식별 검증</span>
           <div class="week-toggle-right">
+            <button class="week-link-btn" onclick="copyWeekLink(event,'week-2')" title="링크 복사">Link</button>
             <span class="week-badge">Latest</span>
             <span class="week-arrow">▼</span>
           </div>
@@ -1112,6 +1127,7 @@
         <summary class="week-toggle">
           <span>1주차 — 환경 구축 및 파이프라인 검증</span>
           <div class="week-toggle-right">
+            <button class="week-link-btn" onclick="copyWeekLink(event,'week-1')" title="링크 복사">Link</button>
             <span class="week-arrow">▼</span>
           </div>
         </summary>
@@ -1197,6 +1213,19 @@
       entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
     }, { threshold: 0.1 });
     document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    // 주차 링크 복사
+    function copyWeekLink(e, weekId) {
+      e.preventDefault();
+      e.stopPropagation();
+      const url = location.origin + location.pathname + '#' + weekId;
+      navigator.clipboard.writeText(url).then(() => {
+        const btn = e.currentTarget;
+        btn.textContent = 'Copied!';
+        btn.classList.add('copied');
+        setTimeout(() => { btn.textContent = 'Link'; btn.classList.remove('copied'); }, 1500);
+      });
+    }
 
     // Hash 딥링크: #week-1, #week-2 등으로 해당 주차를 펼치고 스크롤
     function openWeekFromHash() {
