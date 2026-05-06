@@ -977,18 +977,19 @@
             <div class="research-progress">
               <div class="progress-step done">파이프라인 구현<span class="progress-step-label">완료</span></div>
               <div class="progress-step done">단일 상품 검증<span class="progress-step-label">10장</span></div>
-              <div class="progress-step current">다수 상품 수집<span class="progress-step-label">진행 중</span></div>
-              <div class="progress-step">상품 간 비교<span class="progress-step-label">예정</span></div>
+              <div class="progress-step done">다중 상품 식별<span class="progress-step-label">6종 60장</span></div>
+              <div class="progress-step current">전처리 개선 (SAM)<span class="progress-step-label">진행 중</span></div>
             </div>
           </div>
 
           <div class="tags">
-            <span class="tag">JavaPlex</span>
+            <span class="tag">GUDHI</span>
+            <span class="tag">MobileSAM</span>
+            <span class="tag">Python</span>
             <span class="tag">Spring Boot</span>
             <span class="tag">Android</span>
             <span class="tag">MySQL</span>
             <span class="tag">AWS EC2</span>
-            <span class="tag">nginx</span>
           </div>
         </div>
       </div>
@@ -1012,21 +1013,21 @@
           </div>
         </summary>
         <div class="week-content">
-          <p class="week-desc" style="margin-bottom:1rem;">End-to-End 시스템(Android → EC2 → GUDHI → MySQL)을 구축하고, 6종 상품 60장으로 PH 바코드 기반 상품 식별을 정량 검증하였다. 외형이 뚜렷이 다른 상품은 90~100% 식별되지만, 유사한 질감/구조의 상품(stanley↔kavalan)에서는 한계가 확인되었다.</p>
+          <p class="week-desc" style="margin-bottom:1rem;">End-to-End 시스템을 구축하고 6종 상품 60장으로 PH 바코드 기반 식별을 정량 검증하였다. 고정 크롭 방식의 한계(71.7%)를 발견하고, MobileSAM 물체 인식 크롭으로 80.0%까지 개선하였다.</p>
 
           <!-- 핵심 결과 -->
           <div class="stat-row">
             <div class="stat-card">
-              <div class="stat-value">71.7%</div>
-              <div class="stat-label">Top-1 Accuracy (43/60)</div>
+              <div class="stat-value" style="color:#f59e0b;">71.7%</div>
+              <div class="stat-label">Fixed Crop Top-1</div>
             </div>
-            <div class="stat-card">
-              <div class="stat-value">88.3%</div>
-              <div class="stat-label">Top-3 Accuracy (53/60)</div>
+            <div class="stat-card" style="border-color:rgba(52,211,153,0.3);">
+              <div class="stat-value" style="color:#34d399;">80.0%</div>
+              <div class="stat-label">SAM Crop Top-1<br><span style="font-size:0.6rem;color:#34d399;">+8.3%p</span></div>
             </div>
             <div class="stat-card">
               <div class="stat-value">96.7%</div>
-              <div class="stat-label">Top-5 Accuracy (58/60)</div>
+              <div class="stat-label">Top-5 Accuracy</div>
             </div>
             <div class="stat-card">
               <div class="stat-value">6 / 60</div>
@@ -1034,134 +1035,183 @@
             </div>
           </div>
 
-          <!-- 상품별 PH 통계 테이블 -->
-          <div style="font-family:var(--mono);font-size:0.7rem;color:var(--accent);text-transform:uppercase;letter-spacing:0.05em;margin:1.5rem 0 0.5rem;">PH Statistics per Product (mean ± std)</div>
-          <div class="data-table-wrap">
-          <table class="data-table">
-            <thead>
-              <tr>
-                <th>Product</th>
-                <th class="num">H&#8320; count</th>
-                <th class="num">H&#8321; count</th>
-                <th class="num">H&#8320; max pers.</th>
-                <th class="num">H&#8321; max pers.</th>
-                <th class="num">H&#8320; total pers.</th>
-                <th class="num">Time</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr><td>Philips JC302</td><td class="num">1,735 ± 217</td><td class="num">2,524 ± 467</td><td class="num">106~206</td><td class="num highlight">91~156</td><td class="num">11,476</td><td class="num">767ms</td></tr>
-              <tr><td>pokemon go ++</td><td class="num">1,888 ± 170</td><td class="num">2,336 ± 254</td><td class="num highlight">159~177</td><td class="num">179~223</td><td class="num">9,706</td><td class="num">691ms</td></tr>
-              <tr><td>Airpods Pro</td><td class="num">1,872 ± 204</td><td class="num">2,307 ± 309</td><td class="num">134~166</td><td class="num">172~211</td><td class="num">6,602</td><td class="num">678ms</td></tr>
-              <tr><td>stanley</td><td class="num">2,029 ± 370</td><td class="num">2,638 ± 518</td><td class="num">114~175</td><td class="num">198~225</td><td class="num">8,130</td><td class="num">674ms</td></tr>
-              <tr><td>tubing band</td><td class="num">1,764 ± 232</td><td class="num">2,322 ± 304</td><td class="num">152~168</td><td class="num">188~229</td><td class="num">10,146</td><td class="num">774ms</td></tr>
-              <tr><td>kavalan</td><td class="num">2,164 ± 377</td><td class="num">2,938 ± 566</td><td class="num">84~164</td><td class="num">205~226</td><td class="num">9,345</td><td class="num">683ms</td></tr>
-            </tbody>
-          </table>
-          </div>
+          <!-- ===== Phase 1: 고정 크롭 분석 ===== -->
+          <div style="font-family:var(--mono);font-size:0.7rem;color:var(--accent);text-transform:uppercase;letter-spacing:0.05em;margin:2rem 0 0.75rem;">Phase 1 — 고정 비율 크롭 분석</div>
 
-          <!-- 상품별 Top-1 정확도 -->
-          <div style="font-family:var(--mono);font-size:0.7rem;color:var(--accent);text-transform:uppercase;letter-spacing:0.05em;margin:1.5rem 0 0.5rem;">Per-Product Top-1 Accuracy</div>
-          <div class="data-table-wrap">
-          <table class="data-table">
-            <thead>
-              <tr>
-                <th>Product</th>
-                <th class="num">Top-1</th>
-                <th>Misclassified as</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr><td>pokemon go ++</td><td class="num highlight">10/10 (100%)</td><td style="color:#5a7090;">—</td></tr>
-              <tr><td>Philips JC302</td><td class="num">9/10 (90%)</td><td>→ Airpods Pro ×1</td></tr>
-              <tr><td>Airpods Pro</td><td class="num">9/10 (90%)</td><td>→ pokemon go ++ ×1</td></tr>
-              <tr><td>tubing band</td><td class="num">8/10 (80%)</td><td>→ kavalan ×2</td></tr>
-              <tr><td>kavalan</td><td class="num" style="color:#f59e0b;">5/10 (50%)</td><td>→ tubing band ×3, stanley ×2</td></tr>
-              <tr><td>stanley</td><td class="num" style="color:#ef4444;">2/10 (20%)</td><td>→ kavalan ×6, Airpods Pro ×2</td></tr>
-            </tbody>
-          </table>
-          </div>
+          <p class="week-desc" style="margin-bottom:1rem;">1주차에서 확인한 "같은 상품의 PH 바코드 일관성"을 바탕으로, 6종 상품에서 서로 다른 상품을 구분할 수 있는지 검증하였다.</p>
 
-          <!-- 중심점 거리 -->
-          <div style="font-family:var(--mono);font-size:0.7rem;color:var(--accent);text-transform:uppercase;letter-spacing:0.05em;margin:1.5rem 0 0.5rem;">Centroid L2 Distance (Z-score normalized)</div>
-          <div class="data-table-wrap">
-          <table class="data-table">
-            <thead>
-              <tr>
-                <th>Pair</th>
-                <th class="num">Centroid dist.</th>
-                <th class="num">Mean inter-class dist.</th>
-                <th class="num">Min dist.</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr style="background:rgba(239,68,68,0.06);"><td>stanley ↔ kavalan</td><td class="num" style="color:#ef4444;font-weight:600;">1.95</td><td class="num">4.79</td><td class="num">2.09</td></tr>
-              <tr><td>pokemon go ++ ↔ Airpods Pro</td><td class="num">3.30</td><td class="num">4.81</td><td class="num">2.38</td></tr>
-              <tr><td>Philips JC302 ↔ pokemon go ++</td><td class="num">3.55</td><td class="num">5.18</td><td class="num">3.20</td></tr>
-              <tr><td>tubing band ↔ kavalan</td><td class="num">3.74</td><td class="num">5.29</td><td class="num">2.53</td></tr>
-              <tr><td>stanley ↔ tubing band</td><td class="num">4.75</td><td class="num">6.27</td><td class="num">3.71</td></tr>
-              <tr><td>Airpods Pro ↔ tubing band</td><td class="num highlight">6.01</td><td class="num">7.21</td><td class="num">4.79</td></tr>
-            </tbody>
-          </table>
-          </div>
-
-          <!-- 상품 내 응집도 -->
-          <div style="font-family:var(--mono);font-size:0.7rem;color:var(--accent);text-transform:uppercase;letter-spacing:0.05em;margin:1.5rem 0 0.5rem;">Intra-class Cohesion (same product)</div>
-          <div class="stat-row">
-            <div class="stat-card">
-              <div class="stat-value">2.60</div>
-              <div class="stat-label">pokemon go ++<br><span style="font-size:0.6rem;color:#34d399;">most consistent</span></div>
-            </div>
-            <div class="stat-card">
-              <div class="stat-value">3.62</div>
-              <div class="stat-label">tubing band</div>
-            </div>
-            <div class="stat-card">
-              <div class="stat-value">4.43</div>
-              <div class="stat-label">kavalan</div>
-            </div>
-            <div class="stat-card">
-              <div class="stat-value">4.68</div>
-              <div class="stat-label">Airpods Pro</div>
-            </div>
-            <div class="stat-card">
-              <div class="stat-value">4.88</div>
-              <div class="stat-label">stanley</div>
-            </div>
-            <div class="stat-card">
-              <div class="stat-value">4.93</div>
-              <div class="stat-label">Philips JC302</div>
-            </div>
-          </div>
-
-          <!-- 정확도 변화 -->
-          <div style="display:flex;gap:1rem;margin:1.5rem 0;flex-wrap:wrap;">
+          <div style="display:flex;gap:1rem;margin:0 0 1rem;flex-wrap:wrap;">
             <div style="flex:1;min-width:200px;padding:1rem 1.25rem;background:var(--bg-card);border:1px solid var(--border);border-radius:6px;">
               <div style="font-family:var(--mono);font-size:0.65rem;color:var(--accent);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:0.5rem;">3 Products (Philips, pokemon, Airpods)</div>
               <div style="font-family:var(--mono);font-size:1.3rem;color:#34d399;font-weight:700;">93.3%</div>
-              <div style="font-size:0.72rem;color:var(--text);margin-top:0.25rem;">Top-1: 28/30 — 외형이 확실히 다른 상품 간 식별</div>
+              <div style="font-size:0.72rem;color:var(--text);margin-top:0.25rem;">Top-1: 28/30 — 외형이 확실히 다른 상품</div>
             </div>
             <div style="display:flex;align-items:center;color:#5a7090;font-family:var(--mono);font-size:1.2rem;">→</div>
             <div style="flex:1;min-width:200px;padding:1rem 1.25rem;background:var(--bg-card);border:1px solid var(--border);border-radius:6px;">
               <div style="font-family:var(--mono);font-size:0.65rem;color:var(--accent);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:0.5rem;">6 Products (+stanley, tubing, kavalan)</div>
               <div style="font-family:var(--mono);font-size:1.3rem;color:#f59e0b;font-weight:700;">71.7%</div>
-              <div style="font-size:0.72rem;color:var(--text);margin-top:0.25rem;">Top-1: 43/60 — 유사 질감 상품 추가 시 정확도 하락</div>
+              <div style="font-size:0.72rem;color:var(--text);margin-top:0.25rem;">Top-1: 43/60 — 유사 질감 상품 추가 시 하락</div>
             </div>
           </div>
 
-          <!-- 결과 요약 -->
-          <div class="week-result">
-            Philips JC302의 H&#8321; Max Pers.(91~156)는 다른 5개 상품(172~229)과 완전 분리<br>
-            pokemon go++는 H&#8320; Max Pers. 범위가 159~177로 가장 좁음 — 촬영 조건 무관 안정적 지문<br>
-            stanley/kavalan/tubing band의 H&#8321; Max Pers. 범위(188~229) 중첩 → 17건 중 13건(76%) 혼동<br>
-            stanley↔kavalan 중심점 거리 1.95 (다른 쌍의 절반 이하) — 금속 질감+텍스트 라벨의 위상적 유사성<br>
-            Top-5 96.7% → PH 바코드를 1차 필터로 사용하고 보조 특징(색상/OCR) 결합 시 실용적 식별 가능
+          <div class="data-table-wrap">
+          <table class="data-table">
+            <thead><tr><th>Product</th><th class="num">Top-1</th><th>Misclassified as</th></tr></thead>
+            <tbody>
+              <tr><td>pokemon go ++</td><td class="num highlight">10/10</td><td style="color:#5a7090;">—</td></tr>
+              <tr><td>Philips JC302</td><td class="num">9/10</td><td>→ Airpods Pro ×1</td></tr>
+              <tr><td>Airpods Pro</td><td class="num">9/10</td><td>→ pokemon go ++ ×1</td></tr>
+              <tr><td>tubing band</td><td class="num">8/10</td><td>→ kavalan ×2</td></tr>
+              <tr><td>kavalan</td><td class="num" style="color:#f59e0b;">5/10</td><td>→ tubing band ×3, stanley ×2</td></tr>
+              <tr><td>stanley</td><td class="num" style="color:#ef4444;">2/10</td><td>→ kavalan ×6, Airpods Pro ×2</td></tr>
+            </tbody>
+          </table>
           </div>
 
-          <!-- 상품별 상세 (접기) -->
+          <div class="week-result">
+            외형이 뚜렷이 다른 상품(Philips, pokemon, Airpods)은 90~100%로 식별<br>
+            그러나 stanley↔kavalan은 중심점 거리 1.95 (다른 쌍의 절반 이하)로 8건 상호 오분류<br>
+            → 고정 크롭 시 배경이 함께 분석되어, 유사한 금속 질감+텍스트 구조가 혼동을 유발
+          </div>
+
+          <!-- ===== Phase 2: SAM 크롭 개선 ===== -->
+          <div style="font-family:var(--mono);font-size:0.7rem;color:var(--accent);text-transform:uppercase;letter-spacing:0.05em;margin:2rem 0 0.75rem;padding-top:1.5rem;border-top:1px solid var(--border);">Phase 2 — MobileSAM 물체 인식 크롭</div>
+
+          <p class="week-desc" style="margin-bottom:1rem;">배경을 제거하면 상품 고유의 위상 구조가 더 선명해질 것이라는 가설을 세우고, MobileSAM(TinyViT, 39MB)의 박스 프롬프트로 상품 영역만 크롭하여 동일 60장에 대해 PH를 재계산하였다.</p>
+
+          <!-- 크롭 비교 이미지 -->
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:0.75rem;margin-bottom:1.25rem;">
+            <div style="text-align:center;">
+              <div style="font-family:var(--mono);font-size:0.65rem;color:var(--text-light);margin-bottom:0.3rem;">Philips JC302</div>
+              <div style="display:flex;gap:0.25rem;justify-content:center;">
+                <div><img src="research/products/philips_fixed.jpg" alt="Philips fixed crop" style="width:64px;height:64px;border-radius:3px;border:1px solid var(--border);" title="Fixed center crop"><div style="font-size:0.55rem;color:#5a7090;margin-top:2px;">Fixed</div></div>
+                <div><img src="research/products/philips_sam.jpg" alt="Philips SAM crop" style="width:64px;height:64px;border-radius:3px;border:1px solid rgba(52,211,153,0.4);" title="SAM crop"><div style="font-size:0.55rem;color:#34d399;margin-top:2px;">SAM</div></div>
+              </div>
+            </div>
+            <div style="text-align:center;">
+              <div style="font-family:var(--mono);font-size:0.65rem;color:var(--text-light);margin-bottom:0.3rem;">pokemon go ++</div>
+              <div style="display:flex;gap:0.25rem;justify-content:center;">
+                <div><img src="research/products/pokemon_fixed.jpg" alt="pokemon fixed crop" style="width:64px;height:64px;border-radius:3px;border:1px solid var(--border);"><div style="font-size:0.55rem;color:#5a7090;margin-top:2px;">Fixed</div></div>
+                <div><img src="research/products/pokemon_sam.jpg" alt="pokemon SAM crop" style="width:64px;height:64px;border-radius:3px;border:1px solid rgba(52,211,153,0.4);"><div style="font-size:0.55rem;color:#34d399;margin-top:2px;">SAM</div></div>
+              </div>
+            </div>
+            <div style="text-align:center;">
+              <div style="font-family:var(--mono);font-size:0.65rem;color:var(--text-light);margin-bottom:0.3rem;">Airpods Pro</div>
+              <div style="display:flex;gap:0.25rem;justify-content:center;">
+                <div><img src="research/products/airpods_fixed.jpg" alt="Airpods fixed crop" style="width:64px;height:64px;border-radius:3px;border:1px solid var(--border);"><div style="font-size:0.55rem;color:#5a7090;margin-top:2px;">Fixed</div></div>
+                <div><img src="research/products/airpods_sam.jpg" alt="Airpods SAM crop" style="width:64px;height:64px;border-radius:3px;border:1px solid rgba(52,211,153,0.4);"><div style="font-size:0.55rem;color:#34d399;margin-top:2px;">SAM</div></div>
+              </div>
+            </div>
+            <div style="text-align:center;">
+              <div style="font-family:var(--mono);font-size:0.65rem;color:var(--text-light);margin-bottom:0.3rem;">stanley</div>
+              <div style="display:flex;gap:0.25rem;justify-content:center;">
+                <div><img src="research/products/stanley_fixed.jpg" alt="stanley fixed crop" style="width:64px;height:64px;border-radius:3px;border:1px solid var(--border);"><div style="font-size:0.55rem;color:#5a7090;margin-top:2px;">Fixed</div></div>
+                <div><img src="research/products/stanley_sam.jpg" alt="stanley SAM crop" style="width:64px;height:64px;border-radius:3px;border:1px solid rgba(52,211,153,0.4);"><div style="font-size:0.55rem;color:#34d399;margin-top:2px;">SAM</div></div>
+              </div>
+            </div>
+            <div style="text-align:center;">
+              <div style="font-family:var(--mono);font-size:0.65rem;color:var(--text-light);margin-bottom:0.3rem;">tubing band</div>
+              <div style="display:flex;gap:0.25rem;justify-content:center;">
+                <div><img src="research/products/tubing_fixed.jpg" alt="tubing fixed crop" style="width:64px;height:64px;border-radius:3px;border:1px solid var(--border);"><div style="font-size:0.55rem;color:#5a7090;margin-top:2px;">Fixed</div></div>
+                <div><img src="research/products/tubing_sam.jpg" alt="tubing SAM crop" style="width:64px;height:64px;border-radius:3px;border:1px solid rgba(52,211,153,0.4);"><div style="font-size:0.55rem;color:#34d399;margin-top:2px;">SAM</div></div>
+              </div>
+            </div>
+            <div style="text-align:center;">
+              <div style="font-family:var(--mono);font-size:0.65rem;color:var(--text-light);margin-bottom:0.3rem;">kavalan</div>
+              <div style="display:flex;gap:0.25rem;justify-content:center;">
+                <div><img src="research/products/kavalan_fixed.jpg" alt="kavalan fixed crop" style="width:64px;height:64px;border-radius:3px;border:1px solid var(--border);"><div style="font-size:0.55rem;color:#5a7090;margin-top:2px;">Fixed</div></div>
+                <div><img src="research/products/kavalan_sam.jpg" alt="kavalan SAM crop" style="width:64px;height:64px;border-radius:3px;border:1px solid rgba(52,211,153,0.4);"><div style="font-size:0.55rem;color:#34d399;margin-top:2px;">SAM</div></div>
+              </div>
+            </div>
+          </div>
+          <div style="font-size:0.68rem;color:#5a7090;margin-bottom:1rem;">256×256 grayscale. Fixed = 고정 3:4 중앙 크롭. SAM = 박스 프롬프트(중앙 80%)로 인식한 물체의 바운딩 박스 크롭.</div>
+
+          <!-- 정확도 비교 -->
+          <div class="data-table-wrap">
+          <table class="data-table">
+            <thead><tr><th>Product</th><th class="num">Fixed</th><th class="num">SAM</th><th class="num">Change</th><th>Note</th></tr></thead>
+            <tbody>
+              <tr style="background:rgba(52,211,153,0.08);"><td>stanley</td><td class="num" style="color:#ef4444;">2/10</td><td class="num" style="color:#f59e0b;">6/10</td><td class="num" style="color:#34d399;font-weight:700;">+4</td><td style="font-size:0.72rem;">배경 제거로 텀블러 고유 구조 부각</td></tr>
+              <tr style="background:rgba(52,211,153,0.06);"><td>kavalan</td><td class="num" style="color:#f59e0b;">5/10</td><td class="num" style="color:#34d399;">7/10</td><td class="num" style="color:#34d399;font-weight:600;">+2</td><td style="font-size:0.72rem;">라벨 고유 구조 부각</td></tr>
+              <tr style="background:rgba(52,211,153,0.04);"><td>tubing band</td><td class="num">8/10</td><td class="num">9/10</td><td class="num" style="color:#34d399;">+1</td><td style="font-size:0.72rem;">반복 패턴 선명화</td></tr>
+              <tr><td>pokemon go ++</td><td class="num highlight">10/10</td><td class="num highlight">10/10</td><td class="num" style="color:#5a7090;">0</td><td style="font-size:0.72rem;">완벽 유지</td></tr>
+              <tr><td>Airpods Pro</td><td class="num">9/10</td><td class="num">8/10</td><td class="num" style="color:#ef4444;">-1</td><td style="font-size:0.72rem;">1건 오분류</td></tr>
+              <tr><td>Philips JC302</td><td class="num">9/10</td><td class="num">8/10</td><td class="num" style="color:#ef4444;">-1</td><td style="font-size:0.72rem;">2건 오분류</td></tr>
+            </tbody>
+          </table>
+          </div>
+
+          <!-- Phase 2 결론 -->
+          <div class="week-result" style="margin-top:1rem;">
+            SAM 크롭으로 Top-1 71.7% → 80.0% (+8.3%p), Top-3 88.3% → 91.7% 개선<br>
+            핵심 혼동 쌍 stanley↔kavalan: 8건 → 5건 (중심점 거리 1.95 → 2.81)<br>
+            → 배경 노이즈 제거가 유사 질감 상품 분리에 효과적임을 확인
+          </div>
+
+          <!-- 상세 데이터 (접기) -->
           <details class="inner-collapse" style="margin-top:1.25rem;">
-            <summary>상품별 상세 데이터 (이미지 + 개별 수치)<span class="collapse-count">6 products</span></summary>
+            <summary>상세 분석 데이터<span class="collapse-count">tables + images</span></summary>
             <div class="inner-collapse-body">
+
+              <!-- PH Statistics -->
+              <div style="font-family:var(--mono);font-size:0.7rem;color:var(--accent);text-transform:uppercase;letter-spacing:0.05em;margin:0 0 0.5rem;">PH Statistics per Product — Fixed Crop (mean ± std)</div>
+              <div class="data-table-wrap">
+              <table class="data-table">
+                <thead><tr><th>Product</th><th class="num">H&#8320; count</th><th class="num">H&#8321; count</th><th class="num">H&#8320; max pers.</th><th class="num">H&#8321; max pers.</th><th class="num">H&#8320; total pers.</th><th class="num">Time</th></tr></thead>
+                <tbody>
+                  <tr><td>Philips JC302</td><td class="num">1,735 ± 217</td><td class="num">2,524 ± 467</td><td class="num">106~206</td><td class="num highlight">91~156</td><td class="num">11,476</td><td class="num">767ms</td></tr>
+                  <tr><td>pokemon go ++</td><td class="num">1,888 ± 170</td><td class="num">2,336 ± 254</td><td class="num highlight">159~177</td><td class="num">179~223</td><td class="num">9,706</td><td class="num">691ms</td></tr>
+                  <tr><td>Airpods Pro</td><td class="num">1,872 ± 204</td><td class="num">2,307 ± 309</td><td class="num">134~166</td><td class="num">172~211</td><td class="num">6,602</td><td class="num">678ms</td></tr>
+                  <tr><td>stanley</td><td class="num">2,029 ± 370</td><td class="num">2,638 ± 518</td><td class="num">114~175</td><td class="num">198~225</td><td class="num">8,130</td><td class="num">674ms</td></tr>
+                  <tr><td>tubing band</td><td class="num">1,764 ± 232</td><td class="num">2,322 ± 304</td><td class="num">152~168</td><td class="num">188~229</td><td class="num">10,146</td><td class="num">774ms</td></tr>
+                  <tr><td>kavalan</td><td class="num">2,164 ± 377</td><td class="num">2,938 ± 566</td><td class="num">84~164</td><td class="num">205~226</td><td class="num">9,345</td><td class="num">683ms</td></tr>
+                </tbody>
+              </table>
+              </div>
+
+              <!-- Centroid L2 Distance -->
+              <div style="font-family:var(--mono);font-size:0.7rem;color:var(--accent);text-transform:uppercase;letter-spacing:0.05em;margin:1.5rem 0 0.5rem;">Centroid L2 Distance — Fixed Crop (Z-score normalized)</div>
+              <div class="data-table-wrap">
+              <table class="data-table">
+                <thead><tr><th>Pair</th><th class="num">Centroid dist.</th><th class="num">Mean inter-class</th><th class="num">Min dist.</th></tr></thead>
+                <tbody>
+                  <tr style="background:rgba(239,68,68,0.06);"><td>stanley ↔ kavalan</td><td class="num" style="color:#ef4444;font-weight:600;">1.95</td><td class="num">4.79</td><td class="num">2.09</td></tr>
+                  <tr><td>pokemon go ++ ↔ Airpods Pro</td><td class="num">3.30</td><td class="num">4.81</td><td class="num">2.38</td></tr>
+                  <tr><td>Philips JC302 ↔ pokemon go ++</td><td class="num">3.55</td><td class="num">5.18</td><td class="num">3.20</td></tr>
+                  <tr><td>tubing band ↔ kavalan</td><td class="num">3.74</td><td class="num">5.29</td><td class="num">2.53</td></tr>
+                  <tr><td>stanley ↔ tubing band</td><td class="num">4.75</td><td class="num">6.27</td><td class="num">3.71</td></tr>
+                  <tr><td>Airpods Pro ↔ tubing band</td><td class="num highlight">6.01</td><td class="num">7.21</td><td class="num">4.79</td></tr>
+                </tbody>
+              </table>
+              </div>
+
+              <!-- Intra-class Cohesion -->
+              <div style="font-family:var(--mono);font-size:0.7rem;color:var(--accent);text-transform:uppercase;letter-spacing:0.05em;margin:1.5rem 0 0.5rem;">Intra-class Cohesion — Fixed Crop</div>
+              <div class="stat-row">
+                <div class="stat-card"><div class="stat-value">2.60</div><div class="stat-label">pokemon go ++<br><span style="font-size:0.6rem;color:#34d399;">most consistent</span></div></div>
+                <div class="stat-card"><div class="stat-value">3.62</div><div class="stat-label">tubing band</div></div>
+                <div class="stat-card"><div class="stat-value">4.43</div><div class="stat-label">kavalan</div></div>
+                <div class="stat-card"><div class="stat-value">4.68</div><div class="stat-label">Airpods Pro</div></div>
+                <div class="stat-card"><div class="stat-value">4.88</div><div class="stat-label">stanley</div></div>
+                <div class="stat-card"><div class="stat-value">4.93</div><div class="stat-label">Philips JC302</div></div>
+              </div>
+
+              <!-- SAM Centroid Distance Changes -->
+              <div style="font-family:var(--mono);font-size:0.7rem;color:var(--accent);text-transform:uppercase;letter-spacing:0.05em;margin:1.5rem 0 0.5rem;">Centroid Distance Changes — SAM vs Fixed</div>
+              <div class="data-table-wrap">
+              <table class="data-table">
+                <thead><tr><th>Pair</th><th class="num">Fixed</th><th class="num">SAM</th><th class="num">Change</th></tr></thead>
+                <tbody>
+                  <tr style="background:rgba(52,211,153,0.06);"><td>tubing ↔ kavalan</td><td class="num">3.74</td><td class="num" style="color:#34d399;">4.99</td><td class="num" style="color:#34d399;">+1.25</td></tr>
+                  <tr style="background:rgba(52,211,153,0.04);"><td>Airpods ↔ tubing</td><td class="num">6.01</td><td class="num">6.98</td><td class="num" style="color:#34d399;">+0.97</td></tr>
+                  <tr style="background:rgba(52,211,153,0.04);"><td>stanley ↔ kavalan</td><td class="num" style="color:#ef4444;">1.95</td><td class="num" style="color:#f59e0b;">2.81</td><td class="num" style="color:#34d399;">+0.86</td></tr>
+                  <tr style="background:rgba(52,211,153,0.04);"><td>pokemon ↔ Airpods</td><td class="num">3.30</td><td class="num">3.90</td><td class="num" style="color:#34d399;">+0.60</td></tr>
+                  <tr style="background:rgba(239,68,68,0.04);"><td>Philips ↔ kavalan</td><td class="num">5.53</td><td class="num">4.55</td><td class="num" style="color:#ef4444;">-0.98</td></tr>
+                </tbody>
+              </table>
+              </div>
+
+              <div style="border-top:1px solid var(--border);margin:1.5rem 0;padding-top:1rem;font-family:var(--mono);font-size:0.7rem;color:var(--accent);text-transform:uppercase;letter-spacing:0.05em;">Per-Product Details</div>
 
               <!-- Philips JC302 -->
               <div style="margin-bottom:2rem;">
@@ -1521,8 +1571,8 @@
           <div class="week-result">
             H₀ 3,884~5,803개 · H₁ 3,706~5,534개 구조 검출<br>
             H₀ max persistence 240~249 범위에서 안정적 — 전체 밝기 구조가 일관됨<br>
-            L2 평균 거리 22,032 · 표준편차 13,946<br>
-            → 같은 상품의 PH 바코드는 촬영 조건이 달라져도 일정 범위 안에 분포 (긍정적 신호)
+            → 같은 상품의 PH 바코드는 촬영 조건이 달라져도 일정 범위 안에 분포<br>
+            → 다음 검증: 서로 다른 상품 간에도 유의미한 차이를 보이는가?
           </div>
         </div>
       </details>
