@@ -937,7 +937,7 @@
     <div class="container">
       <div class="section-label reveal">Weekly Log</div>
 
-      <details class="week-item reveal" open>
+      <details id="week-2" class="week-item reveal">
         <summary class="week-toggle">
           <span>2주차 — 서버 인프라 구축 및 다중 상품 식별 검증</span>
           <div class="week-toggle-right">
@@ -1108,7 +1108,7 @@
         </div>
       </details>
 
-      <details class="week-item reveal">
+      <details id="week-1" class="week-item reveal">
         <summary class="week-toggle">
           <span>1주차 — 환경 구축 및 파이프라인 검증</span>
           <div class="week-toggle-right">
@@ -1197,6 +1197,35 @@
       entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
     }, { threshold: 0.1 });
     document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    // Hash 딥링크: #week-1, #week-2 등으로 해당 주차를 펼치고 스크롤
+    function openWeekFromHash() {
+      const hash = location.hash.slice(1);
+      if (!hash.startsWith('week-')) return;
+      const target = document.getElementById(hash);
+      if (!target) return;
+      // 모든 주차 닫기
+      document.querySelectorAll('.week-item').forEach(d => d.removeAttribute('open'));
+      // 대상 주차 열기
+      target.setAttribute('open', '');
+      target.classList.add('visible');
+      // 스크롤
+      setTimeout(() => target.scrollIntoView({ behavior: 'smooth', block: 'start' }), 100);
+    }
+    // 주차 토글 시 hash 업데이트
+    document.querySelectorAll('.week-item').forEach(d => {
+      d.addEventListener('toggle', () => {
+        if (d.open && d.id) history.replaceState(null, '', '#' + d.id);
+      });
+    });
+    if (location.hash && location.hash.startsWith('#week-')) {
+      openWeekFromHash();
+    } else {
+      // hash 없으면 Latest 주차를 기본 열기
+      const latest = document.querySelector('.week-item');
+      if (latest) latest.setAttribute('open', '');
+    }
+    window.addEventListener('hashchange', openWeekFromHash);
   </script>
 
 </body>
