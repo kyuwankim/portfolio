@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#0f1620">
+  <title>Study Plan — Kyuwan Kim</title>
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Study Plan — Math Foundation for Data Science">
+  <meta property="og:description" content="수학과 데이터사이언스 석사과정 준비를 위한 수학 기초 학습 로드맵.">
+  <meta property="og:url" content="https://kyuwan.kim/study.html">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='32' y2='32' gradientUnits='userSpaceOnUse'%3E%3Cstop stop-color='%2338bdf8'/%3E%3Cstop offset='1' stop-color='%23818cf8'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='32' height='32' rx='8' fill='%230f1620'/%3E%3Cpath d='M12 7v18M12 16l9-9M12 16l9 9' stroke='url(%23g)' stroke-width='3' stroke-linecap='round' stroke-linejoin='round' fill='none'/%3E%3C/svg%3E">
+  <style>
+    :root {
+      --bg: #0f1620;
+      --bg-card: #151d2b;
+      --bg-card-hover: #1a2435;
+      --border: #1e2a3a;
+      --border-light: #253245;
+      --text: #a3b3c6;
+      --text-light: #d4dde8;
+      --text-white: #f1f5f9;
+      --accent: #38bdf8;
+      --accent-dim: rgba(56, 189, 248, 0.08);
+      --accent-border: rgba(56, 189, 248, 0.15);
+      --mono: 'JetBrains Mono', monospace;
+      --sans: 'Noto Sans KR', sans-serif;
+      --green: #34d399;
+      --yellow: #fbbf24;
+      --purple: #a78bfa;
+      --pink: #f472b6;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    ::selection { background: rgba(56,189,248,0.25); color: #fff; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--sans);
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      overflow-x: hidden;
+      word-break: keep-all;
+      overflow-wrap: break-word;
+    }
+
+    ::-webkit-scrollbar { width: 5px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: #253245; border-radius: 3px; }
+
+    /* ── Nav ── */
+    nav {
+      position: fixed; top: 0; width: 100%; z-index: 100;
+      padding: calc(1rem + env(safe-area-inset-top, 0px)) 2rem 1rem;
+      background: rgba(15,22,32,0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-inner {
+      max-width: 1000px; margin: 0 auto;
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .nav-name {
+      font-weight: 700; font-size: 0.95rem; color: var(--text-white);
+      text-decoration: none; letter-spacing: -0.02em;
+    }
+    .nav-links { display: flex; gap: 1.75rem; list-style: none; }
+    .nav-links a {
+      color: #4a5568; text-decoration: none; font-size: 0.8rem;
+      font-weight: 500; transition: color 0.2s; letter-spacing: 0.01em;
+    }
+    .nav-links a:hover { color: var(--accent); }
+    .nav-links a.active { color: var(--accent); }
+    .nav-toggle {
+      display: none;
+      background: none; border: none; cursor: pointer;
+      width: 28px; height: 20px; position: relative;
+      flex-direction: column; justify-content: space-between;
+    }
+    .nav-toggle span {
+      display: block; width: 100%; height: 2px;
+      background: var(--text-light); border-radius: 1px;
+      transition: transform 0.3s, opacity 0.3s;
+    }
+    .nav-toggle.open span:nth-child(1) { transform: translateY(9px) rotate(45deg); }
+    .nav-toggle.open span:nth-child(2) { opacity: 0; }
+    .nav-toggle.open span:nth-child(3) { transform: translateY(-9px) rotate(-45deg); }
+
+    /* ── Layout ── */
+    .container { max-width: 1000px; margin: 0 auto; padding: 0 2rem; }
+    .page-header { padding: 7rem 0 3rem; }
+    .page-header-inner { max-width: 1000px; margin: 0 auto; padding: 0 2rem; }
+    .back-link {
+      display: inline-flex; align-items: center; gap: 0.4rem;
+      font-family: var(--mono); font-size: 0.75rem; color: #5a7090;
+      text-decoration: none; margin-bottom: 2rem; transition: color 0.2s;
+    }
+    .back-link:hover { color: var(--accent); }
+    .page-title {
+      font-size: clamp(1.8rem, 4vw, 2.5rem); font-weight: 900;
+      color: var(--text-white); letter-spacing: -0.03em; margin-bottom: 0.5rem;
+    }
+    .page-sub { font-size: 0.92rem; color: var(--text); line-height: 1.7; }
+    .page-sub strong { color: var(--text-light); font-weight: 600; }
+    .divider {
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--border), transparent);
+      max-width: 1000px; margin: 0 auto;
+    }
+    section { padding: 3rem 0; }
+    .section-label {
+      font-size: 1.1rem; font-family: var(--mono); text-transform: uppercase;
+      letter-spacing: 0.15em; color: var(--accent);
+      padding-left: 0.75rem; border-left: 3px solid var(--accent);
+      margin-bottom: 2rem; font-weight: 700;
+    }
+
+    /* ── Diagnostic Cards ── */
+    .diag-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 1.5rem 0;
+    }
+    .diag-card {
+      padding: 1.25rem 1.5rem; background: var(--bg-card);
+      border: 1px solid var(--border); border-radius: 8px;
+    }
+    .diag-card.strength { border-left: 3px solid var(--green); }
+    .diag-card.gap { border-left: 3px solid var(--yellow); }
+    .diag-label {
+      font-family: var(--mono); font-size: 0.68rem; text-transform: uppercase;
+      letter-spacing: 0.1em; margin-bottom: 0.6rem; font-weight: 600;
+    }
+    .diag-card.strength .diag-label { color: var(--green); }
+    .diag-card.gap .diag-label { color: var(--yellow); }
+    .diag-card ul {
+      list-style: none; font-size: 0.88rem; color: var(--text-light);
+    }
+    .diag-card ul li { padding: 0.2rem 0; }
+    .diag-card ul li::before {
+      content: ''; display: inline-block; width: 5px; height: 5px;
+      border-radius: 50%; margin-right: 0.6rem; vertical-align: middle;
+    }
+    .diag-card.strength ul li::before { background: var(--green); }
+    .diag-card.gap ul li::before { background: var(--yellow); }
+
+    /* ── Transcript mini ── */
+    .transcript-mini {
+      margin: 1.5rem 0; padding: 1.25rem 1.5rem;
+      background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px;
+    }
+    .transcript-mini .tm-label {
+      font-family: var(--mono); font-size: 0.68rem; color: var(--accent);
+      text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.75rem;
+    }
+    .transcript-mini .tm-row {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 0.35rem 0; border-bottom: 1px solid var(--border);
+      font-size: 0.85rem;
+    }
+    .transcript-mini .tm-row:last-child { border-bottom: none; }
+    .tm-course { color: var(--text-light); }
+    .tm-grade {
+      font-family: var(--mono); font-weight: 600; font-size: 0.82rem;
+    }
+    .tm-grade.good { color: var(--green); }
+    .tm-grade.ok { color: var(--yellow); }
+
+    /* ── Timeline / Roadmap ── */
+    .roadmap { margin: 2rem 0; position: relative; }
+    .roadmap::before {
+      content: ''; position: absolute; left: 18px; top: 0; bottom: 0;
+      width: 2px; background: var(--border-light);
+    }
+    .phase {
+      position: relative; padding-left: 52px; margin-bottom: 2.5rem;
+    }
+    .phase:last-child { margin-bottom: 0; }
+    .phase-dot {
+      position: absolute; left: 8px; top: 4px;
+      width: 22px; height: 22px; border-radius: 50%;
+      border: 2px solid; display: flex; align-items: center; justify-content: center;
+      font-family: var(--mono); font-size: 0.6rem; font-weight: 700;
+      background: var(--bg);
+    }
+    .phase-dot.now { border-color: var(--green); color: var(--green); }
+    .phase-dot.summer { border-color: var(--accent); color: var(--accent); }
+    .phase-dot.fall { border-color: var(--purple); color: var(--purple); }
+    .phase-dot.next { border-color: var(--pink); color: var(--pink); }
+    .phase-header {
+      display: flex; align-items: baseline; gap: 0.75rem;
+      margin-bottom: 0.75rem; flex-wrap: wrap;
+    }
+    .phase-title {
+      font-size: 1.1rem; font-weight: 700; color: var(--text-white);
+    }
+    .phase-period {
+      font-family: var(--mono); font-size: 0.72rem; color: #5a7090;
+    }
+    .phase-desc {
+      font-size: 0.9rem; color: var(--text); line-height: 1.75; margin-bottom: 1rem;
+    }
+
+    /* ── Subject Cards ── */
+    .subject-cards { display: flex; flex-direction: column; gap: 0.75rem; }
+    .subject-card {
+      padding: 1.15rem 1.35rem; background: var(--bg-card);
+      border: 1px solid var(--border); border-radius: 8px;
+      transition: border-color 0.2s;
+    }
+    .subject-card:hover { border-color: var(--border-light); }
+    .subject-top {
+      display: flex; justify-content: space-between; align-items: center;
+      margin-bottom: 0.4rem; flex-wrap: wrap; gap: 0.5rem;
+    }
+    .subject-name {
+      font-size: 0.95rem; font-weight: 600; color: var(--text-white);
+    }
+    .subject-tag {
+      font-family: var(--mono); font-size: 0.62rem; padding: 0.2rem 0.55rem;
+      border-radius: 3px; text-transform: uppercase; letter-spacing: 0.05em;
+    }
+    .subject-tag.core { background: rgba(56,189,248,0.12); color: var(--accent); }
+    .subject-tag.research { background: rgba(167,139,250,0.12); color: var(--purple); }
+    .subject-tag.foundation { background: rgba(52,211,153,0.12); color: var(--green); }
+    .subject-why {
+      font-size: 0.84rem; color: var(--text); line-height: 1.7;
+    }
+    .subject-resources {
+      margin-top: 0.6rem; font-size: 0.78rem; color: #5a7090;
+      font-family: var(--mono);
+    }
+    .subject-resources a {
+      color: var(--accent); text-decoration: none;
+    }
+    .subject-resources a:hover { text-decoration: underline; }
+
+    /* ── Connection Map ── */
+    .conn-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 1.5rem 0;
+    }
+    .conn-card {
+      padding: 1.15rem 1.35rem; background: var(--bg-card);
+      border: 1px solid var(--border); border-radius: 8px;
+    }
+    .conn-title {
+      font-family: var(--mono); font-size: 0.72rem; color: var(--accent);
+      text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 0.5rem;
+    }
+    .conn-body {
+      font-size: 0.85rem; color: var(--text-light); line-height: 1.7;
+    }
+    .conn-arrow {
+      color: var(--accent); font-family: var(--mono); font-size: 0.75rem;
+    }
+
+    /* ── Goal Block ── */
+    .goal-block {
+      margin: 2rem 0; padding: 1.5rem 1.75rem;
+      background: rgba(56,189,248,0.03);
+      border: 1px solid var(--accent-border); border-radius: 8px;
+    }
+    .goal-label {
+      font-family: var(--mono); font-size: 0.68rem; color: var(--accent);
+      text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.75rem;
+    }
+    .goal-block p {
+      font-size: 0.92rem; color: var(--text-light); line-height: 1.8;
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 768px) {
+      nav { padding: calc(0.75rem + env(safe-area-inset-top, 0px)) 1.25rem 0.75rem; }
+      .nav-toggle { display: flex; }
+      .nav-links {
+        display: none; position: absolute; top: 100%; left: 0; right: 0;
+        flex-direction: column; background: rgba(15,22,32,0.98);
+        border-bottom: 1px solid var(--border); padding: 1rem 1.25rem; gap: 1rem;
+      }
+      .nav-links.open { display: flex; }
+      .nav-links a { font-size: 0.85rem; }
+      .container { padding: 0 1.25rem; }
+      .page-header-inner { padding: 0 1.25rem; }
+      .diag-grid, .conn-grid { grid-template-columns: 1fr; }
+      .phase { padding-left: 44px; }
+    }
+
+    /* ── Reveal Animation ── */
+    .reveal {
+      opacity: 0; transform: translateY(20px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    footer {
+      padding: 3rem 2rem; text-align: center;
+      font-family: var(--mono); font-size: 0.72rem; color: #3a4a5e;
+      border-top: 1px solid var(--border);
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <div class="nav-inner">
+      <a href="index.html" class="nav-name">Kyuwan Kim</a>
+      <button class="nav-toggle" aria-label="메뉴" onclick="this.classList.toggle('open');this.nextElementSibling.classList.toggle('open')">
+        <span></span><span></span><span></span>
+      </button>
+      <ul class="nav-links">
+        <li><a href="index.html#experience">Experience</a></li>
+        <li><a href="research.html">Research</a></li>
+        <li><a href="index.html#stack">Stack</a></li>
+        <li><a href="index.html#education">Education</a></li>
+        <li><a href="index.html#contact">Contact</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <div class="page-header">
+    <div class="page-header-inner">
+      <a href="index.html" class="back-link">&larr; Back</a>
+      <h1 class="page-title">Study Plan</h1>
+      <p class="page-sub">
+        <strong>수학 기초 학습 로드맵</strong>
+      </p>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ═══════════════════ 학기 전 커리큘럼 ═══════════════════ -->
+  <section class="container reveal">
+    <div class="section-label">Before Semester  - 2026.05 - 08</div>
+
+    <div class="goal-block">
+      <div class="goal-label">목표</div>
+      <p>
+        <strong>Stewart Calculus 권장문제를 다 풀 수 있는 상태</strong>를 만들고,<br>
+        <strong>선형대수 + 확률론</strong> 기초를 잡아 대학원 수업을 따라갈 준비를 한다.
+      </p>
+    </div>
+
+    <div class="roadmap">
+
+      <!-- 5월 -->
+      <div class="phase">
+        <div class="phase-dot now">5</div>
+        <div class="phase-header">
+          <span class="phase-title">기초 체력 만들기</span>
+          <span class="phase-period">5월</span>
+        </div>
+        <div class="phase-desc">
+          수식을 손으로 쓰는 감각부터 되살린다. Math4AI로 전체 지도를 그리고, Stewart로 미분 기초를 잡는다.
+        </div>
+        <div class="subject-cards">
+          <div class="subject-card">
+            <div class="subject-top">
+              <span class="subject-name">Math4AI 1회독</span>
+              <span class="subject-tag foundation">기본</span>
+            </div>
+            <div class="subject-why">
+              AI에 필요한 수학(선형대수 + 미적분 + 확률) 전체 구조를 훑는다.<br>
+              모르는 부분은 표시만 해두고, 아는 부분은 손으로 풀어본다.
+            </div>
+            <div class="subject-resources">
+              교재: 이상구 "인공지능을 위한 기초수학" (358p, Part I-IV)
+            </div>
+          </div>
+          <div class="subject-card">
+            <div class="subject-top">
+              <span class="subject-name">Stewart Ch.2-3 - 미분 기초</span>
+              <span class="subject-tag core">TA 범위</span>
+            </div>
+            <div class="subject-why">
+              극한 → 연속 → 미분의 정의 → 기본 미분 공식 → 연쇄법칙(Chain Rule).<br>
+              TA 수업이 미분법 Review로 시작하니까 여기가 출발점이다.
+            </div>
+            <div class="subject-resources">
+              <strong style="color:var(--accent);">[메인]</strong> Stewart "Calculus" 9E, Ch.2-3 + 권장문제 손풀이<br>
+              [직관] <a href="https://www.youtube.com/playlist?list=PLZHQObOWTQDMsr9K-rj53DwVRMYO3t5Yr" target="_blank">3Blue1Brown Essence of Calculus</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 6월 -->
+      <div class="phase">
+        <div class="phase-dot summer">6</div>
+        <div class="phase-header">
+          <span class="phase-title">적분 기법 집중</span>
+          <span class="phase-period">6월</span>
+        </div>
+        <div class="phase-desc">
+          TA 수업에서 비중이 가장 큰 파트. 적분 기초를 다지고, 다양한 적분 기법을 익힌다.
+        </div>
+        <div class="subject-cards">
+          <div class="subject-card">
+            <div class="subject-top">
+              <span class="subject-name">Stewart Ch.4-5 - 적분 기초 + 응용</span>
+              <span class="subject-tag core">TA 범위</span>
+            </div>
+            <div class="subject-why">
+              정적분의 정의 → 미적분학 기본정리 → 치환적분 → 부피(회전체, 원통껍질).<br>
+              TA 수업 2-3주차 범위. 권장문제: SS5.2, SS5.3 전부 풀기.
+            </div>
+            <div class="subject-resources">
+              <strong style="color:var(--accent);">[메인]</strong> Stewart 9E Ch.4-5 + 권장문제 손풀이
+            </div>
+          </div>
+          <div class="subject-card">
+            <div class="subject-top">
+              <span class="subject-name">Stewart Ch.6-7 - 역삼각함수, 로피탈, 적분 기법</span>
+              <span class="subject-tag core">TA 핵심</span>
+            </div>
+            <div class="subject-why">
+              역삼각함수의 도함수 → 로피탈 법칙 → 부분적분 → 삼각적분 → 삼각치환 → 부분분수 분해.<br>
+              시험 비중이 가장 높은 파트. 권장문제: SS6.6, SS6.8, SS7.1-7.4 전부.
+            </div>
+            <div class="subject-resources">
+              <strong style="color:var(--accent);">[메인]</strong> Stewart 9E Ch.6.6, 6.8, 7.1-7.4 + 권장문제<br>
+              [보충] <a href="http://www.kocw.net/home/cview.do?mty=p&kemId=1263561" target="_blank">KOCW 부산대 미적분학 기초</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 7월 -->
+      <div class="phase">
+        <div class="phase-dot summer">7</div>
+        <div class="phase-header">
+          <span class="phase-title">급수 + 선형대수 시작</span>
+          <span class="phase-period">7월</span>
+        </div>
+        <div class="phase-desc">
+          TA 수업 후반부인 급수 파트에 들어간다. 분량이 가장 많다. 동시에 선형대수를 시작한다.
+        </div>
+        <div class="subject-cards">
+          <div class="subject-card">
+            <div class="subject-top">
+              <span class="subject-name">Stewart Ch.10-11 - 매개변수, 극좌표, 급수</span>
+              <span class="subject-tag core">TA 범위</span>
+            </div>
+            <div class="subject-why">
+              매개변수 곡선 → 극좌표 미적분 → 이상적분 → 수열/급수 → 수렴판정법(적분, 비교, 교대급수, 비율).<br>
+              급수 파트(Ch.11)가 TA 수업에서 분량이 가장 많다. 6주에 걸쳐 진행된다.
+            </div>
+            <div class="subject-resources">
+              <strong style="color:var(--accent);">[메인]</strong> Stewart 9E Ch.10.1-10.4, 7.8, 11.1-11.6 + 권장문제
+            </div>
+          </div>
+          <div class="subject-card">
+            <div class="subject-top">
+              <span class="subject-name">선형대수 - 벡터, 행렬, 고유값</span>
+              <span class="subject-tag foundation">기초</span>
+            </div>
+            <div class="subject-why">
+              벡터 → 행렬 연산 → 연립방정식 → 선형독립 → 기저와 차원 → 고유값/고유벡터.<br>
+              "54차원 특징 벡터"가 수학적으로 무엇인지를 이해하게 된다.
+            </div>
+            <div class="subject-resources">
+              <strong style="color:var(--accent);">[메인]</strong> <a href="https://www.youtube.com/playlist?list=PL127T2Zu76FuVMq1UQnZv9SG-GFIdZfLg" target="_blank">이상엽Math 선형대수학</a><br>
+              [직관] <a href="https://www.youtube.com/playlist?list=PLZHQObOWTQDPD3MizzM2xVFitgF8hE_ab" target="_blank">3Blue1Brown Essence of Linear Algebra</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 8월 -->
+      <div class="phase">
+        <div class="phase-dot summer">8</div>
+        <div class="phase-header">
+          <span class="phase-title">마무리 + 확률론</span>
+          <span class="phase-period">8월</span>
+        </div>
+        <div class="phase-desc">
+          Stewart 나머지를 마무리하고, 권장문제를 총복습한다.<br>
+          선형대수를 심화하고, 확률론 기초에 진입한다.
+        </div>
+        <div class="subject-cards">
+          <div class="subject-card">
+            <div class="subject-top">
+              <span class="subject-name">Stewart Ch.11-12 마무리 + 권장문제 총복습</span>
+              <span class="subject-tag core">TA 완성</span>
+            </div>
+            <div class="subject-why">
+              멱급수 → 테일러/매클로린 급수 → 3차원 좌표 → 벡터 → 내적.<br>
+              TA 수업 전 범위 권장문제를 처음부터 다시 풀어본다. 막히는 문제 위주로 반복.
+            </div>
+            <div class="subject-resources">
+              <strong style="color:var(--accent);">[메인]</strong> Stewart 9E Ch.11.8-11.11, 12.2-12.3 + 전체 권장문제 복습
+            </div>
+          </div>
+          <div class="subject-card">
+            <div class="subject-top">
+              <span class="subject-name">선형대수 심화 - 대각화, SVD</span>
+              <span class="subject-tag foundation">기초</span>
+            </div>
+            <div class="subject-why">
+              대각화 → 직교 대각화 → SVD(특이값 분해).<br>
+              PCA 차원 축소, 이미지 압축 등 AI 핵심 개념이 여기서 나온다.
+            </div>
+            <div class="subject-resources">
+              <strong style="color:var(--accent);">[메인]</strong> <a href="https://www.youtube.com/playlist?list=PL127T2Zu76FuVMq1UQnZv9SG-GFIdZfLg" target="_blank">이상엽Math 선형대수학</a> - 고유값/대각화 파트<br>
+              [보충] <a href="https://ocw.mit.edu/courses/18-06sc-linear-algebra-fall-2011/" target="_blank">MIT 18.06</a> Lecture 21-29
+            </div>
+          </div>
+          <div class="subject-card">
+            <div class="subject-top">
+              <span class="subject-name">확률론 기초 + Math4AI 2회독</span>
+              <span class="subject-tag foundation">기초</span>
+            </div>
+            <div class="subject-why">
+              확률변수 → 확률분포 → 기댓값/분산 → 정규분포.<br>
+              Math4AI Part III(확률통계)를 중심으로, 5월에 못 풀었던 전체 문제를 다시 풀어본다.
+            </div>
+            <div class="subject-resources">
+              <strong style="color:var(--accent);">[메인]</strong> Math4AI Part III + 전체 2회독 손풀이
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- 체크리스트 -->
+    <div class="goal-block" style="margin-top:2.5rem;">
+      <div class="goal-label">9월까지 도달 목표</div>
+      <p>
+        <strong>✓ TA 준비</strong>  - Stewart 수학1 범위 권장문제를 다 풀 수 있다<br>
+        <strong>✓ 미적분</strong>  - 적분 기법, 급수, 테일러 급수를 자신있게 풀 수 있다<br>
+        <strong>✓ 선형대수</strong>  - 행렬 연산, 고유값, SVD를 이해하고 계산할 수 있다<br>
+        <strong>✓ 확률론</strong>  - 기본 확률분포와 기댓값/분산을 이해한다<br>
+        <strong>✓ Math4AI</strong>  - 전체 내용을 손으로 풀 수 있다
+      </p>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ═══════════════════ 학기 이후 ═══════════════════ -->
+  <section class="container reveal">
+    <div class="section-label">After  - 학기 시작 이후</div>
+
+    <p style="font-size:0.92rem;color:var(--text-light);line-height:1.8;margin-bottom:1.5rem;">
+      학기가 시작되면 대학원 수업을 통해 다음 과목들을 체계적으로 배운다.
+    </p>
+
+    <div class="conn-grid">
+      <div class="conn-card">
+        <div class="conn-title">1학기 (2026.09-12)</div>
+        <div class="conn-body">
+          <strong>미적분 TA</strong>  - 학부 수학1 수업 조교<br>
+          <strong>해석학 / 확률론</strong>  - 대학원 수업 수강<br>
+          <strong>연구</strong>  - TDA 파이프라인 고도화
+        </div>
+      </div>
+      <div class="conn-card">
+        <div class="conn-title">2학기 이후 (2027.03-)</div>
+        <div class="conn-body">
+          <strong>위상수학 / 측도론</strong>  - TDA 이론적 기반<br>
+          <strong>석사 논문</strong>  - 연구 주제 구체화 및 실험
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ═══════════════════ 리소스 ═══════════════════ -->
+  <section class="container reveal">
+    <div class="section-label">Resources</div>
+
+    <div class="subject-cards">
+      <div class="subject-card">
+        <div class="subject-top">
+          <span class="subject-name" style="font-size:0.88rem;">교재</span>
+        </div>
+        <div class="subject-why" style="line-height:2.1;">
+          <strong>미적분 (TA)</strong> - James Stewart "Calculus: Metric Version" 9E, Cengage Learning - TA 수업 교재<br>
+          <strong>기초수학</strong> - 이상구 "인공지능을 위한 기초수학" (Math4AI) - 선형대수 + 미적분 + 확률통계, 기본기
+        </div>
+      </div>
+      <div class="subject-card">
+        <div class="subject-top">
+          <span class="subject-name" style="font-size:0.88rem;">한국어 강의</span>
+        </div>
+        <div class="subject-why" style="line-height:2.1;">
+          <strong>선형대수</strong> - <a href="https://www.youtube.com/playlist?list=PL127T2Zu76FuVMq1UQnZv9SG-GFIdZfLg" target="_blank">이상엽Math 선형대수학</a> - 친절하고 꼼꼼한 설명, 비전공자도 따라갈 수 있음<br>
+          <strong>미적분</strong> - <a href="http://www.kocw.net/home/cview.do?mty=p&kemId=1263561" target="_blank">KOCW 부산대 미적분학 기초</a> - 처음부터 쉽게 설명, 무료<br>
+          <strong>선형대수</strong> - <a href="http://kocw.net/home/cview.do?mty=p&kemId=1043234" target="_blank">KOCW 한양대 선형대수</a> - 공학 관점에서 체계적, 무료
+        </div>
+      </div>
+      <div class="subject-card">
+        <div class="subject-top">
+          <span class="subject-name" style="font-size:0.88rem;">영어 강의</span>
+        </div>
+        <div class="subject-why" style="line-height:2.1;">
+          <strong>미적분</strong> - <a href="https://www.youtube.com/playlist?list=PLZHQObOWTQDMsr9K-rj53DwVRMYO3t5Yr" target="_blank">3Blue1Brown Essence of Calculus</a> - 시각적 직관, 짧은 영상<br>
+          <strong>선형대수</strong> - <a href="https://www.youtube.com/playlist?list=PLZHQObOWTQDPD3MizzM2xVFitgF8hE_ab" target="_blank">3Blue1Brown Essence of Linear Algebra</a> - 기하학적 직관 최고<br>
+          <strong>선형대수</strong> - <a href="https://ocw.mit.edu/courses/18-06sc-linear-algebra-fall-2011/" target="_blank">MIT 18.06 Gilbert Strang</a> - 체계적 정석 강의
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">&copy; 2026 Kyuwan Kim</div>
+  </footer>
+
+  <script>
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+  </script>
+
+</body>
+</html>

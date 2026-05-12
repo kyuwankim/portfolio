@@ -5,12 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <meta name="theme-color" content="#0f1620">
   <title>Kyuwan Kim</title>
-  <meta name="description" content="10년차 백엔드 엔지니어. Java/Spring Boot 기반 물류솔루션 COLO를 처음부터 6년간 설계·개발. 현재 응용수학 석사과정에서 TDA 연구 중.">
+  <meta name="description" content="10년차 백엔드 엔지니어. 물류 시스템 설계부터 AI 자동화까지. 현재 고려대 응용수학 석사과정.">
   <meta name="robots" content="index, follow">
   <link rel="canonical" href="https://kyuwan.kim/">
   <meta property="og:type" content="website">
   <meta property="og:title" content="Kyuwan Kim">
-  <meta property="og:description" content="10년차 백엔드 엔지니어. Java/Spring Boot 기반 물류솔루션 COLO를 처음부터 6년간 설계·개발.">
+  <meta property="og:description" content="10년차 백엔드 엔지니어. 물류 시스템 설계부터 AI 자동화까지.">
   <meta property="og:url" content="https://kyuwan.kim/">
   <meta property="og:image" content="https://kyuwan.kim/og-image.png">
   <meta property="og:image:width" content="1200">
@@ -804,9 +804,9 @@
       <p class="hero-tag">Java / Spring Boot &middot; Backend Engineer &middot; Mathematics</p>
       <h1 class="hero-name">Kyuwan Kim</h1>
       <p class="hero-sub">
-        하나의 물류솔루션을 처음부터 6년간 만들었습니다.<br>
-        시스템을 설계하고, ML 파이프라인을 구축하다가<br>
-        작동하는 원리가 궁금해져 수학과에 갔습니다.
+        물류 시스템을 설계하고, 데이터를 활용한<br>
+        자동화 기술을 만들다 보니<br>
+        AI를 더 깊이 적용하고 싶어져 수학과에 갔습니다.
       </p>
       <div class="hero-facts">
         <div class="hero-fact">
@@ -848,7 +848,7 @@
             <div class="exp-role">정규직 &middot; 6년 2개월</div>
           </div>
           <div>
-            <p class="exp-group-summary">OMS · WMS · TMS를 통합한 물류솔루션 COLO를 처음부터 개발에 참여하여 6년간 성장시킴</p>
+            <p class="exp-group-summary">주문관리·창고관리·배송관리를 하나로 연결하는 물류솔루션 COLO를 초기부터 함께 만들며 6년간 성장시킴</p>
             <div class="exp-results">
               <div class="exp-chip">
                 <span class="exp-chip-value">1,300억</span>
@@ -879,13 +879,13 @@
       <div class="exp-item">
         <div class="exp-item-num">1</div>
         <div>
-          <div class="exp-title">Transformer 매핑 추천 파이프라인</div>
+          <div class="exp-title">AI 기반 상품 자동 매칭 시스템</div>
           <ul class="exp-desc">
-            <li>외부 매핑 API의 커버리지 한계를 확인하고, 반자동 추천 방식으로 전환을 결정</li>
-            <li>e5(intfloat/multilingual-e5-large) 임베딩 기반 PoC 수행<br>7,247건 대상 Recall@1 57%, Recall@3 73% 달성</li>
-            <li>표본을 3,810건으로 확대하여 MeCab 대비 정량 비교 — Transformer Top-1 78.4%, Top-5 92.1%</li>
-            <li>배치 오프라인 임베딩 + 온라인 추천 + WordBase 폴백 하이브리드 아키텍처 설계</li>
-            <li>Docker → ECR → AWS Batch → Jenkins CI/CD 엔드투엔드 파이프라인 단독 구축</li>
+            <li>기존 상품 매칭 서비스의 한계를 확인하고, AI 기반 반자동 추천 방식으로 전환을 결정</li>
+            <li>AI 언어모델(e5-large)로 상품명 유사도를 분석하는 시스템 구축<br>7,247건 대상 첫 번째 추천 정확도 57%, 상위 3개 포함 73% 달성</li>
+            <li>표본을 3,810건으로 확대하여 기존 방식 대비 정량 비교 — AI 모델 첫 번째 추천 78.4%, 상위 5개 포함 92.1%</li>
+            <li>사전 분석 + 실시간 추천 + 규칙 기반 보완을 결합한 하이브리드 시스템 설계</li>
+            <li>클라우드 환경(AWS)에서 데이터 처리부터 배포까지 전체 자동화 파이프라인 단독 구축</li>
           </ul>
 
           <div class="evolution">
@@ -893,22 +893,22 @@
             <div class="evolution-steps">
               <div class="evo-step">
                 <span class="evo-num">1</span>
-                <span>외부 매핑 API 기반 자동화 시도<br>사전/인덱스 미등록 상품 89.8% 무후보</span>
+                <span>기존 상품 매칭 서비스로 자동화 시도<br>등록되지 않은 상품 89.8%는 매칭 불가</span>
               </div>
               <div class="evo-arrow">↓ 완전 자동화는 어렵다. 반자동은?</div>
               <div class="evo-step">
                 <span class="evo-num">2</span>
-                <span>Transformer 임베딩 PoC<br>Coverage 100%, Recall@1 57%</span>
+                <span>AI 모델로 시범 적용<br>모든 상품에 추천 가능, 첫 번째 추천 정확도 57%</span>
               </div>
               <div class="evo-arrow">↓ 표본 확대로 개선 가능한가?</div>
               <div class="evo-step">
                 <span class="evo-num">3</span>
-                <span>MeCab 대비 비교 분석<br>MeCab 실패 건의 70% 커버, Top-5 92.1%</span>
+                <span>기존 방식과 비교 분석<br>기존 방식이 실패한 건의 70%를 AI가 커버, 상위 5개 정확도 92.1%</span>
               </div>
               <div class="evo-arrow">↓ 두 방식을 결합하면?</div>
               <div class="evo-step">
                 <span class="evo-num">4</span>
-                <span>하이브리드 아키텍처 설계<br>배치 임베딩 + 온라인 추천 + 룰 기반 후처리</span>
+                <span>하이브리드 시스템 설계<br>사전 분석 + 실시간 추천 + 규칙 기반 보완</span>
               </div>
             </div>
           </div>
@@ -916,15 +916,15 @@
           <div class="exp-results">
             <div class="exp-chip">
               <span class="exp-chip-value">78.4%</span>
-              <span class="exp-chip-label">Top-1 정확도</span>
+              <span class="exp-chip-label">첫 번째 추천 정확도</span>
             </div>
             <div class="exp-chip">
               <span class="exp-chip-value">92.1%</span>
-              <span class="exp-chip-label">Top-5 정확도</span>
+              <span class="exp-chip-label">상위 5개 포함 정확도</span>
             </div>
             <div class="exp-chip">
               <span class="exp-chip-value">70%</span>
-              <span class="exp-chip-label">MeCab 실패 건 커버</span>
+              <span class="exp-chip-label">기존 방식 실패 건 커버</span>
             </div>
           </div>
           <div class="exp-tags">
@@ -943,20 +943,20 @@
       <div class="exp-item">
         <div class="exp-item-num">2</div>
         <div>
-          <div class="exp-title">COLO 고도화</div>
+          <div class="exp-title">물류솔루션(COLO) 기능 고도화</div>
           <ul class="exp-desc">
-            <li>셀러/센터/관리자가 하나의 앱에서 if문 분기로 동작하여
-              결합도가 높았고,
-              출고신청만 했는데 피킹 전에 재고가 차감되는 등
-              도메인 간 역설이 발생</li>
-            <li>분리 원칙 수립 —
-              각 권한은 메소드를 공유하지 않고 RESTful로만 통신,
-              서로의 도메인을 직접 건드리지 않는다</li>
-            <li>셀러단 분리를 첫 단계로 실행.
-              JSP → React 전환 + 공통 RESTful API 설계.
-              주문수집과 출고신청 프로세스를 독립적으로 분리</li>
-            <li>플레이오토 연동을 기획·개발하여
-              주문수집 가능한 쇼핑몰을 75개로 확대</li>
+            <li>판매자·물류센터·관리자가 하나의 시스템에 섞여 있어
+              서로 영향을 주는 구조적 문제가 있었고,
+              출고 요청만 했는데 실제 포장 전에 재고가 줄어드는 등
+              예상치 못한 오류가 발생</li>
+            <li>역할별 시스템 분리 원칙 수립 —
+              판매자·센터·관리자 각각이 독립적으로 동작하고,
+              정해진 방식으로만 데이터를 주고받도록 설계</li>
+            <li>판매자 시스템 분리를 첫 단계로 실행.
+              화면 기술을 최신화(React)하고,
+              주문 수집과 출고 요청 과정을 독립적으로 분리</li>
+            <li>쇼핑몰 통합 관리 서비스(플레이오토)를 연동하여
+              주문을 자동 수집할 수 있는 쇼핑몰을 75개로 확대</li>
             <li>기획, 설계, 개발 전 과정을 주도</li>
           </ul>
           <div class="exp-tags">
@@ -974,14 +974,14 @@
       <div class="exp-item">
         <div class="exp-item-num">3</div>
         <div>
-          <div class="exp-title">COLO Global — 미국 버전</div>
+          <div class="exp-title">물류솔루션(COLO) 미국 진출</div>
           <ul class="exp-desc">
-            <li>국내 COLO는 센터 작업 프로세스, 로케이션 관리,
-              작업자 리포트 기능이 취약했음<br>미국 현지 운영을 위해
+            <li>국내 버전은 물류센터 내부의 작업 흐름 관리, 재고 위치 추적,
+              작업자별 실적 보고 기능이 부족했음<br>미국 현지 운영에 필요한
               이 기능들을 갖춘 글로벌 버전을 개발</li>
-            <li>입고 전체 프로세스를 담당 —
-              UPC 기반 입고 세분화, 데이터 불일치 시 실시간 알림 및 CS 프로세스,
-              분리적재 라벨 시스템</li>
+            <li>상품 입고 전체 과정을 담당 —
+              바코드 기반 입고 분류, 데이터 불일치 시 실시간 알림 및 고객 응대 프로세스,
+              상품별 분리 보관 라벨 시스템</li>
             <li>미국 CTK USA 센터에서 실서비스 운영,
               이후 CTK가 콜로세움에 시리즈A 투자</li>
           </ul>
@@ -1013,7 +1013,7 @@
       <div class="exp-item">
         <div class="exp-item-num">4</div>
         <div>
-          <div class="exp-title">COLO 정규버전 런칭</div>
+          <div class="exp-title">물류솔루션(COLO) 정규버전 런칭</div>
           <ul class="exp-desc">
             <li>실제 서비스에 필요한 전반적 기능이 들어간 첫 정규 버전</li>
             <li>상품등록, 입고, 상품매핑을 필두로
