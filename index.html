@@ -1336,8 +1336,12 @@
 
     const observer = new IntersectionObserver(entries => {
       entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
-    }, { threshold: 0.1 });
+    }, { threshold: 0, rootMargin: '0px 0px 100px 0px' });
     document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+    // 안전장치: 3초 후에도 안 보이는 reveal 요소는 강제 표시
+    setTimeout(() => {
+      document.querySelectorAll('.reveal:not(.visible)').forEach(el => el.classList.add('visible'));
+    }, 3000);
 
     document.querySelectorAll('.number-value[data-target]').forEach(el => {
       const obs = new IntersectionObserver(entries => {
