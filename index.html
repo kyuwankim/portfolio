@@ -377,6 +377,12 @@
       grid-template-columns: 40px 1fr;
       gap: 1.25rem;
       align-items: start;
+      border-left: 3px solid transparent;
+      transition: border-color 0.3s, background 0.3s;
+    }
+    .exp-item:hover {
+      border-left-color: var(--accent);
+      background: rgba(56,189,248,0.02);
     }
     .exp-item:last-child { border-bottom: none; }
     .exp-item-num {
@@ -390,18 +396,33 @@
       display: flex; align-items: center; justify-content: center;
       margin-top: 0.15rem;
     }
+    .exp-title-row {
+      display: flex;
+      align-items: baseline;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+      margin-bottom: 0.2rem;
+    }
     .exp-title {
       font-size: 1.05rem;
       color: var(--text-white);
       font-weight: 700;
-      margin-bottom: 0.2rem;
+    }
+    .exp-title-period {
+      font-family: var(--mono);
+      font-size: 0.68rem;
+      color: #5a7090;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--border-light);
+      padding: 0.1rem 0.5rem;
+      border-radius: 3px;
+      white-space: nowrap;
     }
     .exp-subtitle {
-      font-family: var(--mono);
-      font-size: 0.72rem;
+      font-size: 0.82rem;
       color: var(--accent);
       margin-bottom: 0.75rem;
-      opacity: 0.85;
+      line-height: 1.5;
     }
     .exp-desc {
       font-size: 0.88rem;
@@ -818,7 +839,9 @@
       .exp-group-header { padding: 1.5rem 1.25rem 1.25rem; }
       .exp-header-top { flex-direction: column; gap: 0.4rem; }
       .exp-company { font-size: 1.15rem; }
-      .exp-item { grid-template-columns: 28px 1fr; gap: 0.75rem; padding: 1.25rem; }
+      .exp-item { grid-template-columns: 28px 1fr; gap: 0.75rem; padding: 1.25rem; border-left: none !important; }
+      .exp-title-row { flex-direction: column; gap: 0.3rem; }
+      .exp-subtitle { font-size: 0.78rem; }
       .exp-results { gap: 0.4rem; }
       .exp-chip { padding: 0.45rem 0.7rem; min-width: 70px; }
       .exp-chip-value { font-size: 0.88rem; }
@@ -938,7 +961,10 @@
       <div class="exp-item">
         <div class="exp-item-num">1</div>
         <div>
-          <div class="exp-title">AI 기반 상품 자동 매칭 시스템</div>
+          <div class="exp-title-row">
+            <div class="exp-title">AI 기반 상품 자동 매칭 시스템</div>
+            <span class="exp-title-period">2024 — 2025</span>
+          </div>
           <div class="exp-subtitle">Top-1 78.4% · Top-5 92.1% — 혼자서 설계·구축·배포</div>
           <ul class="exp-desc">
             <li>기존 상품 매칭 서비스의 한계를 확인하고, AI 기반 반자동 추천 방식으로 전환을 결정</li>
@@ -1003,7 +1029,10 @@
       <div class="exp-item">
         <div class="exp-item-num">2</div>
         <div>
-          <div class="exp-title">물류솔루션(COLO) 기능 고도화</div>
+          <div class="exp-title-row">
+            <div class="exp-title">물류솔루션(COLO) 기능 고도화</div>
+            <span class="exp-title-period">2022 — 2024</span>
+          </div>
           <div class="exp-subtitle">판매자 시스템 분리 · 쇼핑몰 75개 연동 — 기획부터 개발까지 주도</div>
           <ul class="exp-desc">
             <li>판매자·물류센터·관리자가 하나의 시스템에 섞여 있어
@@ -1016,7 +1045,7 @@
             <li>판매자 시스템 분리를 첫 단계로 실행.
               화면을 최신 기술로 재구축하고,
               주문 수집과 출고 요청 과정을 독립적으로 분리</li>
-            <li>쇼핑몰 통합 관리 서비스(플레이오토)를 연동하여
+            <li>여러 쇼핑몰의 주문을 한곳에서 관리하는 외부 서비스(플레이오토)를 연동하여
               주문을 자동 수집할 수 있는 쇼핑몰을 75개로 확대</li>
             <li>기획, 설계, 개발 전 과정을 주도</li>
           </ul>
@@ -1035,7 +1064,10 @@
       <div class="exp-item">
         <div class="exp-item-num">3</div>
         <div>
-          <div class="exp-title">물류솔루션(COLO) 미국 진출</div>
+          <div class="exp-title-row">
+            <div class="exp-title">물류솔루션(COLO) 미국 진출</div>
+            <span class="exp-title-period">2021 — 2022</span>
+          </div>
           <div class="exp-subtitle">미국 CTK 센터 실서비스 운영 → Series A 투자유치 기여</div>
           <ul class="exp-desc">
             <li>국내 버전은 물류센터 내부의 작업 흐름 관리, 재고 위치 추적,
@@ -1075,7 +1107,10 @@
       <div class="exp-item">
         <div class="exp-item-num">4</div>
         <div>
-          <div class="exp-title">물류솔루션(COLO) 정규버전 런칭</div>
+          <div class="exp-title-row">
+            <div class="exp-title">물류솔루션(COLO) 정규버전 런칭</div>
+            <span class="exp-title-period">2020 — 2021</span>
+          </div>
           <div class="exp-subtitle">첫 정규 버전 — 핵심 기능 대부분을 설계·구현</div>
           <ul class="exp-desc">
             <li>실제 서비스에 필요한 전반적 기능이 들어간 첫 정규 버전</li>
@@ -1111,9 +1146,9 @@
             </div>
           </div>
           <p class="exp-group-summary">Android 앱 · VR 앱 · 3D 콘텐츠 개발 — 전국 국립박물관 전시물 3D 스캔·촬영부터 앱 개발까지</p>
-            <details class="exp-collapse">
+            <details class="exp-collapse" open>
             <summary class="exp-collapse-toggle">
-              <span>프로젝트 상세 보기</span>
+              <span>프로젝트 상세</span>
               <span class="arrow">▼</span>
             </summary>
             <div class="exp-collapse-content">
@@ -1121,6 +1156,7 @@
               <div class="exp-item">
                 <div>
                   <div class="exp-title">360SCOPE</div>
+                  <div class="exp-subtitle">VR 올인원 장비 — 태블릿에서 전시 선택하면 VR이 자동 재생</div>
                   <ul class="exp-desc">
                     <li>3D 가상박물관 VR 올인원 장비 개발</li>
                     <li>태블릿 + VR 헤드셋 연동,
@@ -1145,6 +1181,7 @@
               <div class="exp-item">
                 <div>
                   <div class="exp-title">3D 가상박물관</div>
+                  <div class="exp-subtitle">전국 13개 국립박물관 전시를 3D로 — 웹·앱·TV 멀티플랫폼</div>
                   <ul class="exp-desc">
                     <li>국립중앙박물관 및 전국 13개 국립박물관
                       상설/특별전 3D 구성</li>
@@ -1160,6 +1197,7 @@
               <div class="exp-item" style="border-bottom:none;">
                 <div>
                   <div class="exp-title">Bideomap</div>
+                  <div class="exp-subtitle">360도 영상 지도 서비스 — Android 앱 + VR 플레이어</div>
                   <ul class="exp-desc">
                     <li>360도 영상 지도 서비스
                       Android 앱 개발</li>
