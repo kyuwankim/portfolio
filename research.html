@@ -1118,9 +1118,9 @@
   <!-- Weekly Log -->
   <section class="log-section">
     <div class="container">
-      <div class="section-label reveal">Weekly Log</div>
+      <div class="section-label">Weekly Log</div>
 
-      <details id="week-2" class="week-item reveal">
+      <details id="week-2" class="week-item">
         <summary class="week-toggle">
           <span>2주차 — PH 기반 상품 식별 정확도 개선 (94%)</span>
           <div class="week-toggle-right">
@@ -1619,7 +1619,7 @@
         </div>
       </details>
 
-      <details id="week-1" class="week-item reveal">
+      <details id="week-1" class="week-item">
         <summary class="week-toggle">
           <span>1주차 — 환경 구축 및 파이프라인 검증</span>
           <div class="week-toggle-right">
@@ -1724,8 +1724,12 @@
   <script>
     const observer = new IntersectionObserver(entries => {
       entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
-    }, { threshold: 0.1 });
+    }, { threshold: 0, rootMargin: '0px 0px 100px 0px' });
     document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+    // 안전장치: 3초 후에도 안 보이는 reveal 요소는 강제 표시
+    setTimeout(() => {
+      document.querySelectorAll('.reveal:not(.visible)').forEach(el => el.classList.add('visible'));
+    }, 3000);
 
     // 주차 링크 복사
     function copyWeekLink(e, weekId) {
