@@ -1185,7 +1185,9 @@
 
           <p class="week-desc" style="margin-bottom:1rem;">
             동일 100장에 대해 특징 조합을 바꿔가며 LOO(한 장씩 빼면서 검증) 정확도를 측정했다.<br>
-            서로 다른 특징의 거리를 동일 척도로 결합하기 위해 Min-Max 정규화를 적용하였다.
+            PH 거리는 수만 단위, Color 거리는 소수점, OCR 유사도는 0~1 &mdash; <strong>단위가 제각각</strong>이라<br>
+            그냥 합산하면 숫자가 큰 PH만 결과를 지배한다. 모든 거리를 0~1 범위로 맞춘 뒤(Min-Max 정규화)<br>
+            동등하게 합산해야 세 특징이 <strong>공정하게 기여</strong>할 수 있다.
           </p>
 
           <div class="figure" style="margin-bottom:1.5rem;">
@@ -1209,7 +1211,7 @@
           </table>
           </div>
           <p class="week-desc" style="font-size:0.85rem;color:#5a7090;margin-bottom:0.5rem;">
-            PH + Color만으로 이미 100%. OCR은 추가 이득 없지만, 상품 수가 늘어나면 필요해질 수 있다.
+            PH + Color만으로 이미 100%. OCR은 현재 추가 이득이 없지만, 같은 상품의 다른 맛/색상/사이즈 변형(예: 킷캣 오리지널 vs 딸기)처럼 박스 형태와 색은 거의 같고 글자만 다른 경우에 필수적이 된다.
           </p>
 
           <!-- ===== 상품별 정확도 ===== -->
@@ -1311,7 +1313,8 @@
           <p class="week-desc">
             PH(형태) + Color(색상) + OCR(글자), 세 가지 관점을 결합하면<br>
             각각의 약점을 상호 보완하여 <strong>10종 100장에서 Top-1 100%, Top-5 100%</strong>를 달성한다.<br>
-            PH + Color만으로 이미 100%이며, OCR은 현재 노이즈가 있지만 향후 유사 상품 구분에 기여할 수 있다.
+            PH + Color만으로 이미 100%이며, OCR은 현재 추가 이득이 없지만 &mdash;<br>
+            같은 상품의 다른 맛/색상/사이즈(예: 킷캣 오리지널 vs 딸기)처럼 <strong>박스 형태와 색은 같고 글자만 다른 경우</strong>에 핵심 구분자가 된다.
           </p>
           <p class="week-desc" style="margin-top:0.75rem;">
             핵심 발견은 <strong>Color Histogram이 단독 97%로 매우 강력하다</strong>는 점이다.<br>
@@ -1338,7 +1341,7 @@
           <div class="week-section-label">다음 주 계획</div>
 
           <ul class="week-desc">
-            <li><strong>상품 수 확대 (30~40종)</strong> &mdash; 기존 10종에 20~30종을 추가하여 Color 단독의 한계를 확인하고, PH + Color + OCR 결합의 확장성을 검증한다. 특히 유사 색상/동일 브랜드 변형 상품(예: 킷캣 오리지널 vs 딸기)을 포함한다.</li>
+            <li><strong>상품 수 확대 (30~40종)</strong> &mdash; 기존 10종에 20~30종을 추가하여 Color 단독의 한계를 확인하고, PH + Color + OCR 결합의 확장성을 검증한다. 특히 같은 브랜드의 다른 맛/색상/사이즈(예: 킷캣 오리지널 vs 딸기 &mdash; 박스 형태와 색은 같고 글자만 다른 경우)를 포함하여 OCR의 실질적 기여를 검증한다.</li>
             <li><strong>실시간 스캔 프로토타입</strong> &mdash; 카메라 프리뷰에서 상품을 실시간으로 인식하는 모드. PH(64&times;64) + Color로 200~300ms 내 처리, 초당 3~5회 인식 목표.</li>
             <li><strong>Product Fingerprint DB</strong> &mdash; 상품별 fingerprint(150D + 텍스트)를 온디바이스 DB에 저장하고, 서버 없이 즉시 매칭하는 구조 구현.</li>
           </ul>
