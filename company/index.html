@@ -8,26 +8,23 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
         :root {
-            --dark: #0f0f0f;
-            --dark2: #1a1a1a;
-            --light: #f5f3ef;
-            --warm: #f8f6f1;
-            --text-on-dark: #f0ede8;
-            --sub-on-dark: #9a9590;
-            --text: #1a1a1a;
-            --sub: #6b6560;
-            --muted: #a09a94;
-            --accent: #e8613a;
-            --accent2: #f2994a;
-            --accent-glow: rgba(232,97,58,0.15);
-            --line-dark: rgba(255,255,255,0.08);
-            --line-light: #e5e0d8;
+            --bg: #0a0a12;
+            --glass: rgba(255,255,255,0.06);
+            --glass-border: rgba(255,255,255,0.1);
+            --glass-hover: rgba(255,255,255,0.1);
+            --text: #f0eef5;
+            --sub: rgba(240,238,245,0.55);
+            --muted: rgba(240,238,245,0.3);
+            --accent1: #7c5cfc;
+            --accent2: #00d4aa;
+            --accent3: #f97066;
+            --accent4: #fbbf24;
         }
         * { margin: 0; padding: 0; box-sizing: border-box; }
         html { scroll-behavior: smooth; }
         body {
             font-family: 'Inter', -apple-system, 'Malgun Gothic', sans-serif;
-            background: var(--dark);
+            background: var(--bg);
             color: var(--text);
             line-height: 1.6;
             word-break: keep-all;
@@ -35,44 +32,118 @@
             overflow-x: hidden;
         }
 
+        /* ── mesh gradient bg ── */
+        .mesh-bg {
+            position: fixed; inset: 0; z-index: 0;
+            pointer-events: none;
+            overflow: hidden;
+        }
+        .mesh-orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(120px);
+            opacity: 0.35;
+            animation: orbFloat 20s ease-in-out infinite;
+        }
+        .orb-1 {
+            width: 600px; height: 600px;
+            background: var(--accent1);
+            top: -10%; left: -10%;
+            animation-delay: 0s;
+        }
+        .orb-2 {
+            width: 500px; height: 500px;
+            background: var(--accent2);
+            top: 30%; right: -15%;
+            animation-delay: -7s;
+        }
+        .orb-3 {
+            width: 450px; height: 450px;
+            background: var(--accent3);
+            bottom: 10%; left: 20%;
+            animation-delay: -14s;
+        }
+        .orb-4 {
+            width: 350px; height: 350px;
+            background: var(--accent4);
+            top: 60%; left: 50%;
+            animation-delay: -4s;
+        }
+        @keyframes orbFloat {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            33% { transform: translate(40px, -30px) scale(1.05); }
+            66% { transform: translate(-20px, 20px) scale(0.95); }
+        }
+
+        /* ── grain overlay ── */
+        .grain {
+            position: fixed; inset: 0; z-index: 1;
+            pointer-events: none;
+            opacity: 0.03;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+            background-repeat: repeat;
+        }
+
+        /* ── content z-index ── */
+        .content { position: relative; z-index: 2; }
+
         /* ── reveal ── */
         .reveal {
             opacity: 0;
-            transform: translateY(40px);
+            transform: translateY(36px);
             transition: opacity 0.8s cubic-bezier(0.22,1,0.36,1), transform 0.8s cubic-bezier(0.22,1,0.36,1);
         }
         .reveal.visible { opacity: 1; transform: translateY(0); }
-        .reveal-delay-1 { transition-delay: 0.1s; }
-        .reveal-delay-2 { transition-delay: 0.2s; }
-        .reveal-delay-3 { transition-delay: 0.3s; }
+        .reveal-d1 { transition-delay: 0.1s; }
+        .reveal-d2 { transition-delay: 0.2s; }
+        .reveal-d3 { transition-delay: 0.3s; }
+
+        /* ── glass card mixin ── */
+        .glass {
+            background: var(--glass);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+        }
+        .glass:hover {
+            background: var(--glass-hover);
+            border-color: rgba(255,255,255,0.15);
+        }
 
         /* ── nav ── */
         nav {
             position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-            padding: 24px 48px;
+            padding: 20px 48px;
             display: flex; align-items: center; justify-content: space-between;
             transition: all 0.4s;
         }
         nav.scrolled {
-            background: rgba(15,15,15,0.9);
-            backdrop-filter: blur(20px);
-            padding: 16px 48px;
+            background: rgba(10,10,18,0.7);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border-bottom: 1px solid var(--glass-border);
+            padding: 14px 48px;
         }
-        .nav-name {
-            font-size: 15px; font-weight: 800;
-            color: #fff;
+        .nav-logo {
+            font-size: 16px; font-weight: 800;
             letter-spacing: -0.5px;
+            background: linear-gradient(135deg, var(--accent1), var(--accent2));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
         .nav-links { display: flex; gap: 28px; }
         .nav-links a {
             font-size: 12px; font-weight: 500;
-            color: var(--sub-on-dark); text-decoration: none;
-            letter-spacing: 0.5px;
+            color: var(--sub);
+            text-decoration: none;
+            letter-spacing: 0.3px;
             transition: color 0.2s;
         }
-        .nav-links a:hover { color: #fff; }
+        .nav-links a:hover { color: var(--text); }
 
-        /* ── hero (dark) ── */
+        /* ── hero ── */
         .hero {
             min-height: 100vh;
             display: flex; flex-direction: column;
@@ -80,70 +151,64 @@
             padding: 0 48px;
             max-width: 1200px;
             margin: 0 auto;
-            position: relative;
         }
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: -20%; right: -30%;
-            width: 800px; height: 800px;
-            background: radial-gradient(circle, var(--accent-glow) 0%, transparent 65%);
-            pointer-events: none;
-        }
-        .hero-label {
+        .hero-badge {
             display: inline-flex; align-items: center; gap: 8px;
+            padding: 8px 18px;
+            border-radius: 100px;
+            background: var(--glass);
+            backdrop-filter: blur(16px);
+            border: 1px solid var(--glass-border);
             font-size: 12px; font-weight: 600;
-            color: var(--accent);
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            margin-bottom: 32px;
+            color: var(--sub);
+            margin-bottom: 36px;
+            width: fit-content;
         }
-        .hero-label::before {
-            content: '';
-            width: 8px; height: 8px;
-            background: var(--accent);
+        .hero-badge .dot {
+            width: 7px; height: 7px;
             border-radius: 50%;
-            animation: pulse 2s ease-in-out infinite;
+            background: var(--accent2);
+            box-shadow: 0 0 10px var(--accent2);
+            animation: dotPulse 2s ease-in-out infinite;
         }
-        @keyframes pulse {
-            0%, 100% { opacity: 1; transform: scale(1); }
-            50% { opacity: 0.5; transform: scale(0.8); }
+        @keyframes dotPulse {
+            0%, 100% { opacity: 1; box-shadow: 0 0 10px var(--accent2); }
+            50% { opacity: 0.5; box-shadow: 0 0 4px var(--accent2); }
         }
         .hero h1 {
-            font-size: clamp(42px, 7vw, 76px);
+            font-size: clamp(40px, 7vw, 74px);
             font-weight: 900;
-            color: #fff;
             letter-spacing: -3px;
             line-height: 1.1;
-            margin-bottom: 32px;
+            margin-bottom: 28px;
         }
-        .hero h1 .gradient {
-            background: linear-gradient(135deg, var(--accent) 0%, var(--accent2) 100%);
+        .hero h1 .grad {
+            background: linear-gradient(135deg, var(--accent1) 0%, var(--accent2) 50%, var(--accent4) 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
         }
         .hero-sub {
             font-size: 17px;
-            color: var(--sub-on-dark);
-            max-width: 460px;
-            line-height: 1.8;
-            margin-bottom: 48px;
+            color: var(--sub);
+            max-width: 440px;
+            line-height: 1.85;
+            margin-bottom: 44px;
         }
         .hero-cta {
-            display: inline-flex; align-items: center; gap: 12px;
+            display: inline-flex; align-items: center; gap: 10px;
             font-size: 14px; font-weight: 600;
             color: #fff;
             text-decoration: none;
             padding: 16px 36px;
-            background: var(--accent);
             border-radius: 100px;
+            background: linear-gradient(135deg, var(--accent1), var(--accent2));
+            box-shadow: 0 4px 24px rgba(124,92,252,0.3), 0 0 60px rgba(0,212,170,0.1);
             transition: all 0.3s;
-            box-shadow: 0 4px 24px rgba(232,97,58,0.3);
         }
         .hero-cta:hover {
             transform: translateY(-2px);
-            box-shadow: 0 8px 32px rgba(232,97,58,0.4);
+            box-shadow: 0 8px 32px rgba(124,92,252,0.4), 0 0 80px rgba(0,212,170,0.15);
         }
         .hero-cta .arrow { transition: transform 0.3s; }
         .hero-cta:hover .arrow { transform: translateX(4px); }
@@ -152,224 +217,199 @@
             position: absolute;
             bottom: 40px; left: 50%; transform: translateX(-50%);
             font-size: 10px; font-weight: 600;
-            color: var(--sub-on-dark);
+            color: var(--muted);
             letter-spacing: 3px;
             text-transform: uppercase;
-            display: flex; flex-direction: column; align-items: center; gap: 10px;
+            display: flex; flex-direction: column; align-items: center; gap: 8px;
         }
         .hero-scroll::after {
             content: '';
-            width: 1px; height: 36px;
-            background: linear-gradient(to bottom, var(--sub-on-dark), transparent);
-            animation: scrollPulse 2s ease-in-out infinite;
+            width: 1px; height: 32px;
+            background: linear-gradient(to bottom, var(--muted), transparent);
+            animation: scrollAnim 2s ease-in-out infinite;
         }
-        @keyframes scrollPulse {
-            0%, 100% { opacity: 0.3; }
-            50% { opacity: 1; }
+        @keyframes scrollAnim {
+            0%, 100% { opacity: 0.3; transform: scaleY(0.6); }
+            50% { opacity: 1; transform: scaleY(1); }
         }
 
-        /* ── marquee (dark) ── */
+        /* ── marquee ── */
         .marquee-wrap {
-            border-top: 1px solid var(--line-dark);
-            border-bottom: 1px solid var(--line-dark);
-            padding: 18px 0;
+            border-top: 1px solid var(--glass-border);
+            border-bottom: 1px solid var(--glass-border);
+            padding: 16px 0;
             overflow: hidden;
-            background: var(--dark);
         }
         .marquee-track {
             display: inline-flex;
-            animation: marquee 25s linear infinite;
+            animation: marquee 30s linear infinite;
         }
         .marquee-track span {
-            font-size: 13px; font-weight: 600;
-            color: var(--sub-on-dark);
+            font-size: 12px; font-weight: 600;
+            color: var(--muted);
             letter-spacing: 2px;
             text-transform: uppercase;
-            padding: 0 28px;
+            padding: 0 24px;
         }
-        .marquee-track .dot { color: var(--accent); }
+        .marquee-track .hl { color: var(--accent2); }
         @keyframes marquee {
             0% { transform: translateX(0); }
             100% { transform: translateX(-50%); }
         }
 
-        /* ── section: warm light ── */
-        .sec-light {
-            background: var(--warm);
-            color: var(--text);
-        }
-        /* ── section: dark ── */
-        .sec-dark {
-            background: var(--dark);
-            color: var(--text-on-dark);
-        }
-        .sec-dark .s-sub { color: var(--sub-on-dark); }
-
-        .s-inner { max-width: 1200px; margin: 0 auto; padding: 120px 48px; }
+        /* ── sections ── */
+        .sec { max-width: 1200px; margin: 0 auto; padding: 120px 48px; }
 
         .s-label {
             font-size: 11px; font-weight: 700;
+            color: var(--accent2);
             letter-spacing: 3px;
             text-transform: uppercase;
-            margin-bottom: 20px;
+            margin-bottom: 18px;
         }
-        .sec-light .s-label { color: var(--accent); }
-        .sec-dark .s-label { color: var(--accent); }
-
         .s-title {
-            font-size: clamp(28px, 4vw, 42px);
+            font-size: clamp(26px, 4vw, 40px);
             font-weight: 800;
             letter-spacing: -1.5px;
             line-height: 1.25;
-            margin-bottom: 16px;
+            margin-bottom: 14px;
         }
         .s-sub {
             font-size: 15px;
             color: var(--sub);
+            max-width: 460px;
             line-height: 1.8;
-            max-width: 480px;
         }
 
-        /* ── services grid (light bg) ── */
+        /* ── services ── */
         .svc-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             gap: 16px;
-            margin-top: 56px;
+            margin-top: 52px;
         }
         .svc-card {
-            padding: 36px 30px;
-            border-radius: 20px;
-            background: #fff;
-            border: 1px solid var(--line-light);
-            transition: transform 0.3s, box-shadow 0.3s;
-            position: relative;
-            overflow: hidden;
+            padding: 36px 28px;
+            transition: all 0.35s;
         }
         .svc-card:hover {
             transform: translateY(-6px);
-            box-shadow: 0 20px 60px rgba(0,0,0,0.06);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.2);
         }
-        .svc-card.featured {
-            background: linear-gradient(135deg, var(--accent) 0%, var(--accent2) 100%);
-            color: #fff;
-            border: none;
-        }
-        .svc-card.featured p { color: rgba(255,255,255,0.85); }
-        .svc-card.featured .svc-tags span {
-            background: rgba(255,255,255,0.18);
-            color: rgba(255,255,255,0.9);
-        }
-        .svc-num {
-            font-size: 52px; font-weight: 900;
-            line-height: 1;
+        .svc-icon {
+            width: 48px; height: 48px;
+            border-radius: 14px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 22px;
             margin-bottom: 24px;
-            opacity: 0.1;
         }
-        .svc-card.featured .svc-num { opacity: 0.2; color: #fff; }
+        .svc-icon.c1 { background: rgba(124,92,252,0.15); }
+        .svc-icon.c2 { background: rgba(0,212,170,0.15); }
+        .svc-icon.c3 { background: rgba(249,112,102,0.15); }
         .svc-card h3 {
-            font-size: 19px; font-weight: 700;
+            font-size: 18px; font-weight: 700;
             letter-spacing: -0.3px;
             margin-bottom: 12px;
         }
         .svc-card p {
-            font-size: 14px;
+            font-size: 13px;
             color: var(--sub);
-            line-height: 1.75;
+            line-height: 1.8;
         }
         .svc-tags {
             display: flex; flex-wrap: wrap; gap: 6px;
-            margin-top: 20px;
+            margin-top: 18px;
         }
         .svc-tags span {
-            font-size: 11px; font-weight: 600;
-            padding: 5px 14px;
+            font-size: 10px; font-weight: 600;
+            padding: 4px 12px;
             border-radius: 100px;
-            background: var(--warm);
+            background: rgba(255,255,255,0.06);
             color: var(--sub);
+            border: 1px solid rgba(255,255,255,0.06);
         }
-        /* summary card spanning full width */
         .svc-summary {
             grid-column: 1 / -1;
-            padding: 32px 36px;
-            border-radius: 20px;
-            background: #fff;
-            border: 1px solid var(--line-light);
+            padding: 28px 32px;
         }
         .svc-summary p {
             font-size: 15px; color: var(--sub); line-height: 1.8;
         }
         .svc-summary strong { color: var(--text); }
 
-        /* ── philosophy (dark section) ── */
-        .phil-layout {
+        /* ── philosophy ── */
+        .phil-sep {
+            width: 100%;
+            height: 1px;
+            background: var(--glass-border);
+        }
+        .phil-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 80px;
+            gap: 72px;
             align-items: start;
-            margin-top: 56px;
+            margin-top: 52px;
         }
         .phil-quote {
-            font-size: 21px;
+            font-size: 20px;
             font-weight: 300;
-            color: var(--text-on-dark);
-            line-height: 1.8;
+            line-height: 1.85;
             font-style: italic;
+            color: var(--text);
             padding-left: 24px;
-            border-left: 3px solid var(--accent);
-            margin-bottom: 28px;
+            border-left: 2px solid var(--accent1);
+            margin-bottom: 24px;
         }
         .phil-text p {
-            font-size: 15px;
-            color: var(--sub-on-dark);
-            line-height: 1.8;
-            margin-bottom: 12px;
+            font-size: 14px;
+            color: var(--sub);
+            line-height: 1.85;
+            margin-bottom: 10px;
         }
         .val-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 14px;
+            gap: 12px;
         }
         .val-card {
-            padding: 24px;
-            border-radius: 16px;
-            background: var(--dark2);
-            border: 1px solid var(--line-dark);
+            padding: 22px;
         }
         .val-card h4 {
-            font-size: 14px; font-weight: 700;
-            color: var(--text-on-dark);
+            font-size: 13px; font-weight: 700;
             margin-bottom: 6px;
         }
         .val-card p {
-            font-size: 12px;
-            color: var(--sub-on-dark);
+            font-size: 11px;
+            color: var(--sub);
             line-height: 1.6;
         }
 
-        /* ── works (light section) ── */
+        /* ── works ── */
         .works-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 16px;
-            margin-top: 56px;
+            margin-top: 52px;
         }
         .w-card {
-            border-radius: 20px;
+            border-radius: 24px;
             overflow: hidden;
             text-decoration: none;
             color: var(--text);
-            background: #fff;
-            border: 1px solid var(--line-light);
-            transition: transform 0.3s, box-shadow 0.3s;
+            background: var(--glass);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border: 1px solid var(--glass-border);
+            transition: all 0.35s;
             display: block;
         }
         .w-card:hover {
             transform: translateY(-6px);
-            box-shadow: 0 20px 60px rgba(0,0,0,0.08);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.25);
+            border-color: rgba(255,255,255,0.15);
         }
         .w-thumb {
-            height: 220px;
+            height: 210px;
             background-size: cover;
             background-position: center;
             position: relative;
@@ -377,154 +417,151 @@
         .w-thumb::after {
             content: '';
             position: absolute; inset: 0;
-            background: linear-gradient(180deg, transparent 40%, rgba(0,0,0,0.5));
+            background: linear-gradient(180deg, transparent 40%, rgba(10,10,18,0.7));
         }
         .w-url {
             position: absolute;
-            bottom: 14px; left: 16px; z-index: 1;
+            bottom: 12px; left: 16px; z-index: 1;
             font-size: 11px; font-weight: 600;
-            color: rgba(255,255,255,0.9);
-            background: rgba(0,0,0,0.35);
-            backdrop-filter: blur(8px);
-            padding: 4px 12px;
+            color: rgba(255,255,255,0.85);
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            padding: 4px 14px;
             border-radius: 100px;
+            border: 1px solid rgba(255,255,255,0.1);
         }
-        .w-info { padding: 28px; }
+        .w-info { padding: 24px 28px; }
         .w-info h3 {
-            font-size: 17px; font-weight: 700;
+            font-size: 16px; font-weight: 700;
             margin-bottom: 8px; letter-spacing: -0.3px;
         }
         .w-info p { font-size: 13px; color: var(--sub); line-height: 1.7; }
 
-        .rnd-banner {
+        .rnd-card {
             grid-column: 1 / -1;
-            margin-top: 0;
             padding: 32px 36px;
-            border-radius: 20px;
-            background: linear-gradient(135deg, var(--dark) 0%, #1f1a17 100%);
-            border: 1px solid var(--line-dark);
             display: flex;
             align-items: center;
             gap: 24px;
-            color: var(--text-on-dark);
         }
         .rnd-icon {
             width: 52px; height: 52px;
-            border-radius: 14px;
-            background: linear-gradient(135deg, var(--accent), var(--accent2));
+            border-radius: 16px;
+            background: linear-gradient(135deg, var(--accent1), var(--accent3));
             display: flex; align-items: center; justify-content: center;
             font-size: 22px;
             flex-shrink: 0;
         }
-        .rnd-banner h3 { font-size: 15px; font-weight: 700; margin-bottom: 4px; }
-        .rnd-banner p { font-size: 13px; color: var(--sub-on-dark); line-height: 1.7; }
+        .rnd-card h3 { font-size: 15px; font-weight: 700; margin-bottom: 4px; }
+        .rnd-card p { font-size: 13px; color: var(--sub); line-height: 1.7; }
 
-        /* ── founder (dark section) ── */
+        /* ── founder ── */
         .founder-row {
             display: flex;
             align-items: center;
-            gap: 40px;
-            margin-top: 56px;
+            gap: 36px;
+            margin-top: 52px;
+        }
+        .founder-img-wrap {
+            position: relative;
+            flex-shrink: 0;
+        }
+        .founder-img-wrap::before {
+            content: '';
+            position: absolute;
+            inset: -3px;
+            border-radius: 26px;
+            background: linear-gradient(135deg, var(--accent1), var(--accent2));
+            z-index: 0;
         }
         .founder-img {
-            width: 150px; height: 150px;
+            width: 140px; height: 140px;
             border-radius: 24px;
             object-fit: cover;
             object-position: center 15%;
-            flex-shrink: 0;
-            border: 2px solid var(--line-dark);
+            position: relative;
+            z-index: 1;
+            display: block;
         }
         .founder-body h3 {
             font-size: 22px; font-weight: 800;
-            color: #fff;
             margin-bottom: 4px;
         }
         .founder-role {
-            font-size: 13px; font-weight: 600;
-            color: var(--accent);
-            margin-bottom: 16px;
+            font-size: 12px; font-weight: 600;
+            color: var(--accent2);
+            margin-bottom: 14px;
         }
-        .founder-body p {
+        .founder-body > p {
             font-size: 14px;
-            color: var(--sub-on-dark);
+            color: var(--sub);
             line-height: 1.85;
         }
         .founder-links {
-            display: flex; gap: 10px; margin-top: 20px;
+            display: flex; gap: 10px; margin-top: 18px;
         }
         .founder-links a {
-            font-size: 12px; font-weight: 600;
-            color: var(--sub-on-dark);
+            font-size: 11px; font-weight: 600;
+            color: var(--sub);
             text-decoration: none;
             padding: 7px 18px;
             border-radius: 100px;
-            border: 1px solid var(--line-dark);
+            border: 1px solid var(--glass-border);
             transition: all 0.2s;
         }
         .founder-links a:hover {
-            color: #fff;
-            border-color: var(--accent);
+            color: var(--text);
+            border-color: var(--accent1);
+            background: rgba(124,92,252,0.08);
         }
 
-        /* ── CTA (accent gradient) ── */
+        /* ── CTA ── */
         .cta-section {
-            background: linear-gradient(135deg, #1a1210 0%, var(--dark) 50%, #12151a 100%);
             text-align: center;
             padding: 140px 48px;
-            position: relative;
-            overflow: hidden;
-        }
-        .cta-section::before {
-            content: '';
-            position: absolute;
-            top: 50%; left: 50%; transform: translate(-50%,-50%);
-            width: 700px; height: 700px;
-            background: radial-gradient(circle, var(--accent-glow) 0%, transparent 60%);
-            pointer-events: none;
+            max-width: 1200px;
+            margin: 0 auto;
         }
         .cta-section h2 {
             font-size: clamp(26px, 4vw, 40px);
             font-weight: 800;
-            color: #fff;
             letter-spacing: -1.5px;
             line-height: 1.3;
             margin-bottom: 16px;
-            position: relative;
         }
         .cta-section p {
             font-size: 15px;
-            color: var(--sub-on-dark);
+            color: var(--sub);
             margin-bottom: 40px;
-            position: relative;
         }
         .cta-btn {
             display: inline-flex; align-items: center; gap: 10px;
             font-size: 15px; font-weight: 600;
             color: #fff;
             text-decoration: none;
-            padding: 18px 40px;
-            background: linear-gradient(135deg, var(--accent) 0%, var(--accent2) 100%);
+            padding: 18px 42px;
             border-radius: 100px;
+            background: linear-gradient(135deg, var(--accent1) 0%, var(--accent2) 100%);
+            box-shadow: 0 4px 32px rgba(124,92,252,0.3), 0 0 80px rgba(0,212,170,0.08);
             transition: all 0.3s;
-            position: relative;
-            box-shadow: 0 4px 32px rgba(232,97,58,0.35);
         }
         .cta-btn:hover {
             transform: translateY(-3px);
-            box-shadow: 0 8px 40px rgba(232,97,58,0.45);
+            box-shadow: 0 8px 40px rgba(124,92,252,0.4), 0 0 100px rgba(0,212,170,0.12);
         }
 
         /* ── footer ── */
         footer {
+            border-top: 1px solid var(--glass-border);
             padding: 24px 48px;
-            border-top: 1px solid var(--line-dark);
             display: flex;
             align-items: center;
             justify-content: space-between;
             max-width: 1200px;
             margin: 0 auto;
         }
-        footer p { font-size: 11px; color: var(--sub-on-dark); }
+        footer p { font-size: 11px; color: var(--muted); }
 
         /* ── responsive ── */
         @media (max-width: 768px) {
@@ -535,89 +572,106 @@
             .hero h1 { letter-spacing: -1.5px; }
             .hero-sub { font-size: 15px; }
             .hero-scroll { display: none; }
-            .marquee-track span { font-size: 11px; padding: 0 16px; }
-            .s-inner { padding: 80px 24px; }
+            .marquee-track span { font-size: 10px; padding: 0 14px; }
+            .sec { padding: 80px 24px; }
             .svc-grid { grid-template-columns: 1fr; }
-            .phil-layout { grid-template-columns: 1fr; gap: 40px; }
+            .phil-grid { grid-template-columns: 1fr; gap: 36px; }
             .val-grid { grid-template-columns: 1fr; }
             .works-grid { grid-template-columns: 1fr; }
             .w-thumb { height: 180px; }
-            .rnd-banner { flex-direction: column; text-align: center; padding: 28px 24px; }
+            .rnd-card { flex-direction: column; text-align: center; padding: 28px 24px; }
             .founder-row { flex-direction: column; text-align: center; gap: 24px; }
             .founder-links { justify-content: center; }
             .cta-section { padding: 100px 24px; }
             footer { padding: 20px 24px; flex-direction: column; gap: 4px; text-align: center; }
+            .orb-1 { width: 350px; height: 350px; }
+            .orb-2 { width: 300px; height: 300px; }
+            .orb-3 { width: 250px; height: 250px; }
+            .orb-4 { width: 200px; height: 200px; }
         }
         @media (max-width: 400px) {
             .hero h1 { letter-spacing: -1px; }
             .s-title { letter-spacing: -0.5px; }
-            .svc-card { padding: 28px 24px; }
+            .svc-card { padding: 28px 22px; }
         }
     </style>
 </head>
 <body>
 
-    <nav id="nav">
-        <div class="nav-name">AI-oneer</div>
-        <div class="nav-links">
-            <a href="#services">서비스</a>
-            <a href="#philosophy">철학</a>
-            <a href="#works">작업물</a>
-            <a href="#about">소개</a>
-            <a href="#contact">연락</a>
-        </div>
-    </nav>
-
-    <!-- Hero (dark) -->
-    <section class="hero">
-        <div class="hero-label reveal">Technology Studio</div>
-        <h1 class="reveal reveal-delay-1">
-            더 나은 방법이<br>
-            있다면,<br>
-            <span class="gradient">찾아드립니다.</span>
-        </h1>
-        <p class="hero-sub reveal reveal-delay-2">
-            웹사이트를 만드는 것을 넘어,<br>
-            AI와 기술을 활용해 비즈니스가<br>
-            더 똑똑하게 돌아가도록 돕습니다.
-        </p>
-        <a href="#contact" class="hero-cta reveal reveal-delay-3">
-            프로젝트 문의 <span class="arrow">&rarr;</span>
-        </a>
-        <div class="hero-scroll">Scroll</div>
-    </section>
-
-    <!-- Marquee -->
-    <div class="marquee-wrap">
-        <div class="marquee-track">
-            <span>Web Development</span><span class="dot">&bull;</span>
-            <span>AI Consulting</span><span class="dot">&bull;</span>
-            <span>IT Automation</span><span class="dot">&bull;</span>
-            <span>R&D</span><span class="dot">&bull;</span>
-            <span>Security Audit</span><span class="dot">&bull;</span>
-            <span>SEO</span><span class="dot">&bull;</span>
-            <span>Data Analysis</span><span class="dot">&bull;</span>
-            <span>Web Development</span><span class="dot">&bull;</span>
-            <span>AI Consulting</span><span class="dot">&bull;</span>
-            <span>IT Automation</span><span class="dot">&bull;</span>
-            <span>R&D</span><span class="dot">&bull;</span>
-            <span>Security Audit</span><span class="dot">&bull;</span>
-            <span>SEO</span><span class="dot">&bull;</span>
-            <span>Data Analysis</span><span class="dot">&bull;</span>
-        </div>
+    <!-- Mesh gradient background -->
+    <div class="mesh-bg">
+        <div class="mesh-orb orb-1"></div>
+        <div class="mesh-orb orb-2"></div>
+        <div class="mesh-orb orb-3"></div>
+        <div class="mesh-orb orb-4"></div>
     </div>
+    <div class="grain"></div>
 
-    <!-- Services (warm light) -->
-    <section class="sec-light" id="services">
-        <div class="s-inner">
+    <div class="content">
+
+        <nav id="nav">
+            <div class="nav-logo">AI-oneer</div>
+            <div class="nav-links">
+                <a href="#services">서비스</a>
+                <a href="#philosophy">철학</a>
+                <a href="#works">작업물</a>
+                <a href="#about">소개</a>
+                <a href="#contact">연락</a>
+            </div>
+        </nav>
+
+        <!-- Hero -->
+        <section class="hero">
+            <div class="hero-badge reveal">
+                <span class="dot"></span>
+                Technology Studio
+            </div>
+            <h1 class="reveal reveal-d1">
+                더 나은 방법이<br>
+                있다면,<br>
+                <span class="grad">찾아드립니다.</span>
+            </h1>
+            <p class="hero-sub reveal reveal-d2">
+                웹사이트를 만드는 것을 넘어,<br>
+                AI와 기술을 활용해 비즈니스가<br>
+                더 똑똑하게 돌아가도록 돕습니다.
+            </p>
+            <a href="#contact" class="hero-cta reveal reveal-d3">
+                프로젝트 문의 <span class="arrow">&rarr;</span>
+            </a>
+            <div class="hero-scroll">Scroll</div>
+        </section>
+
+        <!-- Marquee -->
+        <div class="marquee-wrap">
+            <div class="marquee-track">
+                <span>Web Development</span><span class="hl">&bull;</span>
+                <span>AI Consulting</span><span class="hl">&bull;</span>
+                <span>IT Automation</span><span class="hl">&bull;</span>
+                <span>R&D</span><span class="hl">&bull;</span>
+                <span>Security Audit</span><span class="hl">&bull;</span>
+                <span>SEO</span><span class="hl">&bull;</span>
+                <span>Data Analysis</span><span class="hl">&bull;</span>
+                <span>Web Development</span><span class="hl">&bull;</span>
+                <span>AI Consulting</span><span class="hl">&bull;</span>
+                <span>IT Automation</span><span class="hl">&bull;</span>
+                <span>R&D</span><span class="hl">&bull;</span>
+                <span>Security Audit</span><span class="hl">&bull;</span>
+                <span>SEO</span><span class="hl">&bull;</span>
+                <span>Data Analysis</span><span class="hl">&bull;</span>
+            </div>
+        </div>
+
+        <!-- Services -->
+        <section class="sec" id="services">
             <div class="reveal">
                 <p class="s-label">What We Do</p>
                 <h2 class="s-title">세 가지 방식으로<br>문제를 해결합니다</h2>
             </div>
 
             <div class="svc-grid">
-                <div class="svc-card reveal">
-                    <div class="svc-num">01</div>
+                <div class="svc-card glass reveal">
+                    <div class="svc-icon c1">&#128736;</div>
                     <h3>만들어드립니다</h3>
                     <p>
                         브랜드의 첫인상이 되는 웹사이트를<br>
@@ -632,8 +686,8 @@
                         <span>유지보수</span>
                     </div>
                 </div>
-                <div class="svc-card featured reveal reveal-delay-1">
-                    <div class="svc-num">02</div>
+                <div class="svc-card glass reveal reveal-d1">
+                    <div class="svc-icon c2">&#9889;</div>
                     <h3>더 효율적으로<br>만들어드립니다</h3>
                     <p>
                         반복되는 업무에 AI와 자동화를 넣어<br>
@@ -646,8 +700,8 @@
                         <span>프로세스 개선</span>
                     </div>
                 </div>
-                <div class="svc-card reveal reveal-delay-2">
-                    <div class="svc-num">03</div>
+                <div class="svc-card glass reveal reveal-d2">
+                    <div class="svc-icon c3">&#128161;</div>
                     <h3>직접 만들고 있습니다</h3>
                     <p>
                         AI와 데이터 분석을 결합한<br>
@@ -661,7 +715,7 @@
                         <span>서비스 개발</span>
                     </div>
                 </div>
-                <div class="svc-summary reveal">
+                <div class="svc-summary glass reveal">
                     <p>
                         <strong>만들어드리는 것</strong>에서 그치지 않습니다.
                         비즈니스를 <strong>더 잘 돌아가게</strong> 만들고,
@@ -669,18 +723,17 @@
                     </p>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- Philosophy (dark) -->
-    <section class="sec-dark" id="philosophy">
-        <div class="s-inner">
+        <!-- Philosophy -->
+        <div class="phil-sep"></div>
+        <section class="sec" id="philosophy">
             <div class="reveal">
                 <p class="s-label">Philosophy</p>
                 <h2 class="s-title">기술은 수단이고,<br>목적은 더 나은 세상입니다</h2>
             </div>
 
-            <div class="phil-layout">
+            <div class="phil-grid">
                 <div class="phil-text reveal">
                     <div class="phil-quote">
                         "이 기술이 사람의 시간을<br>
@@ -699,31 +752,30 @@
                         우리가 찾아드립니다.
                     </p>
                 </div>
-                <div class="val-grid reveal reveal-delay-1">
-                    <div class="val-card">
+                <div class="val-grid reveal reveal-d1">
+                    <div class="val-card glass">
                         <h4>문제부터 이해합니다</h4>
                         <p>기술 도입 전에<br>비즈니스를 먼저 파악합니다</p>
                     </div>
-                    <div class="val-card">
+                    <div class="val-card glass">
                         <h4>실용적으로 접근합니다</h4>
                         <p>화려한 기술보다<br>실제로 작동하는 솔루션을 만듭니다</p>
                     </div>
-                    <div class="val-card">
+                    <div class="val-card glass">
                         <h4>끝까지 책임집니다</h4>
                         <p>납품 후 사라지지 않습니다<br>유지보수까지 함께합니다</p>
                     </div>
-                    <div class="val-card">
+                    <div class="val-card glass">
                         <h4>스스로도 만듭니다</h4>
                         <p>클라이언트 일만 하지 않고<br>자체 기술과 서비스를 연구합니다</p>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- Works (warm light) -->
-    <section class="sec-light" id="works">
-        <div class="s-inner">
+        <!-- Works -->
+        <div class="phil-sep"></div>
+        <section class="sec" id="works">
             <div class="reveal">
                 <p class="s-label">Selected Works</p>
                 <h2 class="s-title">이런 일을 해왔습니다</h2>
@@ -744,7 +796,7 @@
                         <p>연희동의 독립서점 겸 복합문화공간.<br>브랜드 감성을 살린 반응형 웹사이트를<br>기획·개발했습니다.</p>
                     </div>
                 </a>
-                <a href="https://www.shokokorea.co.kr" target="_blank" class="w-card reveal reveal-delay-1">
+                <a href="https://www.shokokorea.co.kr" target="_blank" class="w-card reveal reveal-d1">
                     <div class="w-thumb" style="background-image: url('https://www.shokokorea.co.kr/wp-content/uploads/2026/01/DSC_6639-105-scaled.jpg'), linear-gradient(135deg, #1E329F, #12008E);">
                         <span class="w-url">shokokorea.co.kr</span>
                     </div>
@@ -753,7 +805,7 @@
                         <p>분석화학·합성수지·금속 사업부를 아우르는<br>B2B 기업 웹사이트.<br>제품 카탈로그와 기업 정보를 체계적으로 구성했습니다.</p>
                     </div>
                 </a>
-                <div class="rnd-banner reveal">
+                <div class="rnd-card glass reveal">
                     <div class="rnd-icon">&#128300;</div>
                     <div>
                         <h3>자체 연구: 위상수학적 데이터 분석 (TDA)</h3>
@@ -766,20 +818,21 @@
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- About (dark) -->
-    <section class="sec-dark" id="about">
-        <div class="s-inner">
+        <!-- About -->
+        <div class="phil-sep"></div>
+        <section class="sec" id="about">
             <div class="reveal">
                 <p class="s-label">Founder</p>
                 <h2 class="s-title">만드는 사람</h2>
             </div>
 
             <div class="founder-row reveal">
-                <img src="../profile_crop.jpg" alt="김규완" class="founder-img"
-                     onerror="this.style.display='none'">
+                <div class="founder-img-wrap">
+                    <img src="../profile_crop.jpg" alt="김규완" class="founder-img"
+                         onerror="this.parentElement.style.display='none'">
+                </div>
                 <div class="founder-body">
                     <h3>김규완</h3>
                     <p class="founder-role">Founder & Engineer</p>
@@ -798,27 +851,29 @@
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- CTA -->
-    <section class="cta-section" id="contact">
-        <h2 class="reveal">"이런 건 가능한가요?"라는<br>질문을 좋아합니다</h2>
-        <p class="reveal reveal-delay-1">
-            프로젝트 의뢰, AI 도입 상담,<br>
-            또는 그냥 궁금한 것이 있다면<br>
-            편하게 연락주세요.
-        </p>
-        <a href="mailto:lpnids@gmail.com" class="cta-btn reveal reveal-delay-2">
-            lpnids@gmail.com <span>&rarr;</span>
-        </a>
-    </section>
+        <!-- CTA -->
+        <div class="phil-sep"></div>
+        <section class="cta-section" id="contact">
+            <h2 class="reveal">"이런 건 가능한가요?"라는<br>질문을 좋아합니다</h2>
+            <p class="reveal reveal-d1">
+                프로젝트 의뢰, AI 도입 상담,<br>
+                또는 그냥 궁금한 것이 있다면<br>
+                편하게 연락주세요.
+            </p>
+            <a href="mailto:lpnids@gmail.com" class="cta-btn reveal reveal-d2">
+                lpnids@gmail.com <span>&rarr;</span>
+            </a>
+        </section>
 
-    <!-- Footer -->
-    <footer>
-        <p>AI-oneer &mdash; Seoul</p>
-        <p>사업자등록번호 221-31-51599</p>
-    </footer>
+        <!-- Footer -->
+        <footer>
+            <p>AI-oneer &mdash; Seoul</p>
+            <p>사업자등록번호 221-31-51599</p>
+        </footer>
+
+    </div><!-- /content -->
 
     <script>
         const nav = document.getElementById('nav');
@@ -833,7 +888,7 @@
                     observer.unobserve(e.target);
                 }
             });
-        }, { threshold: 0.12 });
+        }, { threshold: 0.1 });
         document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
         document.querySelectorAll('a[href^="#"]').forEach(a => {
