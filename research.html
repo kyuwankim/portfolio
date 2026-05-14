@@ -8,12 +8,12 @@
   <!-- Open Graph -->
   <meta property="og:type" content="website">
   <meta property="og:title" content="TDA Research — Topological Data Analysis for Product Identification">
-  <meta property="og:description" content="Persistent Homology 기반 상품 식별 연구. 고정 크롭 + 다중 Filtration 결합으로 Top-1 94%, Top-5 100% 달성.">
+  <meta property="og:description" content="Persistent Homology + Color Histogram + OCR 결합으로 Top-1 100% 달성. 10종 상품 완벽 식별.">
   <meta property="og:image" content="https://kyuwan.kim/r/og-research.png">
   <meta property="og:url" content="https://kyuwan.kim/research.html">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="TDA Research — Product Identification">
-  <meta name="twitter:description" content="PH 기반 상품 식별: Top-1 94%, Top-5 100%">
+  <meta name="twitter:description" content="PH + Color + OCR 결합: Top-1 100%, 10종 완벽 식별">
   <meta name="twitter:image" content="https://kyuwan.kim/r/og-research.png">
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='32' y2='32' gradientUnits='userSpaceOnUse'%3E%3Cstop stop-color='%2338bdf8'/%3E%3Cstop offset='1' stop-color='%23818cf8'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='32' height='32' rx='8' fill='%230f1620'/%3E%3Cpath d='M12 7v18M12 16l9-9M12 16l9 9' stroke='url(%23g)' stroke-width='3' stroke-linecap='round' stroke-linejoin='round' fill='none'/%3E%3C/svg%3E">
@@ -1120,12 +1120,256 @@
     <div class="container">
       <div class="section-label">Weekly Log</div>
 
+      <details id="week-3" class="week-item">
+        <summary class="week-toggle">
+          <span>3주차 — PH + Color + OCR 결합 (Top-1 100%)</span>
+          <div class="week-toggle-right">
+            <button class="week-link-btn" onclick="copyWeekLink(event,'week-3')" title="링크 복사">Link</button>
+            <span class="week-badge">Latest</span>
+            <span class="week-arrow">▼</span>
+          </div>
+        </summary>
+        <div class="week-content">
+          <p class="week-desc" style="margin-bottom:1rem;">
+            2주차에서 PH 단독 94%의 한계를 확인하고, <strong>색상 히스토그램(HSV)</strong>과 <strong>OCR 텍스트 인식</strong>을 결합하여<br>
+            동일 100장(10종&times;10장)에 대해 <strong>Top-1 100%, Top-5 100%</strong>를 달성하였다.<br>
+            PH는 형태, Color는 색상, OCR은 글자를 보기 때문에 세 관점이 상호 보완된다.
+          </p>
+
+          <!-- 핵심 결과 -->
+          <div class="stat-row">
+            <div class="stat-card" style="border-color:rgba(52,211,153,0.3);">
+              <div class="stat-value" style="color:#34d399;">100%</div>
+              <div class="stat-label">Top-1 (PH + Color)</div>
+            </div>
+            <div class="stat-card" style="border-color:rgba(52,211,153,0.3);">
+              <div class="stat-value" style="color:#34d399;">100%</div>
+              <div class="stat-label">Top-5</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-value">10 / 100</div>
+              <div class="stat-label">상품 수 / 사진 수</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-value">150D</div>
+              <div class="stat-label">PH 54D + Color 96D</div>
+            </div>
+          </div>
+
+          <!-- ===== 새로 추가된 특징 ===== -->
+          <div class="week-section-label">새로 추가된 특징 &mdash; Color Histogram + OCR</div>
+
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.75rem;margin-bottom:1.5rem;">
+            <div style="padding:1rem 1.15rem;background:var(--bg-card);border:1px solid rgba(245,158,11,0.3);border-radius:6px;">
+              <div style="font-family:var(--mono);font-size:0.72rem;color:#f59e0b;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:0.5rem;">Color Histogram (HSV) &mdash; 96D</div>
+              <div style="font-size:0.9rem;color:var(--text-white);font-weight:600;margin-bottom:0.3rem;">이미지의 색상 분포를 숫자로 요약</div>
+              <div style="font-size:0.85rem;color:var(--text);line-height:1.6;">
+                HSV 색공간으로 변환 후 각 채널(색상/채도/명도)을<br>
+                32구간으로 나눠 픽셀 수를 셈. H(32) + S(32) + V(32) = 96차원.<br>
+                OpenCV <code style="font-size:0.8rem;color:var(--accent);">cv2.calcHist()</code> 한 줄로 계산. Apache 2.0.
+              </div>
+            </div>
+            <div style="padding:1rem 1.15rem;background:var(--bg-card);border:1px solid rgba(167,139,250,0.3);border-radius:6px;">
+              <div style="font-family:var(--mono);font-size:0.72rem;color:#a78bfa;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:0.5rem;">OCR Text &mdash; Tesseract 5.5</div>
+              <div style="font-size:0.9rem;color:var(--text-white);font-weight:600;margin-bottom:0.3rem;">상품 표면의 글자를 읽어서 비교</div>
+              <div style="font-size:0.85rem;color:var(--text);line-height:1.6;">
+                크롭된 이미지에서 Tesseract OCR로 텍스트를 추출하고,<br>
+                character trigram Jaccard 유사도로 비교.<br>
+                Google 유지보수 오픈소스. Apache 2.0.
+              </div>
+            </div>
+          </div>
+
+          <!-- ===== 방법별 정확도 비교 ===== -->
+          <div class="week-section-label">방법별 정확도 비교 &mdash; Ablation Study</div>
+
+          <p class="week-desc" style="margin-bottom:1rem;">
+            동일 100장에 대해 특징 조합을 바꿔가며 LOO(한 장씩 빼면서 검증) 정확도를 측정했다.<br>
+            서로 다른 특징의 거리를 동일 척도로 결합하기 위해 Min-Max 정규화를 적용하였다.
+          </p>
+
+          <div class="figure" style="margin-bottom:1.5rem;">
+            <img src="research/accuracy_week3.png" alt="Method Accuracy Comparison">
+            <div class="figure-caption">
+              파란 막대: Top-1 / 초록 막대: Top-5 / 빨간 점선: 2주차 PH baseline (94%)
+            </div>
+          </div>
+
+          <div class="data-table-wrap" style="margin-bottom:1rem;">
+          <table class="data-table">
+            <thead><tr><th>Method</th><th>Dim</th><th class="num">Top-1</th><th class="num">Top-5</th><th>설명</th></tr></thead>
+            <tbody>
+              <tr><td>PH 54D (baseline)</td><td>54D</td><td class="num">79%</td><td class="num">89%</td><td style="font-size:0.82rem;">형태만 &mdash; 정규화 적용 시</td></tr>
+              <tr><td>Color 96D only</td><td>96D</td><td class="num" style="color:#f59e0b;">97%</td><td class="num">99%</td><td style="font-size:0.82rem;">색상만 &mdash; 단독으로도 매우 강력</td></tr>
+              <tr><td>OCR only</td><td>text</td><td class="num">74%</td><td class="num">88%</td><td style="font-size:0.82rem;">글자만 &mdash; 노이즈 多, 텍스트 뚜렷한 상품에서 유효</td></tr>
+              <tr style="background:rgba(52,211,153,0.08);"><td><strong>PH + Color</strong></td><td>150D</td><td class="num" style="color:#34d399;font-weight:700;">100%</td><td class="num" style="color:#34d399;font-weight:700;">100%</td><td style="font-size:0.82rem;color:#34d399;"><strong>Best</strong> &mdash; 형태 + 색상 결합으로 완벽 보완</td></tr>
+              <tr><td>PH + OCR</td><td>54D+text</td><td class="num">90%</td><td class="num">94%</td><td style="font-size:0.82rem;">형태 + 글자</td></tr>
+              <tr style="background:rgba(52,211,153,0.05);"><td><strong>PH + Color + OCR</strong></td><td>150D+text</td><td class="num" style="color:#34d399;font-weight:700;">100%</td><td class="num" style="color:#34d399;font-weight:700;">100%</td><td style="font-size:0.82rem;color:#34d399;">3가지 모두 결합</td></tr>
+            </tbody>
+          </table>
+          </div>
+          <p class="week-desc" style="font-size:0.85rem;color:#5a7090;margin-bottom:0.5rem;">
+            PH + Color만으로 이미 100%. OCR은 추가 이득 없지만, 상품 수가 늘어나면 필요해질 수 있다.
+          </p>
+
+          <!-- ===== 상품별 정확도 ===== -->
+          <div class="week-section-label">상품별 정확도 변화</div>
+
+          <div class="figure" style="margin-bottom:1.5rem;">
+            <img src="research/product_week3.png" alt="Per-Product Accuracy">
+            <div class="figure-caption">
+              파랑: PH / 노랑: Color / 보라: OCR / 초록: PH+Color &mdash; 모든 상품이 100%로 개선
+            </div>
+          </div>
+
+          <details class="inner-collapse" style="margin-bottom:1.5rem;">
+            <summary>상품별 상세 결과<span class="collapse-count">detail</span></summary>
+            <div class="inner-collapse-body">
+              <div class="data-table-wrap">
+              <table class="data-table">
+                <thead><tr><th>Product</th><th class="num">PH only</th><th class="num">Color only</th><th class="num">OCR only</th><th class="num">PH+Color</th><th>PH 오분류</th></tr></thead>
+                <tbody>
+                  <tr><td>tubing band</td><td class="num highlight">100%</td><td class="num">100%</td><td class="num">90%</td><td class="num" style="color:#34d399;">100%</td><td style="color:#5a7090;">&mdash;</td></tr>
+                  <tr><td>cookie</td><td class="num">90%</td><td class="num">100%</td><td class="num highlight">100%</td><td class="num" style="color:#34d399;">100%</td><td>&rarr; every time &times;1</td></tr>
+                  <tr><td>orthomol</td><td class="num">90%</td><td class="num">100%</td><td class="num">80%</td><td class="num" style="color:#34d399;">100%</td><td>&rarr; Airpods Pro &times;1</td></tr>
+                  <tr><td>Airpods Pro</td><td class="num">90%</td><td class="num">80%</td><td class="num" style="color:#ef4444;">20%</td><td class="num" style="color:#34d399;">100%</td><td>&rarr; stanley &times;1</td></tr>
+                  <tr><td>pokemon go ++</td><td class="num">90%</td><td class="num">90%</td><td class="num">80%</td><td class="num" style="color:#34d399;">100%</td><td>&rarr; kitkat &times;1</td></tr>
+                  <tr><td>kitkat</td><td class="num">80%</td><td class="num">100%</td><td class="num highlight">100%</td><td class="num" style="color:#34d399;">100%</td><td>&rarr; pokemon &times;2</td></tr>
+                  <tr><td>Philips JC302</td><td class="num" style="color:#f59e0b;">70%</td><td class="num">100%</td><td class="num highlight">100%</td><td class="num" style="color:#34d399;">100%</td><td>&rarr; every time, tubing, cookie</td></tr>
+                  <tr><td>stanley</td><td class="num" style="color:#f59e0b;">70%</td><td class="num">100%</td><td class="num" style="color:#ef4444;">40%</td><td class="num" style="color:#34d399;">100%</td><td>&rarr; cookie, kitkat, Airpods</td></tr>
+                  <tr><td>every time</td><td class="num" style="color:#ef4444;">60%</td><td class="num">100%</td><td class="num">80%</td><td class="num" style="color:#34d399;">100%</td><td>&rarr; pokemon, stanley, tubing, cookie</td></tr>
+                  <tr><td>kavalan</td><td class="num" style="color:#ef4444;">50%</td><td class="num">100%</td><td class="num" style="color:#ef4444;">50%</td><td class="num" style="color:#34d399;">100%</td><td>&rarr; tubing, Philips, stanley &times;2</td></tr>
+                </tbody>
+              </table>
+              </div>
+            </div>
+          </details>
+
+          <!-- ===== 각 특징의 역할 ===== -->
+          <div class="week-section-label">각 특징은 무엇을 보는가</div>
+
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:0.75rem;margin-bottom:1.5rem;">
+            <div style="padding:1rem 1.15rem;background:var(--bg-card);border:1px solid var(--border-light);border-radius:6px;">
+              <div style="font-family:var(--mono);font-size:0.72rem;color:#3b82f6;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:0.5rem;">PH 54D &mdash; 형태</div>
+              <div style="font-size:0.9rem;color:var(--text-white);font-weight:600;margin-bottom:0.3rem;">흑백 밝기 패턴의 위상 구조</div>
+              <div style="font-size:0.83rem;color:var(--text);line-height:1.6;">
+                색을 무시하고 <strong>형태만</strong> 본다.<br>
+                같은 색이어도 모양이 다르면 구분.<br>
+                tubing band 100%, kavalan 50%.
+              </div>
+            </div>
+            <div style="padding:1rem 1.15rem;background:var(--bg-card);border:1px solid var(--border-light);border-radius:6px;">
+              <div style="font-family:var(--mono);font-size:0.72rem;color:#f59e0b;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:0.5rem;">Color 96D &mdash; 색상</div>
+              <div style="font-size:0.9rem;color:var(--text-white);font-weight:600;margin-bottom:0.3rem;">HSV 색상 분포</div>
+              <div style="font-size:0.83rem;color:var(--text);line-height:1.6;">
+                형태를 무시하고 <strong>색만</strong> 본다.<br>
+                색이 다르면 즉시 구분. 단독 97%.<br>
+                같은 색 상품이 늘면 한계.
+              </div>
+            </div>
+            <div style="padding:1rem 1.15rem;background:var(--bg-card);border:1px solid var(--border-light);border-radius:6px;">
+              <div style="font-family:var(--mono);font-size:0.72rem;color:#a78bfa;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:0.5rem;">OCR &mdash; 글자</div>
+              <div style="font-size:0.9rem;color:var(--text-white);font-weight:600;margin-bottom:0.3rem;">상품 표면 텍스트 인식</div>
+              <div style="font-size:0.83rem;color:var(--text);line-height:1.6;">
+                형태·색 무시, <strong>글자만</strong> 본다.<br>
+                kitkat, Philips 등 텍스트 뚜렷한 상품 100%.<br>
+                Airpods(매끈) 20%, stanley 40%.
+              </div>
+            </div>
+          </div>
+
+          <!-- ===== OCR 인식 현황 ===== -->
+          <details class="inner-collapse" style="margin-bottom:1.5rem;">
+            <summary>OCR 인식 현황 &mdash; 상품별 텍스트 추출<span class="collapse-count">data</span></summary>
+            <div class="inner-collapse-body">
+              <p class="week-desc" style="margin-bottom:0.75rem;">
+                Tesseract 5.5.0 (Apache 2.0, Google 유지보수)을 사용하였다. 촬영 각도와 표면 재질에 따라 인식률 차이가 크다.
+              </p>
+              <div class="data-table-wrap">
+              <table class="data-table">
+                <thead><tr><th>Product</th><th class="num">인식률</th><th>대표 추출 텍스트</th></tr></thead>
+                <tbody>
+                  <tr><td>kitkat</td><td class="num highlight">10/10</td><td style="font-size:0.82rem;">sugar butter tree kitkat</td></tr>
+                  <tr><td>cookie</td><td class="num highlight">10/10</td><td style="font-size:0.82rem;">premium cookie set</td></tr>
+                  <tr><td>Philips JC302</td><td class="num highlight">10/10</td><td style="font-size:0.82rem;">keep your shaver like new</td></tr>
+                  <tr><td>orthomol</td><td class="num">10/10</td><td style="font-size:0.82rem;">orthomol ronnefeldt tea excellence</td></tr>
+                  <tr><td>every time</td><td class="num">10/10</td><td style="font-size:0.82rem;">korean ginseng everytime</td></tr>
+                  <tr><td>stanley</td><td class="num">10/10</td><td style="font-size:0.82rem;">stanley</td></tr>
+                  <tr><td>tubing band</td><td class="num">10/10</td><td style="font-size:0.82rem;">(noisy, low quality)</td></tr>
+                  <tr><td>kavalan</td><td class="num">10/10</td><td style="font-size:0.82rem;">distillery reserve (sparse)</td></tr>
+                  <tr><td>Airpods Pro</td><td class="num" style="color:#ef4444;">9/10</td><td style="font-size:0.82rem;">(mostly noise &mdash; smooth white surface)</td></tr>
+                  <tr><td>pokemon go ++</td><td class="num" style="color:#f59e0b;">8/10</td><td style="font-size:0.82rem;">niantic (sparse)</td></tr>
+                </tbody>
+              </table>
+              </div>
+            </div>
+          </details>
+
+          <!-- ===== 3주차 결론 ===== -->
+          <div class="week-section-label">3주차 결론</div>
+
+          <p class="week-desc">
+            PH(형태) + Color(색상) + OCR(글자), 세 가지 관점을 결합하면<br>
+            각각의 약점을 상호 보완하여 <strong>10종 100장에서 Top-1 100%, Top-5 100%</strong>를 달성한다.<br>
+            PH + Color만으로 이미 100%이며, OCR은 현재 노이즈가 있지만 향후 유사 상품 구분에 기여할 수 있다.
+          </p>
+          <p class="week-desc" style="margin-top:0.75rem;">
+            핵심 발견은 <strong>Color Histogram이 단독 97%로 매우 강력하다</strong>는 점이다.<br>
+            이는 현재 10종 상품의 색이 모두 다르기 때문이며, 같은 색 상품이 추가되면<br>
+            Color 단독의 한계가 드러나고 <strong>PH의 형태 구분 능력이 필수적</strong>이 될 것이다.
+          </p>
+          <p class="week-desc" style="margin-top:0.75rem;">
+            이 세 특징을 결합한 벡터(150D + 텍스트)는 상품의 <strong>&ldquo;시각적 지문(Fingerprint)&rdquo;</strong>으로 기능한다.<br>
+            물리적 바코드 없이, 겉모습만으로 상품을 식별하는 &ldquo;TDA-based Product Fingerprint&rdquo; 개념이다.<br>
+            GPU나 AI 모델 없이 <strong>CPU 1~2초, 스마트폰에서 오프라인</strong>으로 동작 가능하다.
+          </p>
+
+          <!-- 한계 및 보완 -->
+          <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:6px;padding:1rem 1.3rem;margin-top:1rem;margin-bottom:0;">
+            <div style="font-family:var(--mono);font-size:0.72rem;color:#f59e0b;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:0.5rem;">실험 한계 &amp; 다음 주차에서 보완할 점</div>
+            <ul class="week-desc" style="margin:0;padding-left:1.2rem;line-height:1.9;">
+              <li><strong>10종은 색이 모두 달라 Color만으로 97%</strong> &mdash; PH의 기여가 3%에 불과하다. 유사 색상 상품을 추가해야 PH의 진가가 드러난다.</li>
+              <li><strong>OCR 노이즈</strong> &mdash; 촬영 각도·표면 재질에 따라 인식률 편차가 크다 (Airpods 20%, stanley 40%). 전처리 개선 또는 다른 OCR 엔진 검토 필요.</li>
+              <li><strong>동일 세션 데이터</strong> &mdash; 여전히 같은 날 같은 환경에서 촬영한 100장이다. Temporal Split 미검증.</li>
+            </ul>
+          </div>
+
+          <!-- ===== 다음 주 계획 ===== -->
+          <div class="week-section-label">다음 주 계획</div>
+
+          <ul class="week-desc">
+            <li><strong>상품 수 확대 (30~40종)</strong> &mdash; 기존 10종에 20~30종을 추가하여 Color 단독의 한계를 확인하고, PH + Color + OCR 결합의 확장성을 검증한다. 특히 유사 색상/동일 브랜드 변형 상품(예: 킷캣 오리지널 vs 딸기)을 포함한다.</li>
+            <li><strong>실시간 스캔 프로토타입</strong> &mdash; 카메라 프리뷰에서 상품을 실시간으로 인식하는 모드. PH(64&times;64) + Color로 200~300ms 내 처리, 초당 3~5회 인식 목표.</li>
+            <li><strong>Product Fingerprint DB</strong> &mdash; 상품별 fingerprint(150D + 텍스트)를 온디바이스 DB에 저장하고, 서버 없이 즉시 매칭하는 구조 구현.</li>
+          </ul>
+
+          <!-- 사용 도구 -->
+          <details class="inner-collapse" style="margin-top:1.25rem;">
+            <summary>사용 도구 (모두 오픈소스)<span class="collapse-count">tools</span></summary>
+            <div class="inner-collapse-body">
+              <div class="data-table-wrap">
+              <table class="data-table">
+                <thead><tr><th>용도</th><th>도구</th><th>버전</th><th>라이선스</th></tr></thead>
+                <tbody>
+                  <tr><td>PH 계산</td><td>GUDHI</td><td>3.12.0</td><td>MIT</td></tr>
+                  <tr><td>이미지 처리 + Color Histogram</td><td>OpenCV</td><td>4.13.0</td><td>Apache 2.0</td></tr>
+                  <tr><td>OCR 엔진</td><td>Tesseract</td><td>5.5.0</td><td>Apache 2.0</td></tr>
+                  <tr><td>OCR Python 래퍼</td><td>pytesseract</td><td>0.3.13</td><td>Apache 2.0</td></tr>
+                  <tr><td>DB 연동</td><td>MySQL + mysql-connector</td><td>8.4</td><td>GPL / MIT</td></tr>
+                </tbody>
+              </table>
+              </div>
+            </div>
+          </details>
+        </div>
+      </details>
+
       <details id="week-2" class="week-item">
         <summary class="week-toggle">
           <span>2주차 — PH 기반 상품 식별 정확도 개선 (94%)</span>
           <div class="week-toggle-right">
             <button class="week-link-btn" onclick="copyWeekLink(event,'week-2')" title="링크 복사">Link</button>
-            <span class="week-badge">Latest</span>
+
             <span class="week-arrow">▼</span>
           </div>
         </summary>
