@@ -1190,6 +1190,49 @@
             동등하게 합산해야 세 특징이 <strong>공정하게 기여</strong>할 수 있다.
           </p>
 
+          <div style="padding:1rem 1.25rem;background:var(--bg-card);border:1px solid rgba(99,102,241,0.3);border-radius:6px;margin-bottom:1.5rem;">
+            <div style="font-family:var(--mono);font-size:0.72rem;color:#818cf8;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:0.6rem;">Min-Max 정규화란?</div>
+            <div style="font-size:0.85rem;color:var(--text);line-height:1.7;">
+              각 값을 <strong style="color:var(--text-white);">가장 작은 값 = 0, 가장 큰 값 = 1</strong>로 변환하는 방법이다.<br>
+              <code style="font-size:0.82rem;color:var(--accent);background:rgba(99,102,241,0.1);padding:0.15em 0.4em;border-radius:3px;">정규화된 값 = (원래 값 &minus; 최소값) / (최대값 &minus; 최소값)</code>
+            </div>
+            <div style="margin-top:0.75rem;padding:0.75rem 1rem;background:rgba(0,0,0,0.2);border-radius:4px;font-size:0.82rem;line-height:1.8;">
+              <div style="color:#818cf8;font-weight:600;margin-bottom:0.3rem;">예시 &mdash; 시험 점수 60, 70, 80, 90, 100점</div>
+              <div style="color:var(--text);">
+                최소=60, 최대=100일 때<br>
+                <span style="color:var(--text-white);">60</span>점 &rarr; (60&minus;60)/(100&minus;60) = <strong style="color:#34d399;">0</strong> &ensp;|&ensp;
+                <span style="color:var(--text-white);">80</span>점 &rarr; (80&minus;60)/(100&minus;60) = <strong style="color:#34d399;">0.5</strong> &ensp;|&ensp;
+                <span style="color:var(--text-white);">100</span>점 &rarr; (100&minus;60)/(100&minus;60) = <strong style="color:#34d399;">1</strong>
+              </div>
+            </div>
+            <div style="margin-top:0.75rem;padding:0.75rem 1rem;background:rgba(0,0,0,0.2);border-radius:4px;font-size:0.82rem;line-height:1.8;">
+              <div style="color:#818cf8;font-weight:600;margin-bottom:0.3rem;">왜 필요한가 &mdash; 정규화 전후 비교</div>
+              <table style="width:100%;font-size:0.82rem;border-collapse:collapse;color:var(--text);">
+                <tr style="border-bottom:1px solid rgba(255,255,255,0.06);">
+                  <td style="padding:0.25rem 0;width:25%;"></td>
+                  <td style="padding:0.25rem 0.5rem;color:#f59e0b;">PH</td>
+                  <td style="padding:0.25rem 0.5rem;color:#34d399;">Color</td>
+                  <td style="padding:0.25rem 0.5rem;color:#a78bfa;">OCR</td>
+                  <td style="padding:0.25rem 0.5rem;color:var(--text-white);">합계</td>
+                </tr>
+                <tr style="border-bottom:1px solid rgba(255,255,255,0.06);">
+                  <td style="padding:0.3rem 0;color:var(--text-white);">정규화 전</td>
+                  <td style="padding:0.3rem 0.5rem;">5,000</td>
+                  <td style="padding:0.3rem 0.5rem;">0.1</td>
+                  <td style="padding:0.3rem 0.5rem;">0.2</td>
+                  <td style="padding:0.3rem 0.5rem;color:#ef4444;">5,000.3 <span style="font-size:0.75rem;">(PH가 99.9%)</span></td>
+                </tr>
+                <tr>
+                  <td style="padding:0.3rem 0;color:var(--text-white);">정규화 후</td>
+                  <td style="padding:0.3rem 0.5rem;">0.3</td>
+                  <td style="padding:0.3rem 0.5rem;">0.4</td>
+                  <td style="padding:0.3rem 0.5rem;">0.5</td>
+                  <td style="padding:0.3rem 0.5rem;color:#34d399;">1.2 <span style="font-size:0.75rem;">(셋 다 공평)</span></td>
+                </tr>
+              </table>
+            </div>
+          </div>
+
           <div class="figure" style="margin-bottom:1.5rem;">
             <img src="research/accuracy_week3.png" alt="Method Accuracy Comparison">
             <div class="figure-caption">
